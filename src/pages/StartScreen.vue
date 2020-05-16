@@ -18,16 +18,16 @@ export default {}
 @import '@/assets/variables.scss'
 
 .start-screen
-   box-sizing: border-box
+   align-items: center
    background-color: map-get($colors, 'background')
+   box-sizing: border-box
    display: flex
    flex-direction: column
    justify-content: space-between
-   align-items: center
    padding: 20%
    .buttons
-      height: 146px
       display: flex
       flex-direction: column
+      height: 146px
       justify-content: space-between
 </style>

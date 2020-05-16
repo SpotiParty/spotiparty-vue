@@ -42,17 +42,17 @@ export default {
 @import '@/assets/variables.scss'
 
 button
-   width: 100%
-   height: 100%
-   border: none
    border-radius: 32px
-   padding: 0px
+   border: none
+   cursor: pointer
    font-weight: 600
+   height: 100%
    margin: 0px
    outline: 0
-   cursor: pointer
+   padding: 0px
+   width: 100%
 .primary
+   background-color: map-get($colors, 'primary')
    color: white
    font-size: 24px
-   background-color: map-get($colors, 'primary')
 </style>

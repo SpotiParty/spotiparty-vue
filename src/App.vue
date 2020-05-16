@@ -8,15 +8,15 @@
 @import url('https://rsms.me/inter/inter.css');
 
 #app
-  font-family: 'Inter', sans-serif
-  -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
+  -webkit-font-smoothing: antialiased;
   color: #2c3e50
+  font-family: 'Inter', sans-serif
+  text-align: center;
 
 .fullscreen
-  width: 100vw
-  min-width: 100vw
   height: 100vh
   min-height: 100vh
+  min-width: 100vw
+  width: 100vw
 </style>
