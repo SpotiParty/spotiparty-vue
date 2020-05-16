@@ -25,6 +25,22 @@ requireComponent.keys().forEach(fileName => {
    Vue.component(componentName, componentConfig.default || componentConfig) // Components registered globally
 })
 
+/*
+ *  Icons in the folder /assets/icons are registered globally
+ */
+const requireIcons = require.context(
+   './assets/icons', //Path
+   false, //Don't search in subdirectories
+   /[A-Z]\w+\.(vue|js)$/ //Regex for the search
+)
+requireIcons.keys().forEach(fileName => {
+   const componentConfig = requireIcons(fileName)
+   const componentName = upperFirst(
+      camelCase(fileName.replace(/^\.\/(.*)\.\w+$/, '$1')) //Pascal Case conversion
+   )
+   Vue.component(componentName, componentConfig.default || componentConfig) // Components registered globally
+})
+
 Vue.config.productionTip = false
 
 new Vue({
