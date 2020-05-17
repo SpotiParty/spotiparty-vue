@@ -1,13 +1,35 @@
-# spotiparty (WIP)
+# SpotiParty
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/d9f2a372-0014-4812-a601-70391199fa21/deploy-status)](https://app.netlify.com/sites/romantic-shirley-7d10fd/deploys)
-[![Mantainment Status](https://img.shields.io/badge/Maintained%3F-yes-00ba61.svg)]
-[![Made on VSCode](https://img.shields.io/badge/Made%20on-VSCode-00aaed.svg)](https://code.visualstudio.com/)
-[![Made with vue](https://img.shields.io/badge/Made%20with-Vue-27b183.svg)](https://vuejs.org/)
-[![Made with firebase](https://img.shields.io/badge/Made%20with-Firebase-fbc246.svg)](https://firebase.google.com/)
-[![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://lbesson.mit-license.org/)
-[![Tweeting](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)
-[![Open Source Love svg2](https://badges.frapsoft.com/os/v2/open-source.svg?v=103)]
+---
+
+<p align="center">
+   <p> 
+      <a href="https://app.netlify.com/sites/romantic-shirley-7d10fd/deploys">
+         <img alt="Netlify Status" src="https://api.netlify.com/api/v1/badges/d9f2a372-0014-4812-a601-70391199fa21/deploy-status" />
+      </a>
+      <img alt="Repo status" src="https://img.shields.io/badge/Repo%20status-WIP-dbaf3b.svg" />
+      <a href="https://vuejs.org/">
+         <img alt="Made with vue" src="https://img.shields.io/badge/Made%20with-Vue-27b183.svg" />
+      </a>
+      <a href="https://firebase.google.com/">
+         <img alt="Made with firebase" src="https://img.shields.io/badge/Made%20with-Firebase-fbc246.svg" />
+      </a>
+   </p>
+   <p>
+      <a href="https://code.visualstudio.com/">
+         <img alt="Made on VSCode" src="https://img.shields.io/badge/Made%20on-VSCode-00aaed.svg" />
+      </a>
+      <a href="https://lbesson.mit-license.org/">
+         <img alt="MIT license" src="https://img.shields.io/badge/License-MIT-blue.svg" />
+      </a>
+      <img alt="Tweet" src="https://img.shields.io/twitter/url/http/shields.io.svg?style=social" />
+      <img alt="Open Source Love" src="https://badges.frapsoft.com/os/v2/open-source.svg?v=103" />
+  </p>
+</p>
+</br>
+</br>
+</br>
+</br>
 
 ## Project setup
 
