@@ -1,9 +1,7 @@
 # SpotiParty
 
----
-
 <p align="center">
-   <p> 
+   <p align="center"> 
       <a href="https://app.netlify.com/sites/romantic-shirley-7d10fd/deploys">
          <img alt="Netlify Status" src="https://api.netlify.com/api/v1/badges/d9f2a372-0014-4812-a601-70391199fa21/deploy-status" />
       </a>
@@ -15,7 +13,7 @@
          <img alt="Made with firebase" src="https://img.shields.io/badge/Made%20with-Firebase-fbc246.svg" />
       </a>
    </p>
-   <p>
+   <p align="center">
       <a href="https://code.visualstudio.com/">
          <img alt="Made on VSCode" src="https://img.shields.io/badge/Made%20on-VSCode-00aaed.svg" />
       </a>
