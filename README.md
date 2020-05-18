@@ -20,7 +20,6 @@
       <a href="https://lbesson.mit-license.org/">
          <img alt="MIT license" src="https://img.shields.io/badge/License-MIT-blue.svg" />
       </a>
-      <img alt="Tweet" src="https://img.shields.io/twitter/url/http/shields.io.svg?style=social" />
       <img alt="Open Source Love" src="https://badges.frapsoft.com/os/v2/open-source.svg?v=103" />
   </p>
 </p>
