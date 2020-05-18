@@ -1,5 +1,5 @@
-# SpotiParty
-
+<h1 align="center">SpotiParty</h1>
+</br>
 <p align="center">
    <p align="center"> 
       <a href="https://app.netlify.com/sites/romantic-shirley-7d10fd/deploys">
