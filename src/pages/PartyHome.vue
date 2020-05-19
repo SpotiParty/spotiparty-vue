@@ -5,7 +5,22 @@
 </template>
 
 <script>
-export default {}
+import { mapActions } from 'vuex'
+
+export default {
+   data() {
+      return {
+         token: this.$route.hash.split('=')[1].split('&')[0]
+      }
+   },
+   methods: {
+      ...mapActions('user', ['setToken', 'setUser'])
+   },
+   created() {
+      this.setToken(this.token)
+      this.setUser()
+   }
+}
 </script>
 
 <style lang="sass" scoped>
