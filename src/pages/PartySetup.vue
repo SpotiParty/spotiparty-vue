@@ -1,5 +1,5 @@
 <template>
-   <div class="party-home fullscreen">
+   <div class="party-setup fullscreen">
       <h1>Logged in correctly</h1>
    </div>
 </template>
@@ -24,7 +24,7 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-.party-home
+.party-setup
    display: flex
    justify-content: center
    align-items: center
