@@ -8,16 +8,12 @@
 import { mapActions } from 'vuex'
 
 export default {
-   data() {
-      return {
-         token: this.$route.hash.split('=')[1].split('&')[0]
-      }
-   },
    methods: {
       ...mapActions('user', ['setToken', 'setUser'])
    },
    created() {
-      this.setToken(this.token)
+      const token = this.$route.hash.split('=')[1].split('&')[0]
+      this.setToken(token)
       this.setUser()
    }
 }
