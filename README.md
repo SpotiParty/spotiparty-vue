@@ -9,7 +9,7 @@
       <a href="https://vuejs.org/">
          <img alt="Made with vue" src="https://img.shields.io/badge/Made%20with-Vue-27b183.svg" />
       </a>
-      <img alt="CI" src="https://github.com/SpotiParty/spotiparty/workflows/Continuous%20Integration/badge.svg">
+      <img alt="CI" src="https://github.com/SpotiParty/spotiparty/workflows/CI/badge.svg">
    </p>
    <p align="center">
       <a href="https://firebase.google.com/">
