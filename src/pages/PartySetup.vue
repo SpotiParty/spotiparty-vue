@@ -6,15 +6,19 @@
 
 <script>
 import { mapActions } from 'vuex'
+import Utils from '@/utils.js'
 
 export default {
    methods: {
-      ...mapActions('user', ['setToken', 'setUser'])
+      ...mapActions('user', ['setToken', 'setUser']),
+      ...mapActions('party', ['createParty'])
    },
    created() {
       const token = this.$route.hash.split('=')[1].split('&')[0]
       this.setToken(token)
       this.setUser()
+      const party_code = Utils.generatePartyCode()
+      this.createParty(party_code)
    }
 }
 </script>

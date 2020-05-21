@@ -1,5 +1,5 @@
 export default {
-   codeGenerator() {
+   generatePartyCode() {
       var randomChars =
          'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
       var result = ''
