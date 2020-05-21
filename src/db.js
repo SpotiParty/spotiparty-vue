@@ -7,5 +7,3 @@ export const db = firebase
 
 const { TimeStamp, GeoPoint } = firebase.firestore
 export { TimeStamp, GeoPoint }
-
-db.settings({ timestampsInSnapshots: true })
