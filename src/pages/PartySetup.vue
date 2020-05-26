@@ -11,7 +11,9 @@
             <p>con gli amici</p>
          </div>
       </div>
-      <BaseButton :width="230">Scegli la playlist</BaseButton>
+      <router-link :to="{ name: 'SelectPlaylist' }">
+         <BaseButton :width="230">Scegli la playlist</BaseButton>
+      </router-link>
    </div>
 </template>
 
