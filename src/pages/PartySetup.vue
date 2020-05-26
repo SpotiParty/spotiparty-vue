@@ -1,7 +1,17 @@
 <template>
    <div class="party-setup fullscreen">
-      <h1>Logged in correctly</h1>
-      <h2>Il codice del tuo party è {{ party.party_code }}</h2>
+      <div class="title">
+         <p>Questo è il codice</p>
+         <p>del tuo party</p>
+      </div>
+      <div>
+         <p class="party-code">{{ party.party_code }}</p>
+         <div class="captions">
+            <p>Ricordati di condividerlo</p>
+            <p>con gli amici</p>
+         </div>
+      </div>
+      <BaseButton :width="230">Scegli la playlist</BaseButton>
    </div>
 </template>
 
@@ -31,6 +41,24 @@ export default {
 .party-setup
    display: flex
    flex-direction: column
-   justify-content: center
+   justify-content: space-between
    align-items: center
+   padding: 10%
+   box-sizing: border-box
+.title
+   text-align: center
+   font-size: 24px
+   font-weight: 700
+   line-height: 0.5
+.party-code
+   text-align: center
+   font-size: 36px
+   font-weight: 800
+   margin: 12px
+.captions
+   text-align: center
+   font-size: 24px
+   font-weight: 400
+   margin: 0px
+   line-height: 0.4
 </style>
