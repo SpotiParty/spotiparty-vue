@@ -1,9 +1,6 @@
 <template>
    <div class="select-playlist fullscreen">
       <p class="title">Scegli una playlist</p>
-      <div class="TabBars">
-         <p>prova</p>
-      </div>
       <Playlist />
    </div>
 </template>
@@ -11,6 +8,11 @@
 <script>
 import Playlist from '@/components/Playlist.vue'
 export default {
+   data() {
+      return {
+         oggetti: [1, 2, 3, 4, 5, 6, 7]
+      }
+   },
    components: {
       Playlist
    }
@@ -23,7 +25,6 @@ export default {
    box-sizing: border-box
    display: flex
    flex-direction: column
-   justify-content: space-between
    padding: 30px
 .title
    display: flex
