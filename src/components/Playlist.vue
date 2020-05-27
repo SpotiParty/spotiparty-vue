@@ -1,12 +1,14 @@
 <template>
    <div class="playlist">
-      <img
-         v-if="has_cover"
-         class="playlist-image"
-         :src="playlist.images[0].url"
-      />
-      <img v-else class="playlist-image" :src="generic_cover" />
-      <p class="playlist-title">{{ playlist.name }}</p>
+      <div class="playlist-content">
+         <img
+            v-if="has_cover"
+            class="playlist-image"
+            :src="playlist.images[0].url"
+         />
+         <img v-else class="playlist-image" :src="generic_cover" />
+         <p class="playlist-title">{{ playlist.name }}</p>
+      </div>
    </div>
 </template>
 
@@ -29,14 +31,17 @@ export default {
 </script>
 
 <style lang="sass" scoped>
+@import '@/assets/variables.scss'
 .playlist
-   display: flex
+   background-color: map-get($colors, "background")
+   padding: 12px
+.playlist-content
    align-items: center
-   margin: 12px
+   display: flex
 .playlist-image
-    width: 80pxs
-    height: 80px
-    margin-top: 0px
+   height: 80px
+   margin-top: 0px
+   width: 80px
 .playlist-title
    padding: 20px
    font-size: 24px

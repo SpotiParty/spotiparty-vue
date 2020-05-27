@@ -1,15 +1,14 @@
 <template>
-   <div class="select-playlist fullscreen">
+   <div class="select-playlist">
       <p class="title">Scegli una playlist</p>
-      <transition-group name="slide-fade-horizontal">
-         <div
-            class="playlist-list"
-            v-for="(playlist, index) in user_playlists"
-            :key="index"
-         >
-            <Playlist :playlist="playlist" />
-         </div>
-      </transition-group>
+      <div class="empty"></div>
+      <div class="playlist-list">
+         <transition-group name="slide-fade-horizontal">
+            <div v-for="playlist in user_playlists" :key="playlist.id">
+               <Playlist :playlist="playlist" />
+            </div>
+         </transition-group>
+      </div>
    </div>
 </template>
 
@@ -37,17 +36,30 @@ export default {
 
 <style lang="sass" scoped>
 @import '@/assets/animations.sass'
+@import '@/assets/variables.scss'
+
+$navigation-height: 69px
+.empty
+   height: $navigation-height
 .select-playlist
-   background-color: #323232
-   box-sizing: border-box
-   display: flex
-   flex-direction: column
-   padding: 30px
+   background-color: map-get($colors, "background")
+   height: 100%
+   margin: 0px
+   padding: 0px
 .title
+   background-color: map-get($colors, "background")
+   box-sizing: border-box
+   color: white
    display: flex
-   justify-content: flex-start
    font-size: 32px
    font-weight: 600
-   color: white
+   justify-content: flex-start
    margin: 0px
+   padding: 30px 30px 0px 30px
+   position: fixed
+   width: 100%
+   z-index: 2
+.playlist-list
+   background-color: map-get($colors, "background")
+   padding: 0px 30px 30px 30px
 </style>
