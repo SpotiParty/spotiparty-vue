@@ -23,18 +23,21 @@ import Utils from '@/utils.js'
 
 export default {
    computed: {
-      ...mapState('party', ['party'])
+      ...mapState('party', ['party']),
+      ...mapState('user', ['access_token'])
    },
    methods: {
       ...mapActions('user', ['setToken', 'setUser']),
       ...mapActions('party', ['createParty'])
    },
    created() {
-      const token = this.$route.hash.split('=')[1].split('&')[0]
-      this.setToken(token)
-      this.setUser()
-      const party_code = Utils.generatePartyCode()
-      this.createParty(party_code)
+      if (this.access_token == null) {
+         const token = this.$route.hash.split('=')[1].split('&')[0]
+         this.setToken(token)
+         this.setUser()
+         const party_code = Utils.generatePartyCode()
+         this.createParty(party_code)
+      }
    }
 }
 </script>
