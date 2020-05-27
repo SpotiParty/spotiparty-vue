@@ -1,19 +1,22 @@
 <template>
    <div class="select-playlist fullscreen">
       <p class="title">Scegli una playlist</p>
-      <div
-         class="playlist-list"
-         v-for="(playlist, index) in user_playlists"
-         :key="index"
-      >
-         <Playlist :playlist="playlist" />
-      </div>
+      <transition-group name="slide-fade-horizontal">
+         <div
+            class="playlist-list"
+            v-for="(playlist, index) in user_playlists"
+            :key="index"
+         >
+            <Playlist :playlist="playlist" />
+         </div>
+      </transition-group>
    </div>
 </template>
 
 <script>
 import { mapState, mapActions } from 'vuex'
 import Playlist from '@/components/Playlist.vue'
+
 export default {
    components: {
       Playlist
@@ -25,12 +28,15 @@ export default {
       ...mapActions('playlist', ['getListOfPlaylists'])
    },
    created() {
-      this.getListOfPlaylists()
+      if (this.user_playlists.length == 0) {
+         this.getListOfPlaylists()
+      }
    }
 }
 </script>
 
 <style lang="sass" scoped>
+@import '@/assets/animations.sass'
 .select-playlist
    background-color: #323232
    box-sizing: border-box
