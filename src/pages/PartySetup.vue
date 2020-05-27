@@ -58,9 +58,13 @@ export default {
    font-weight: 800
    margin: 12px
 .captions
-   text-align: center
+   display: flex
+   flex-direction: column
+   align-items: center
+   justify-content: center
    font-size: 24px
    font-weight: 400
    margin: 0px
-   line-height: 0.4
+   > p
+      margin: 0px
 </style>
