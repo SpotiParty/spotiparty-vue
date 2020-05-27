@@ -1,16 +1,24 @@
 <template>
    <div class="select-playlist fullscreen">
       <p class="title">Scegli una playlist</p>
+      <div class="TabBars">
+         <p>prova</p>
+      </div>
+      <Playlist />
    </div>
 </template>
 
 <script>
-export default {}
+import Playlist from '@/components/Playlist.vue'
+export default {
+   components: {
+      Playlist
+   }
+}
 </script>
 
 <style lang="sass" scoped>
 .select-playlist
-   align-items: left
    background-color: #323232
    box-sizing: border-box
    display: flex
@@ -18,7 +26,8 @@ export default {}
    justify-content: space-between
    padding: 30px
 .title
-   text-align: left
+   display: flex
+   justify-content: flex-start
    font-size: 32px
    font-weight: 600
    color: white
