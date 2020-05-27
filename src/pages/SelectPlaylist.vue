@@ -1,20 +1,31 @@
 <template>
    <div class="select-playlist fullscreen">
       <p class="title">Scegli una playlist</p>
-      <Playlist />
+      <div
+         class="playlist-list"
+         v-for="(playlist, index) in user_playlists"
+         :key="index"
+      >
+         <Playlist :playlist="playlist" />
+      </div>
    </div>
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex'
 import Playlist from '@/components/Playlist.vue'
 export default {
-   data() {
-      return {
-         oggetti: [1, 2, 3, 4, 5, 6, 7]
-      }
-   },
    components: {
       Playlist
+   },
+   computed: {
+      ...mapState('playlist', ['user_playlists'])
+   },
+   methods: {
+      ...mapActions('playlist', ['getListOfPlaylists'])
+   },
+   created() {
+      this.getListOfPlaylists()
    }
 }
 </script>

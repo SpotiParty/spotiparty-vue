@@ -18,7 +18,8 @@ export default {
          const payload = rootState.user.user.id
          await PlaylistApi.getUserPlaylists(payload)
             .then(response => {
-               response.items.forEach(playlist => {
+               console.log(response.data.items)
+               response.data.items.forEach(playlist => {
                   dispatch('getPlaylistImage', playlist)
                })
             })
@@ -28,7 +29,7 @@ export default {
          const payload = playlist.id
          await PlaylistApi.getPlaylistCover(payload)
             .then(response => {
-               playlist.images = response
+               playlist.images = response.data
             })
             .catch(error => console.log(error))
          commit('ADD_PLAYLIST', playlist)
