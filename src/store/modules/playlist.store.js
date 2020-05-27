@@ -18,7 +18,6 @@ export default {
          const payload = rootState.user.user.id
          await PlaylistApi.getUserPlaylists(payload)
             .then(response => {
-               console.log(response.data.items)
                response.data.items.forEach(playlist => {
                   dispatch('getPlaylistImage', playlist)
                })
