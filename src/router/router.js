@@ -4,6 +4,9 @@ import StartScreen from '@/pages/StartScreen.vue'
 import PartySetup from '@/pages/PartySetup.vue'
 import SelectPlaylist from '@/pages/SelectPlaylist.vue'
 
+import MyPlaylists from '@/components/views/MyPlaylists.vue'
+import CategoryList from '@/components/views/CategoryList.vue'
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -20,7 +23,19 @@ const routes = [
    {
       path: '/select-playlist',
       name: 'SelectPlaylist',
-      component: SelectPlaylist
+      component: SelectPlaylist,
+      children: [
+         {
+            path: 'myplaylists',
+            name: 'MyPlaylists',
+            component: MyPlaylists
+         },
+         {
+            path: 'browse-categories',
+            name: 'BrowseCategories',
+            component: CategoryList
+         }
+      ]
    }
 ]
 

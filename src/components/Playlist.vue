@@ -1,5 +1,5 @@
 <template>
-   <div class="playlist">
+   <div class="playlist" @click="click">
       <img
          v-if="has_cover"
          class="playlist-image"
@@ -24,19 +24,25 @@ export default {
          has_cover: !!this.playlist.images[0],
          generic_cover: generic_cover
       }
+   },
+   methods: {
+      click() {
+         this.$emit('click')
+      }
    }
 }
 </script>
 <style lang="sass" scoped>
+@import '@/assets/variables.scss'
 .playlist
    display: flex
    align-items: center
-   margin: 12px
+   padding: 12px
+   background-color: map-get($colors, "background")
 .playlist-image
     width: 80px
     height: 80px
     margin-top: 0px
-
 .playlist-title
    padding: 20px
    font-size: 24px

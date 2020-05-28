@@ -1,24 +1,30 @@
 <template>
    <div class="category">
       <div class="category-content">
-         <img
-            class="category-image"
-            src="https://upload.wikimedia.org/wikipedia/it/5/51/Immagine_13.png"
-         />
-         <p class="category-title">Category name</p>
+         <img class="category-image" :src="category.icons[0].url" />
+         <p class="category-title">{{ category.name }}</p>
       </div>
    </div>
 </template>
+
 <script>
-export default {}
+export default {
+   props: {
+      category: {
+         type: Object,
+         required: true
+      }
+   }
+}
 </script>
+
 <style lang="sass" scoped>
 .category
    display: flex
    padding: 12px
    margin: 0px
 .category-content
-   flex-bases: content
+   flex-basis: content
    flex-direction: column
    align-items: center
    display: flex
