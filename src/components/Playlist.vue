@@ -1,6 +1,6 @@
 <template>
    <div class="playlist">
-      <div class="playlist-content">
+      <div class="playlist-content" @click="click">
          <img
             v-if="has_cover"
             class="playlist-image"
@@ -25,6 +25,11 @@ export default {
       return {
          has_cover: !!this.playlist.images[0],
          generic_cover: generic_cover
+      }
+   },
+   methods: {
+      click() {
+         this.$emit('click')
       }
    }
 }

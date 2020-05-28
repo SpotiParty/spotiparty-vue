@@ -8,7 +8,13 @@
          <transition name="slide-fade-horizontal-left">
             <div v-if="selected_tab == 0">
                <div v-for="playlist in user_playlists" :key="playlist.id">
-                  <Playlist :playlist="playlist" />
+                  <Playlist
+                     :playlist="playlist"
+                     @click="selectPlaylist(playlist.id)"
+                     :class="{
+                        'selected-playlist': selected_playlist == playlist.id
+                     }"
+                  />
                </div>
             </div>
          </transition>
@@ -29,7 +35,8 @@ export default {
    data() {
       return {
          tab_options: ['Le mie playlist', 'Esplora'],
-         selected_tab: 0
+         selected_tab: 0,
+         selected_playlist: null
       }
    },
    computed: {
@@ -39,6 +46,9 @@ export default {
       ...mapActions('playlist', ['getListOfPlaylists']),
       changeTab(index) {
          this.selected_tab = index
+      },
+      selectPlaylist(playlist_id) {
+         this.selected_playlist = playlist_id
       }
    },
    created() {
@@ -84,4 +94,7 @@ $navigation-height: 141px
       left: 0px
       background-color: map-get($colors, "background")
       padding: 0px 30px 30px 30px
+
+.selected-playlist
+   filter: brightness(160%)
 </style>
