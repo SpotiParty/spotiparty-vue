@@ -50,6 +50,7 @@ export default {
    align-items: center
    padding: 10%
    box-sizing: border-box
+   background-color: white
 .title
    text-align: center
    font-size: 24px
