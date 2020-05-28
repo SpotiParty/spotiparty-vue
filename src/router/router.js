@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import StartScreen from '@/pages/StartScreen.vue'
 import PartySetup from '@/pages/PartySetup.vue'
+import SelectPlaylist from '@/pages/SelectPlaylist.vue'
 
 Vue.use(VueRouter)
 
@@ -15,6 +16,11 @@ const routes = [
       path: '/party-setup',
       name: 'PartySetup',
       component: PartySetup
+   },
+   {
+      path: '/select-playlist',
+      name: 'SelectPlaylist',
+      component: SelectPlaylist
    }
 ]
 
