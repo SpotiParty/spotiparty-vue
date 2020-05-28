@@ -2,14 +2,16 @@
    <div class="select-playlist">
       <div class="header">
          <p class="title">Scegli una playlist</p>
-         <TabSelector />
+         <TabSelector :tabs="tab_options" @tab-selected="changeTab" />
       </div>
       <div class="playlist-list">
-         <transition-group name="slide-fade-horizontal-left">
-            <div v-for="playlist in user_playlists" :key="playlist.id">
-               <Playlist :playlist="playlist" />
+         <transition name="slide-fade-horizontal-left">
+            <div v-if="selected_tab == 0">
+               <div v-for="playlist in user_playlists" :key="playlist.id">
+                  <Playlist :playlist="playlist" />
+               </div>
             </div>
-         </transition-group>
+         </transition>
       </div>
    </div>
 </template>
@@ -24,11 +26,20 @@ export default {
       Playlist,
       TabSelector
    },
+   data() {
+      return {
+         tab_options: ['Le mie playlist', 'Esplora'],
+         selected_tab: 0
+      }
+   },
    computed: {
       ...mapState('playlist', ['user_playlists'])
    },
    methods: {
-      ...mapActions('playlist', ['getListOfPlaylists'])
+      ...mapActions('playlist', ['getListOfPlaylists']),
+      changeTab(index) {
+         this.selected_tab = index
+      }
    },
    created() {
       if (this.user_playlists.length == 0) {
