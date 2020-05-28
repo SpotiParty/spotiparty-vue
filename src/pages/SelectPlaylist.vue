@@ -5,8 +5,8 @@
          <TabSelector :tabs="tab_options" @tab-selected="changeTab" />
       </div>
       <div class="playlist-list">
-         <transition name="slide-fade-horizontal-left">
-            <div v-if="selected_tab == 0">
+         <transition name="list-left" mode="out-in">
+            <div v-if="selected_tab == 0" class="my-playlists">
                <div v-for="playlist in user_playlists" :key="playlist.id">
                   <Playlist
                      :playlist="playlist"
@@ -15,6 +15,15 @@
                         'selected-playlist': selected_playlist == playlist.id
                      }"
                   />
+               </div>
+            </div>
+         </transition>
+         <transition name="list-right" mode="out-in">
+            <div v-if="selected_tab == 1" class="browse">
+               <div v-for="(number, index) in numbers" :key="index">
+                  <span style="color: white;">
+                     Tua Mamma
+                  </span>
                </div>
             </div>
          </transition>
@@ -36,7 +45,8 @@ export default {
       return {
          tab_options: ['Le mie playlist', 'Esplora'],
          selected_tab: 0,
-         selected_playlist: null
+         selected_playlist: null,
+         numbers: [1, 2, 3, 4, 5, 6, 7, 8]
       }
    },
    computed: {

@@ -9,7 +9,7 @@
          <span class="tab-element-title">
             {{ tab }}
          </span>
-         <transition name="fade" mode="out-in">
+         <transition :name="animation" mode="out-in">
             <div v-if="selected_tab == index" class="active-line"></div>
          </transition>
       </div>
@@ -30,11 +30,15 @@ export default {
    },
    data() {
       return {
-         selected_tab: this.selected
+         selected_tab: this.selected,
+         animation: null
       }
    },
    methods: {
       selectTab(index) {
+         index > this.selected_tab
+            ? (this.animation = 'tab-left')
+            : (this.animation = 'tab-right')
          this.selected_tab = index
          this.$emit('tab-selected', index)
       }
