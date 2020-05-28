@@ -1,14 +1,12 @@
 <template>
    <div class="playlist">
-      <div class="playlist-content" @click="click">
-         <img
-            v-if="has_cover"
-            class="playlist-image"
-            :src="playlist.images[0].url"
-         />
-         <img v-else class="playlist-image" :src="generic_cover" />
-         <p class="playlist-title">{{ playlist.name }}</p>
-      </div>
+      <img
+         v-if="has_cover"
+         class="playlist-image"
+         :src="playlist.images[0].url"
+      />
+      <img v-else class="playlist-image" :src="generic_cover" />
+      <p class="playlist-title">{{ playlist.name }}</p>
    </div>
 </template>
 
@@ -26,27 +24,19 @@ export default {
          has_cover: !!this.playlist.images[0],
          generic_cover: generic_cover
       }
-   },
-   methods: {
-      click() {
-         this.$emit('click')
-      }
    }
 }
 </script>
-
 <style lang="sass" scoped>
-@import '@/assets/variables.scss'
 .playlist
-   background-color: map-get($colors, "background")
-   padding: 12px
-.playlist-content
-   align-items: center
    display: flex
+   align-items: center
+   margin: 12px
 .playlist-image
-   height: 80px
-   margin-top: 0px
-   width: 80px
+    width: 80px
+    height: 80px
+    margin-top: 0px
+
 .playlist-title
    padding: 20px
    font-size: 24px

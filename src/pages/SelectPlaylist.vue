@@ -21,9 +21,7 @@
          <transition name="list-right" mode="out-in">
             <div v-if="selected_tab == 1" class="browse">
                <div v-for="(number, index) in numbers" :key="index">
-                  <span style="color: white;">
-                     Tua Mamma
-                  </span>
+                  <Category />
                </div>
             </div>
          </transition>
@@ -35,11 +33,13 @@
 import { mapState, mapActions } from 'vuex'
 import Playlist from '@/components/Playlist.vue'
 import TabSelector from '@/components/TabSelector.vue'
+import Category from '@/components/Category.vue'
 
 export default {
    components: {
       Playlist,
-      TabSelector
+      TabSelector,
+      Category
    },
    data() {
       return {
@@ -103,7 +103,10 @@ $navigation-height: 141px
       right: 0px
       left: 0px
       background-color: map-get($colors, "background")
-      padding: 0px 30px 30px 30px
+      padding: 0px 20px 30px 20px
+      >.browse
+         display: flex
+         flex-wrap: wrap
 
 .selected-playlist
    filter: brightness(160%)
