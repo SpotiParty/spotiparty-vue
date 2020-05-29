@@ -48,13 +48,13 @@ export default {
    },
    computed: {
       placeholder() {
-         if (!this.getPartyCode() && this.submitted) {
+         if (!this.isPartyCode() && this.submitted) {
             return 'Codice errato'
          }
          return 'Codice'
       },
       wrong_code() {
-         if (!this.getPartyCode() && this.submitted) {
+         if (!this.isPartyCode() && this.submitted) {
             return true
          }
          return false
@@ -76,7 +76,7 @@ export default {
       }
    },
    created() {
-      if (this.getPartyCode()) {
+      if (this.isPartyCode()) {
          this.$router.push('/welcome-party')
       }
    }

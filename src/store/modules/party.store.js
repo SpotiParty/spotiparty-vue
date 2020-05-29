@@ -39,5 +39,9 @@ export default {
          }
       }
    },
-   getters: {}
+   getters: {
+      isPartyCode(state) {
+         return state.party.party_code != null
+      }
+   }
 }
