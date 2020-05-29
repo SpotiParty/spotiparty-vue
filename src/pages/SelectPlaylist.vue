@@ -10,7 +10,7 @@
          </transition>
       </div>
       <div class="tab-bar">
-         <BaseButton :button_class="button_type" @click="click">
+         <BaseButton :button_class="button_type" @click="choosePlaylist">
             Cominciamo!
          </BaseButton>
       </div>
@@ -19,6 +19,7 @@
 
 <script>
 import TabSelector from '@/components/TabSelector.vue'
+import { mapActions } from 'vuex'
 
 export default {
    components: {
@@ -28,19 +29,20 @@ export default {
       return {
          tab_options: ['Le mie playlist', 'Esplora'],
          selected_tab: 0,
-         selected_playlist: null,
+         selected_playlist_id: null,
          animation: 'slide-fade-horizontal-right'
       }
    },
    computed: {
       button_type() {
-         if (this.selected_playlist == null) {
+         if (this.selected_playlist_id == null) {
             return 'disabled'
          }
          return 'primary'
       }
    },
    methods: {
+      ...mapActions('playlist', ['getPlaylistTracksAndAddToPlayQueue']),
       changeTab(index) {
          index == 0
             ? this.$router.push({ name: 'MyPlaylists' })
@@ -50,10 +52,11 @@ export default {
             : (this.animation = 'slide-fade-horizontal-left')
       },
       selectPlaylist(playlist_id) {
-         this.selected_playlist = playlist_id
+         this.selected_playlist_id = playlist_id
       },
-      click() {
-         if (this.selected_playlist != null) {
+      choosePlaylist() {
+         if (this.selected_playlist_id != null) {
+            this.getPlaylistTracksAndAddToPlayQueue(this.selected_playlist_id)
             this.$router.push({ name: 'HostPartyHome' })
          }
       }

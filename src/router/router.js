@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import StartScreen from '@/pages/StartScreen.vue'
 import PartySetup from '@/pages/PartySetup.vue'
 import SelectPlaylist from '@/pages/SelectPlaylist.vue'
+import HostPartyHome from '@/pages/HostPartyHome.vue'
 
 import MyPlaylists from '@/components/views/MyPlaylists.vue'
 import CategoryList from '@/components/views/CategoryList.vue'
@@ -36,6 +37,11 @@ const routes = [
             component: CategoryList
          }
       ]
+   },
+   {
+      path: '/host-party-home',
+      name: 'HostPartyHome',
+      component: HostPartyHome
    }
 ]
 

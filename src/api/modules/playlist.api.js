@@ -7,7 +7,7 @@ export default {
    getPlaylistCover(playlist_id) {
       return apiClient.get(`/playlists/${playlist_id}/images`)
    },
-   getPlaylistItems(playlist_id) {
+   getPlaylistTracks(playlist_id) {
       return apiClient.get(`/playlists/${playlist_id}/tracks`)
    }
 }
