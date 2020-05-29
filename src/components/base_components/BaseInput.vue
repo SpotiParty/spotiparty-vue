@@ -67,4 +67,28 @@ export default {
 }
 </script>
 
-<style></style>
+<style lang="sass" scoped>
+@import '@/assets/variables.scss'
+
+input
+   justify-content: center
+   align-items: center
+   border-radius: 32px
+   border: solid 2px rgba(255, 255, 255, 0.8)
+   cursor: text
+   font-weight: 600
+   height: 100%
+   margin: 0px
+   outline: 0
+   padding: 0
+   width: 100%
+   background-color: map-get($colors, 'background')
+   padding: 0 15%
+   box-sizing: border-box
+input::placeholder
+   font-weight: 400
+   font-size: 18px
+   color: rgba(255, 255, 255, 0.8)
+.error
+   border: solid 2px red
+</style>
