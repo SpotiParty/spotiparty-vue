@@ -38,6 +38,7 @@ export default {
    display: flex
    align-items: center
    padding: 12px
+   border-radius: 15px
    background-color: map-get($colors, "background")
 .playlist-image
     width: 80px

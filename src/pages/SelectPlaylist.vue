@@ -6,8 +6,13 @@
       </div>
       <div class="playlist-list">
          <transition :name="animation" mode="out-in">
-            <router-view></router-view>
+            <router-view @select="selectPlaylist"></router-view>
          </transition>
+      </div>
+      <div class="tab-bar">
+         <BaseButton :button_class="button_type" @click="click">
+            Cominciamo!
+         </BaseButton>
       </div>
    </div>
 </template>
@@ -27,6 +32,14 @@ export default {
          animation: 'slide-fade-horizontal-right'
       }
    },
+   computed: {
+      button_type() {
+         if (this.selected_playlist == null) {
+            return 'disabled'
+         }
+         return 'primary'
+      }
+   },
    methods: {
       changeTab(index) {
          index == 0
@@ -35,7 +48,18 @@ export default {
          index == 0
             ? (this.animation = 'slide-fade-horizontal-right')
             : (this.animation = 'slide-fade-horizontal-left')
+      },
+      selectPlaylist(playlist_id) {
+         this.selected_playlist = playlist_id
+      },
+      click() {
+         if (this.selected_playlist != null) {
+            this.$router.push({ name: 'HostPartyHome' })
+         }
       }
+   },
+   created() {
+      this.$router.push({ name: 'MyPlaylists' })
    }
 }
 </script>
@@ -75,4 +99,14 @@ $navigation-height: 141px
       left: 0px
       background-color: map-get($colors, "background")
       padding: 0px 20px 30px 20px
+   .tab-bar
+      height: 72px
+      width: 100%
+      position: fixed
+      display: flex
+      align-items: center
+      justify-content: center
+      bottom: 0px
+      background-color: map-get($colors, "background")
+      box-shadow: 0px -5px 15px 14px rgba(0,0,0,0.65);
 </style>

@@ -6,12 +6,11 @@ export default {
       categories: [],
       category_playlists: [],
       offset: 0,
-      limit: 8
+      limit: 16
    },
    mutations: {
       ADD_CATEGORIES(state, categories) {
          state.offset += state.limit
-         console.log(categories)
          state.categories = [...categories]
       },
       ADD_CATEGORY_PLAYLISTS(state, params) {
@@ -23,7 +22,6 @@ export default {
          //TODO api call when scroll
          await BrowseApi.getListOfCategory(state.offset, state.limit)
             .then(response => {
-               console.log(response.data.categories.items)
                commit('ADD_CATEGORIES', response.data.categories.items)
             })
             .catch(error => console.log(error))

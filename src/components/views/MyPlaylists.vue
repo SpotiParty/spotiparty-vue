@@ -20,11 +20,20 @@ export default {
    components: {
       Playlist
    },
+   data() {
+      return {
+         selected_playlist: null
+      }
+   },
    computed: {
       ...mapState('playlist', ['user_playlists'])
    },
    methods: {
-      ...mapActions('playlist', ['getListOfPlaylists'])
+      ...mapActions('playlist', ['getListOfPlaylists']),
+      selectPlaylist(playlist_id) {
+         this.selected_playlist = playlist_id
+         this.$emit('select', playlist_id)
+      }
    },
    created() {
       if (this.user_playlists.length == 0) {
