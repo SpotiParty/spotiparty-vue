@@ -72,12 +72,14 @@ export default {
       if (this.user_playlists.length == 0) {
          this.getListOfPlaylists()
       }
-      this.$router.push({
-         name: 'MyPlaylists',
-         params: {
-            playlist_list: this.user_playlists
-         }
-      })
+      if (this.$router.currentRoute.name != 'MyPlaylists') {
+         this.$router.push({
+            name: 'MyPlaylists',
+            params: {
+               playlist_list: this.user_playlists
+            }
+         })
+      }
    }
 }
 </script>
@@ -87,6 +89,7 @@ export default {
 @import '@/assets/variables.scss'
 
 $navigation-height: 141px
+$tab-bar-height: 72px
 
 .select-playlist
    background-color: map-get($colors, "background")
@@ -102,6 +105,7 @@ $navigation-height: 141px
       position: fixed
       top: 0px
       box-sizing: border-box
+      box-shadow: 0px 3px 10px 3px rgba(0,0,0,0.25)
       .title
          display: flex
          justify-content: flex-start
@@ -111,14 +115,14 @@ $navigation-height: 141px
          font-weight: 600
          margin: 0px
    .playlist-list
-      position: absolute
-      top: $navigation-height
+      margin-top: $navigation-height
+      margin-bottom: $tab-bar-height
       right: 0px
       left: 0px
       background-color: map-get($colors, "background")
-      padding: 0px 20px 30px 20px
+      padding: 10px 20px 10px 20px
    .tab-bar
-      height: 72px
+      height: $tab-bar-height
       width: 100%
       position: fixed
       display: flex
@@ -126,5 +130,5 @@ $navigation-height: 141px
       justify-content: center
       bottom: 0px
       background-color: map-get($colors, "background")
-      box-shadow: 0px -5px 15px 14px rgba(0,0,0,0.65);
+      box-shadow: 0px -3px 10px 3px rgba(0,0,0,0.25);
 </style>
