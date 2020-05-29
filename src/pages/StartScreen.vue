@@ -7,7 +7,9 @@
          <a :href="link">
             <BaseButton>Crea party</BaseButton>
          </a>
-         <BaseButton>Partecipa</BaseButton>
+         <router-link to="/join-party">
+            <BaseButton>Partecipa</BaseButton>
+         </router-link>
       </div>
    </div>
 </template>
