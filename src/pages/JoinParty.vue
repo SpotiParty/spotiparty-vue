@@ -62,7 +62,7 @@ export default {
    },
    methods: {
       ...mapActions('party', ['joinParty']),
-      ...mapGetters('party', ['getPartyCode']),
+      ...mapGetters('party', ['isPartyCode']),
       displayButton() {
          this.input_is_open = true
       },
