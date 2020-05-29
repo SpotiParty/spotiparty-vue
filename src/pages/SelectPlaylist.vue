@@ -19,7 +19,7 @@
 
 <script>
 import TabSelector from '@/components/TabSelector.vue'
-import { mapActions } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 export default {
    components: {
@@ -34,6 +34,7 @@ export default {
       }
    },
    computed: {
+      ...mapState('playlist', ['user_playlists']),
       button_type() {
          if (this.selected_playlist_id == null) {
             return 'disabled'
@@ -42,10 +43,16 @@ export default {
       }
    },
    methods: {
+      ...mapActions('playlist', ['getListOfPlaylists']),
       ...mapActions('playlist', ['getPlaylistTracksAndAddToPlayQueue']),
       changeTab(index) {
          index == 0
-            ? this.$router.push({ name: 'MyPlaylists' })
+            ? this.$router.push({
+                 name: 'MyPlaylists',
+                 params: {
+                    playlist_list: this.user_playlists
+                 }
+              })
             : this.$router.push({ name: 'BrowseCategories' })
          index == 0
             ? (this.animation = 'slide-fade-horizontal-right')
@@ -62,7 +69,15 @@ export default {
       }
    },
    created() {
-      this.$router.push({ name: 'MyPlaylists' })
+      if (this.user_playlists.length == 0) {
+         this.getListOfPlaylists()
+      }
+      this.$router.push({
+         name: 'MyPlaylists',
+         params: {
+            playlist_list: this.user_playlists
+         }
+      })
    }
 }
 </script>
