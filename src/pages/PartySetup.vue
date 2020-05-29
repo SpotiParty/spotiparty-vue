@@ -25,6 +25,7 @@ export default {
       this.createParty(party_code)
    }
 }
+// TODO ordinare lo stile per nome
 </script>
 
 <style lang="sass" scoped>

@@ -65,6 +65,7 @@ export default {
       }
    }
 }
+// TODO ordinare lo stile per nome
 </script>
 
 <style lang="sass" scoped>
@@ -85,6 +86,8 @@ input
    background-color: map-get($colors, 'background')
    padding: 0 15%
    box-sizing: border-box
+   color: rgba(255, 255, 255, 0.8)
+   font-size: 18px
 input::placeholder
    font-weight: 400
    font-size: 18px

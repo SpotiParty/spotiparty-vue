@@ -23,6 +23,7 @@ export default {
       }
    }
 }
+// TODO ordinare lo stile per nome
 </script>
 
 <style lang="sass" scoped>
