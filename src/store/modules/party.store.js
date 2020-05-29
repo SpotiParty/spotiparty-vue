@@ -35,5 +35,7 @@ export default {
          commit('ADD_TRACKS_TO_QUEUE', tracks)
       }
    },
-   getters: {}
+   getters: {
+      logged_in: state => !!state.party.party_code
+   }
 }
