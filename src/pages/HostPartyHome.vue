@@ -1,18 +1,37 @@
 <template>
    <div class="host-party-home fullscreen">
-      <h3>Benvenuto nella home del tuo party</h3>
+      <div v-for="(track, index) in track_list" :key="index">
+         {{ track }}
+      </div>
    </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
-   created() {}
+   data() {
+      return {
+         track_list: []
+      }
+   },
+   computed: {
+      ...mapState('party', ['party'])
+   },
+   created() {
+      //TODO da rimuovere, per la dimostrazione al professore
+      setTimeout(() => {}, 600)
+      this.party.current_playlist.forEach(item => {
+         this.track_list.push(item.track.name)
+      })
+   }
 }
 </script>
 
 <style lang="sass" scoped>
 .host-party-home
    display: flex
+   flex-direction: column
    align-items: center
    justify-content: center
    color: white
