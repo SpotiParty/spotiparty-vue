@@ -1,7 +1,7 @@
 <template>
    <div class="category-list">
       <div v-for="category in categories" :key="category.id">
-         <Category :category="category" />
+         <Category :category="category" @click="click(category.id)" />
       </div>
    </div>
 </template>
@@ -18,7 +18,10 @@ export default {
       ...mapState('browse', ['categories'])
    },
    methods: {
-      ...mapActions('browse', ['getCategories'])
+      ...mapActions('browse', ['getCategories']),
+      click(category_id) {
+         this.$emit('click', category_id)
+      }
    },
    created() {
       if (this.categories.length == 0) {

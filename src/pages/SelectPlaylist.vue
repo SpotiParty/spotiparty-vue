@@ -53,7 +53,7 @@ export default {
                     playlist_list: this.user_playlists
                  }
               })
-            : this.$router.push({ name: 'BrowseCategories' })
+            : this.$router.push({ name: 'Browse' })
          index == 0
             ? (this.animation = 'slide-fade-horizontal-right')
             : (this.animation = 'slide-fade-horizontal-left')

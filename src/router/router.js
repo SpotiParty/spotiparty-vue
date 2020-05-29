@@ -8,6 +8,7 @@ import HostPartyHome from '@/pages/HostPartyHome.vue'
 
 import PlaylistList from '@/components/views/PlaylistList.vue'
 import CategoryList from '@/components/views/CategoryList.vue'
+import Browse from '@/components/views/Browse.vue'
 
 Vue.use(VueRouter)
 
@@ -39,15 +40,29 @@ const routes = [
             })
          },
          {
-            path: 'browse-categories',
-            name: 'BrowseCategories',
-            component: CategoryList,
-            meta: { requireAuth: true }
+            path: 'browse',
+            name: 'Browse',
+            component: Browse,
+            meta: { requireAuth: true },
+            children: [
+               {
+                  path: 'category-list',
+                  name: 'CategoryList',
+                  component: CategoryList,
+                  meta: { requireAuth: true }
+               },
+               {
+                  path: 'category-playlists',
+                  name: 'CategoryPlaylists',
+                  component: PlaylistList,
+                  meta: { requireAuth: true },
+                  props: route => ({
+                     playlist_list: null,
+                     ...route.params
+                  })
+               }
+            ]
          }
-         // {
-         //    path: ':category_id/playlists',
-         //    name: 'CategoryPlaylists'
-         // }
       ]
    },
    {

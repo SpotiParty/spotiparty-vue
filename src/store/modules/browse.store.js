@@ -26,30 +26,32 @@ export default {
             })
             .catch(error => console.log(error))
       },
-      async getCategoryPlaylists({ commit }, category_id) {
+      async getCategoryPlaylists({ commit, dispatch }, category_id) {
          await BrowseApi.getListOfCategoryPlaylists(category_id)
             .then(response => {
+               const playlists = response.data.playlists.items
                const params = {
                   category_id: category_id,
-                  playlists: response.data.items
+                  playlists: playlists
                }
+               playlists.forEach(playlist => {
+                  dispatch('playlist/getPlaylistImage', playlist, { root: true })
+               })
                commit('ADD_CATEGORY_PLAYLISTS', params)
             })
             .catch(error => console.log(error))
+      },
+      categoryPlaylists({ state }, category_id) {
+         const category = state.category_playlists.find(item => item.category_id == category_id)
+         return category.playlists
       }
    },
    getters: {
       category_has_playlists: state => category_id => {
-         return (
-            state.category_playlists.find(
-               item => item.category_id == category_id
-            ) != undefined
-         )
+         return state.category_playlists.find(item => item.category_id == category_id) != undefined
       },
       category_playlists: state => category_id => {
-         return state.category_playlists.find(
-            item => item.category_id == category_id
-         ).playlists
+         return state.category_playlists.find(item => item.category_id == category_id).playlists
       }
    }
 }

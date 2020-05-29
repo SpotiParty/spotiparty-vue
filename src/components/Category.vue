@@ -1,6 +1,6 @@
 <template>
    <div class="category">
-      <div class="category-content">
+      <div class="category-content" @click="click">
          <img class="category-image" :src="category.icons[0].url" />
          <p class="category-title">{{ category.name }}</p>
       </div>
@@ -13,6 +13,11 @@ export default {
       category: {
          type: Object,
          required: true
+      }
+   },
+   methods: {
+      click() {
+         this.$emit('click')
       }
    }
 }
