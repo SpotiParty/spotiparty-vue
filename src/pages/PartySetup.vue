@@ -25,13 +25,12 @@ export default {
       this.createParty(party_code)
    }
 }
-// TODO ordinare lo stile per nome
 </script>
 
 <style lang="sass" scoped>
 .party-setup
+   align-items: center
    display: flex
    flex-direction: column
    justify-content: center
-   align-items: center
 </style>

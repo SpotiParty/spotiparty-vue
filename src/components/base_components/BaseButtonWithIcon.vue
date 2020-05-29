@@ -44,17 +44,17 @@ export default {
 @import '@/assets/variables.scss'
 
 button
+   align-items: center
    border-radius: 50%
    border: none
    cursor: pointer
+   display: flex
    height: 100%
+   justify-content: center
    margin: 0px
    outline: 0
    padding: 0px
    width: 100%
-   display: flex
-   align-items: center
-   justify-content: center
 .primary
    background-color: map-get($colors, 'primary')
    color: white

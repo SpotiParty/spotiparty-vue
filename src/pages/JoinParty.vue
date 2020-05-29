@@ -81,39 +81,38 @@ export default {
       }
    }
 }
-// TODO ordinare lo stile per nome
 </script>
 
 <style lang="sass" scoped>
 @import '@/assets/variables.scss'
 
 .join-party
+   align-items: center
    background-color: map-get($colors, 'background')
    display: flex
    flex-direction: column
-   align-items: center
    justify-content: center
    .title
       color: white
       font-size: 24px
       margin: 20px
    .input-with-icon
-      display: flex
       align-items: center
+      display: flex
       justify-content: center
    .input
       margin: 0px 20px 0px 20px
 .button
-   width: 48px
    box-sizing: border-box
+   width: 48px
 
 .slide-left-enter-active,
 .slide-left-leave-active
    transition: all .6s
 .slide-left-enter,
 .slide-left-leave-to
-   width: 0px
+   opacity: 0
    overflow: visible
    transform: translate(100px, 0px)
-   opacity: 0
+   width: 0px
 </style>
