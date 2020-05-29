@@ -34,6 +34,14 @@ export default {
                   category_id: category_id,
                   playlists: playlists
                }
+               /*
+                *  Prelevo le immagini per la playlist e di conseguenza la metto nello store tra le playlist
+                *  In questo modo posso usare sempre la action che prende le canzoni dall'insieme di playlist
+                *  e le aggiunge alla coda. Non ho utilizzato due action separate perchè il mio componente
+                *  SelectPlaylist non è in grado di distinguere se il select di una playlist viene da una
+                *  categoria o da una playlist personale dell'utente
+                */
+               //TODO ripensare se questo è l'approccio migliore
                playlists.forEach(playlist => {
                   dispatch('playlist/getPlaylistImage', playlist, { root: true })
                })
