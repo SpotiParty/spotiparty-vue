@@ -1,11 +1,6 @@
 <template>
    <div class="tab-selector">
-      <div
-         v-for="(tab, index) in tabs"
-         :key="index"
-         class="tab-element"
-         @click="selectTab(index)"
-      >
+      <div v-for="(tab, index) in tabs" :key="index" class="tab-element" @click="selectTab(index)">
          <span class="tab-element-title">
             {{ tab }}
          </span>
@@ -36,9 +31,7 @@ export default {
    },
    methods: {
       selectTab(index) {
-         index > this.selected_tab
-            ? (this.animation = 'tab-left')
-            : (this.animation = 'tab-right')
+         index > this.selected_tab ? (this.animation = 'tab-left') : (this.animation = 'tab-right')
          this.selected_tab = index
          this.$emit('tab-selected', index)
       }
@@ -55,13 +48,13 @@ export default {
    justify-content: flex-start
    margin: 24px 0px 20px 0px
    >.tab-element
+      color: white
       display: flex
       flex-direction: column
-      color: white
       margin: 0px 30px 0px 0px
       >.active-line
-         width: 100%
+         background-color: map-get($colors, "primary")
          height: 3px
          margin: 5px 0px 0px 0px
-         background-color: map-get($colors, "primary")
+         width: 100%
 </style>

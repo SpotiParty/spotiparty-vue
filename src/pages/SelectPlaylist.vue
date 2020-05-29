@@ -99,36 +99,36 @@ $tab-bar-height: 72px
    position: relative
    .header
       background-color: map-get($colors, "background")
+      box-shadow: 0px 3px 10px 3px rgba(0,0,0,0.25)
+      box-sizing: border-box
       padding: 30px 30px 0px 30px
-      width: 100%
-      z-index: 2
       position: fixed
       top: 0px
-      box-sizing: border-box
-      box-shadow: 0px 3px 10px 3px rgba(0,0,0,0.25)
+      width: 100%
+      z-index: 2
       .title
-         display: flex
-         justify-content: flex-start
          box-sizing: border-box
          color: white
+         display: flex
          font-size: 32px
          font-weight: 600
+         justify-content: flex-start
          margin: 0px
    .playlist-list
-      margin-top: $navigation-height
-      margin-bottom: $tab-bar-height
-      right: 0px
+      background-color: map-get($colors, "background")
       left: 0px
-      background-color: map-get($colors, "background")
+      margin-bottom: $tab-bar-height
+      margin-top: $navigation-height
       padding: 10px 20px 10px 20px
+      right: 0px
    .tab-bar
-      height: $tab-bar-height
-      width: 100%
-      position: fixed
-      display: flex
       align-items: center
-      justify-content: center
-      bottom: 0px
       background-color: map-get($colors, "background")
+      bottom: 0px
       box-shadow: 0px -3px 10px 3px rgba(0,0,0,0.25);
+      display: flex
+      height: $tab-bar-height
+      justify-content: center
+      position: fixed
+      width: 100%
 </style>

@@ -26,20 +26,20 @@ export default {
 <style lang="sass" scoped>
 .category
    display: flex
-   padding: 12px
    margin: 0px
+   padding: 12px
 .category-content
-   flex-basis: content
-   flex-direction: column
    align-items: center
    display: flex
+   flex-basis: content
+   flex-direction: column
 .category-image
    height: 150px
    width: 158px
 .category-title
-   padding: 10px 10px 0px 10px
+   color: white
    font-size: 18px
    font-weight: 400
-   color: white
    margin: 0px
+   padding: 10px 10px 0px 10px
 </style>
