@@ -77,7 +77,7 @@ export default {
    },
    created() {
       if (this.isPartyCode()) {
-         this.$router.push('/welcome-party')
+         this.$router.push({ name: 'GuestPartyHome' })
       }
    }
 }
