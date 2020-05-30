@@ -5,7 +5,9 @@ export default {
    namespaced: true,
    state: {
       party_code: null,
-      current_playlist: []
+      current_playlist: [],
+      currently_playing: null,
+      in_play: false
    },
    mutations: {
       ADD_PARTY_CODE(state, party_code) {
@@ -13,6 +15,9 @@ export default {
       },
       ADD_TRACKS_TO_QUEUE(state, tracks) {
          state.current_playlist = [...tracks]
+      },
+      PLAY_PAUSE(state, status) {
+         state.in_play = status
       }
    },
    actions: {
@@ -31,7 +36,17 @@ export default {
       }),
       addTracksToQueue({ commit }, tracks) {
          commit('ADD_TRACKS_TO_QUEUE', tracks)
-      }
+      },
+      async playPause({ commit, dispatch, state }) {
+         const status = !state.in_play
+         await dispatch('syncPlayPause', status)
+         commit('PLAY_PAUSE', status)
+      },
+      syncPlayPause: firestoreAction(status => {
+         return db.collection('party').add({
+            in_play: status
+         })
+      })
    },
    getters: {
       logged_in: state => !!state.party_code
