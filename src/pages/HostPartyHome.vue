@@ -1,6 +1,6 @@
 <template>
    <div class="host-party-home fullscreen">
-      {{ this.party.current_playlist }}
+      {{ this.current_playlist }}
    </div>
 </template>
 
@@ -9,7 +9,7 @@ import { mapState } from 'vuex'
 
 export default {
    computed: {
-      ...mapState('party', ['party'])
+      ...mapState('party', ['current_playlist'])
    }
 }
 </script>

@@ -4,17 +4,15 @@ import { db } from '@/db.js'
 export default {
    namespaced: true,
    state: {
-      party: {
-         party_code: null,
-         current_playlist: []
-      }
+      party_code: null,
+      current_playlist: []
    },
    mutations: {
       ADD_PARTY_CODE(state, party_code) {
-         state.party.party_code = party_code
+         state.party_code = party_code
       },
       ADD_TRACKS_TO_QUEUE(state, tracks) {
-         state.party.current_playlist = [...tracks]
+         state.current_playlist = [...tracks]
       }
    },
    actions: {
@@ -27,7 +25,7 @@ export default {
       },
       uploadPartyCode: firestoreAction(({ state, rootState }) => {
          return db.collection('party').add({
-            party_code: state.party.party_code,
+            party_code: state.party_code,
             spotify_token: rootState.user.access_token
          })
       }),
@@ -36,6 +34,6 @@ export default {
       }
    },
    getters: {
-      logged_in: state => !!state.party.party_code
+      logged_in: state => !!state.party_code
    }
 }

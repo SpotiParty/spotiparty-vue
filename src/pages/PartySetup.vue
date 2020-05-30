@@ -5,7 +5,7 @@
          <p>del tuo party</p>
       </div>
       <div>
-         <p class="party-code">{{ party.party_code }}</p>
+         <p class="party-code">{{ party_code }}</p>
          <div class="captions">
             <p>Ricordati di condividerlo</p>
             <p>con gli amici</p>
@@ -23,7 +23,7 @@ import Utils from '@/utils.js'
 
 export default {
    computed: {
-      ...mapState('party', ['party']),
+      ...mapState('party', ['party_code']),
       ...mapState('user', ['access_token'])
    },
    methods: {
