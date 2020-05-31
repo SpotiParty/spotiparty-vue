@@ -24,13 +24,11 @@
                </BaseIcon>
             </div>
          </CircleButton>
-         <CircleButton v-else :width="100" :height="100" @click="pause">
-            <div class="flex">
-               <BaseIcon :width="51" :height="51" viewBox="0 0 51 51">
-                  <Pause />
-               </BaseIcon>
-            </div>
-         </CircleButton>
+         <BaseButtonWithIcon v-else :width="100" :height="100" @click="pause">
+            <BaseIcon :width="51" :height="51" viewBox="0 0 51 51">
+               <Pause />
+            </BaseIcon>
+         </BaseButtonWithIcon>
          <div class="devices">
             <div class="selector">
                <div
