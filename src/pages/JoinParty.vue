@@ -43,7 +43,8 @@ export default {
       return {
          input_code: '',
          input_is_open: false,
-         submitted: false
+         submitted: false,
+         verifying: false
       }
    },
    computed: {
@@ -70,6 +71,7 @@ export default {
          this.input_is_open = false
       },
       checkPartyCode() {
+         this.verifying = true
          this.joinParty(this.input_code)
          this.submitted = true
          this.input_code = ''
