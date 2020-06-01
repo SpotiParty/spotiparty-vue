@@ -25,7 +25,21 @@ export default {
          const payload = rootState.user.user.id
          await PlaylistApi.getUserPlaylists(payload)
             .then(response => {
-               const playlists = response.data.items
+               const playlists = []
+               response.data.items.forEach(playlist => {
+                  const parsedPlaylist = {
+                     id: playlist.id,
+                     uri: playlist.uri,
+                     name: playlist.name,
+                     description: playlist.description,
+                     images: playlist.images,
+                     tracks: playlist.tracks
+                  }
+                  playlists.push(parsedPlaylist)
+               })
+               return playlists
+            })
+            .then(playlists => {
                playlists.forEach(async playlist => {
                   const payload = playlist.id
                   await PlaylistApi.getPlaylistCover(payload)
@@ -41,12 +55,37 @@ export default {
       async getPlaylistTracksAndAddToPlayQueue({ commit, dispatch }, playlist_id) {
          await PlaylistApi.getPlaylistTracks(playlist_id)
             .then(response => {
+               const tracks = []
+               //Remove unnecessary data from tracks
+               response.data.items.forEach(track => {
+                  //Remove unnecessary data from artists
+                  const artists = []
+                  track.track.artists.forEach(artist => {
+                     const parsedArtist = {
+                        id: artist.id,
+                        name: artist.name,
+                        uri: artist.uri
+                     }
+                     artists.push(parsedArtist)
+                  })
+                  const parsedTrack = {
+                     id: track.track.id,
+                     images: track.track.images,
+                     name: track.track.name,
+                     artists: artists,
+                     uri: track.track.uri
+                  }
+                  tracks.push(parsedTrack)
+               })
+               return tracks
+            })
+            .then(tracks => {
                const params = {
                   playlist_id: playlist_id,
-                  tracks: response.data.items
+                  tracks: tracks
                }
                commit('ADD_TRACKS_TO_PLAYLIST', params)
-               dispatch('party/addTracksToQueue', response.data.items, { root: true })
+               dispatch('party/addTracksToQueue', tracks, { root: true })
             })
             .catch(error => console.log(error))
       }

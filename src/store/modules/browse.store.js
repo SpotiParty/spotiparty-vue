@@ -30,11 +30,26 @@ export default {
       async getCategoryPlaylists({ commit }, category_id) {
          await BrowseApi.getListOfCategoryPlaylists(category_id)
             .then(response => {
-               const playlists = response.data.playlists.items
+               //Remove unnecessary data from playlists
+               const playlists = []
+               response.data.playlists.items.forEach(playlist => {
+                  const parsedPlaylist = {
+                     id: playlist.id,
+                     images: playlist.images,
+                     name: playlist.name,
+                     tracks: [],
+                     uri: playlist.uri
+                  }
+                  playlists.push(parsedPlaylist)
+               })
+               return playlists
+            })
+            .then(playlists => {
                const params = {
                   category_id: category_id,
                   playlists: playlists
                }
+               //Get cover image for each playlist
                playlists.forEach(async playlist => {
                   const payload = playlist.id
                   await PlaylistApi.getPlaylistCover(payload)
