@@ -11,6 +11,7 @@ import HostPartyHome from '@/pages/HostPartyHome.vue'
 import PlaylistList from '@/components/views/PlaylistList.vue'
 import CategoryList from '@/components/views/CategoryList.vue'
 import Browse from '@/components/views/Browse.vue'
+import Player from '@/components/views/Player.vue'
 
 Vue.use(VueRouter)
 
@@ -78,10 +79,17 @@ const routes = [
       ]
    },
    {
-      path: '/host-party-home',
+      path: '/host-party-home/:id',
       name: 'HostPartyHome',
       component: HostPartyHome,
-      meta: { requireAuth: true }
+      meta: { requireAuth: true },
+      children: [
+         {
+            path: 'player',
+            name: 'HostPlayer',
+            component: Player
+         }
+      ]
    }
 ]
 

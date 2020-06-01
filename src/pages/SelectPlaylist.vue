@@ -35,6 +35,7 @@ export default {
    },
    computed: {
       ...mapState('playlist', ['user_playlists']),
+      ...mapState('party', ['party_code']),
       button_type() {
          if (this.selected_playlist_id == null) {
             return 'disabled'
@@ -64,7 +65,7 @@ export default {
       async choosePlaylist() {
          if (this.selected_playlist_id != null) {
             await this.getPlaylistTracksAndAddToPlayQueue(this.selected_playlist_id)
-            this.$router.push({ name: 'HostPartyHome' })
+            this.$router.push({ name: 'HostPartyHome', params: { id: this.party_code } })
          }
       }
    },

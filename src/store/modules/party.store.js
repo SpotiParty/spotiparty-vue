@@ -61,8 +61,8 @@ export default {
    },
    getters: {
       isPartyCode(state) {
-         return state.party.party_code != null
+         return state.party_code != null
       },
-      logged_in: state => !!state.party.party_code
+      logged_in: state => !!state.party_code
    }
 }
