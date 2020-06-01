@@ -6,12 +6,16 @@ export default {
    namespaced: true,
    state: {
       party: {
-         party_code: null
+         party_code: null,
+         current_playlist: []
       }
    },
    mutations: {
       ADD_PARTY_CODE(state, party_code) {
          state.party.party_code = party_code
+      },
+      ADD_TRACKS_TO_QUEUE(state, tracks) {
+         state.party.current_playlist = [...tracks]
       }
    },
    actions: {
@@ -37,11 +41,15 @@ export default {
             router.push({ name: 'GuestPartyHome' })
             commit('ADD_PARTY_CODE', input_code)
          }
-      }
+      },
+     addTracksToQueue({ commit }, tracks) {
+         commit('ADD_TRACKS_TO_QUEUE', tracks)
+     }
    },
    getters: {
       isPartyCode(state) {
          return state.party.party_code != null
-      }
+      },
+      logged_in: state => !!state.party.party_code
    }
 }
