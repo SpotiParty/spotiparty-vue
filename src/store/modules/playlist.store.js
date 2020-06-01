@@ -7,7 +7,7 @@ export default {
    },
    mutations: {
       ADD_PLAYLISTS(state, new_playlists) {
-         state.user_playlists.concat(new_playlists)
+         state.user_playlists = [...new_playlists]
       },
       ADD_PLAYLIST(state, new_playlist) {
          state.user_playlists.push(new_playlist)
@@ -19,24 +19,22 @@ export default {
       }
    },
    actions: {
-      async getListOfPlaylists({ dispatch, rootState }) {
+      async getListOfPlaylists({ commit, rootState }) {
          const payload = rootState.user.user.id
          await PlaylistApi.getUserPlaylists(payload)
             .then(response => {
-               response.data.items.forEach(playlist => {
-                  dispatch('getPlaylistImage', playlist)
+               const playlists = response.data.items
+               playlists.forEach(async playlist => {
+                  const payload = playlist.id
+                  await PlaylistApi.getPlaylistCover(payload)
+                     .then(response => {
+                        playlist.images = response.data
+                     })
+                     .catch(error => console.log(error))
                })
+               commit('ADD_PLAYLISTS', playlists)
             })
             .catch(error => console.log(error))
-      },
-      async getPlaylistImage({ commit }, playlist) {
-         const payload = playlist.id
-         await PlaylistApi.getPlaylistCover(payload)
-            .then(response => {
-               playlist.images = response.data
-            })
-            .catch(error => console.log(error))
-         commit('ADD_PLAYLIST', playlist)
       },
       async getPlaylistTracksAndAddToPlayQueue({ commit, dispatch }, playlist_id) {
          await PlaylistApi.getPlaylistTracks(playlist_id)

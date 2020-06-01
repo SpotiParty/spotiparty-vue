@@ -1,4 +1,5 @@
 import BrowseApi from '@/api/modules/browse.api.js'
+import PlaylistApi from '@/api/modules/playlist.api.js'
 
 export default {
    namespaced: true,
@@ -26,7 +27,7 @@ export default {
             })
             .catch(error => console.log(error))
       },
-      async getCategoryPlaylists({ commit, dispatch }, category_id) {
+      async getCategoryPlaylists({ commit }, category_id) {
          await BrowseApi.getListOfCategoryPlaylists(category_id)
             .then(response => {
                const playlists = response.data.playlists.items
@@ -34,16 +35,13 @@ export default {
                   category_id: category_id,
                   playlists: playlists
                }
-               /*
-                *  Prelevo le immagini per la playlist e di conseguenza la metto nello store tra le playlist
-                *  In questo modo posso usare sempre la action che prende le canzoni dall'insieme di playlist
-                *  e le aggiunge alla coda. Non ho utilizzato due action separate perchè il mio componente
-                *  SelectPlaylist non è in grado di distinguere se il select di una playlist viene da una
-                *  categoria o da una playlist personale dell'utente
-                */
-               //TODO ripensare se questo è l'approccio migliore
-               playlists.forEach(playlist => {
-                  dispatch('playlist/getPlaylistImage', playlist, { root: true })
+               playlists.forEach(async playlist => {
+                  const payload = playlist.id
+                  await PlaylistApi.getPlaylistCover(payload)
+                     .then(response => {
+                        playlist.images = response.data
+                     })
+                     .catch(error => console.log(error))
                })
                commit('ADD_CATEGORY_PLAYLISTS', params)
             })

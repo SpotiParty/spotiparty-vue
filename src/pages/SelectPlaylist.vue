@@ -68,9 +68,9 @@ export default {
          }
       }
    },
-   created() {
+   async created() {
       if (this.user_playlists.length == 0) {
-         this.getListOfPlaylists()
+         await this.getListOfPlaylists()
       }
       if (this.$router.currentRoute.name != 'MyPlaylists') {
          this.$router.push({
