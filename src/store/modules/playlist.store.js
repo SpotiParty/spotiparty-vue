@@ -14,8 +14,10 @@ export default {
       },
       ADD_TRACKS_TO_PLAYLIST(state, params) {
          const playlist = state.user_playlists.find(playlist => playlist.id == params.playlist_id)
-         playlist.tracks = []
-         playlist.tracks = [...params.tracks]
+         if (playlist) {
+            playlist.tracks = []
+            playlist.tracks = [...params.tracks]
+         }
       }
    },
    actions: {
