@@ -65,7 +65,10 @@ export default {
       async choosePlaylist() {
          if (this.selected_playlist_id != null) {
             await this.getPlaylistTracksAndAddToPlayQueue(this.selected_playlist_id)
-            this.$router.push({ name: 'HostPartyHome', params: { id: this.party_code } })
+            this.$router.push({
+               name: 'HostPartyHome',
+               params: { id: this.party_code }
+            })
          }
       }
    },

@@ -48,7 +48,7 @@
 
 <script>
 import PlayerApi from '@/api/modules/player.api.js'
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 
 export default {
    props: {
@@ -62,10 +62,11 @@ export default {
          user_devices: [],
          active_device: null,
          show_devices_popup: true,
-         is_playing: false
+         is_playing: null
       }
    },
    computed: {
+      ...mapState('party', ['party_playlist']),
       imageUrl() {
          return null
       }
@@ -93,8 +94,12 @@ export default {
          await PlayerApi.pause()
       },
       async play() {
-         this.is_playing = !this.is_playing
-         await PlayerApi.resume()
+         if (this.is_playing == null) {
+            await PlayerApi.play(this.party_playlist.uri, this.active_device)
+         } else {
+            this.is_playing = !this.is_playing
+            await PlayerApi.resume()
+         }
       },
       clickDevices() {
          this.getDevices()
@@ -115,7 +120,6 @@ export default {
    async created() {
       await this.getDevices()
       await this.getState()
-      // await PlayerApi.play(this.track.playlist_uri, this.track.uri, this.active_device)
    }
 }
 </script>

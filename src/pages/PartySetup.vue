@@ -30,13 +30,13 @@ export default {
       ...mapActions('user', ['setToken', 'setUser']),
       ...mapActions('party', ['createParty'])
    },
-   created() {
+   async created() {
       if (this.access_token == null) {
          const token = this.$route.hash.split('=')[1].split('&')[0]
-         this.setToken(token)
-         this.setUser()
+         await this.setToken(token)
+         await this.setUser()
          const party_code = Utils.generatePartyCode()
-         this.createParty(party_code)
+         await this.createParty(party_code)
       }
    }
 }

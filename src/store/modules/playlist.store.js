@@ -105,7 +105,7 @@ export default {
                   tracks: tracks
                }
                commit('ADD_TRACKS_TO_PLAYLIST', params)
-               dispatch('party/addTracksToQueue', tracks, { root: true })
+               dispatch('party/addTracksToPlaylist', tracks, { root: true })
             })
       }
    },

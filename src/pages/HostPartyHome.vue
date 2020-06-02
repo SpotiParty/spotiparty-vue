@@ -11,14 +11,14 @@ import { mapState } from 'vuex'
 
 export default {
    computed: {
-      ...mapState('party', ['current_playlist'])
+      ...mapState('party', ['party_playlist'])
    },
    methods: {
       goToPlayer() {
          this.$router.push({
             name: 'HostPlayer',
             params: {
-               track: this.current_playlist[0]
+               track: this.party_playlist.tracks[0]
             }
          })
       }
