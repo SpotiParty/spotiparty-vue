@@ -1,7 +1,7 @@
 <template>
    <div class="tab-bar">
       <router-link :to="{ name: 'player' }">
-         <div class="player">
+         <div :class="{ active: this.$router.currentRoute.name == 'Player', player: true }">
             <BaseIcon width="27" height="27" viewBox="0 0 27 27">
                <Player />
             </BaseIcon>
@@ -10,8 +10,8 @@
       </router-link>
 
       <router-link :to="{ name: 'Ciao' }">
-         <div class="vector">
-            <BaseIcon width="27" height="27" viewBox="0 0 27 27">
+         <div :class="{ active: this.$router.currentRoute.name == 'Ciao', vector: true }">
+            <BaseIcon width="27" height="27" viewBox="0 0 27 27" color="#ffffff">
                <Vector />
             </BaseIcon>
             <div class="title">Votazione</div>
@@ -19,7 +19,7 @@
       </router-link>
 
       <router-link :to="{ name: 'Nati <3' }">
-         <div class="setting">
+         <div :class="{ active: this.$router.currentRoute.name == 'Nati', setting: true }">
             <BaseIcon width="27" height="27" viewBox="0 0 27 27">
                <Setting />
             </BaseIcon>
@@ -34,7 +34,6 @@ export default {}
 
 <style lang="sass" scoped>
 .tab-bar
-   color: white
    display: flex
    flex-direction: row
    justify-content: space-around
@@ -60,10 +59,12 @@ export default {}
       width: 70px
       margin: 1px
    .title
-         color: white
+         color: #d9d9d9
          display: flex
          font-size: 12px
          font-weight: 600
          justify-content: flex-start
          margin: 1px
+.active
+   color: white
 </style>
