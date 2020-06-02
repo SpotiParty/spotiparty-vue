@@ -1,13 +1,17 @@
 <template>
    <div class="host-party-home fullscreen">
-      {{ this.party.current_playlist }}
+      <TabBar />
    </div>
 </template>
 
 <script>
+import TabBar from '@/components/TabBar.vue'
 import { mapState } from 'vuex'
 
 export default {
+   components: {
+      TabBar
+   },
    computed: {
       ...mapState('party', ['party'])
    }
