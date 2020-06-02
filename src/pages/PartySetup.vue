@@ -5,7 +5,7 @@
          <p>del tuo party</p>
       </div>
       <div>
-         <p class="party-code">{{ party.party_code }}</p>
+         <p class="party-code">{{ party_code }}</p>
          <div class="captions">
             <p>Ricordati di condividerlo</p>
             <p>con gli amici</p>
@@ -23,20 +23,21 @@ import Utils from '@/utils.js'
 
 export default {
    computed: {
-      ...mapState('party', ['party']),
+      ...mapState('party', ['party_code']),
       ...mapState('user', ['access_token'])
    },
    methods: {
       ...mapActions('user', ['setToken', 'setUser']),
       ...mapActions('party', ['createParty'])
    },
-   created() {
+   async created() {
       if (this.access_token == null) {
+         // Get the token from the hash of the route
          const token = this.$route.hash.split('=')[1].split('&')[0]
-         this.setToken(token)
-         this.setUser()
+         await this.setToken(token)
+         await this.setUser()
          const party_code = Utils.generatePartyCode()
-         this.createParty(party_code)
+         await this.createParty(party_code)
       }
    }
 }
@@ -44,6 +45,7 @@ export default {
 
 <style lang="sass" scoped>
 .party-setup
+   align-items: center
    display: flex
    flex-direction: column
    justify-content: space-between

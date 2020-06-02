@@ -1,6 +1,8 @@
 <template>
    <div class="host-party-home fullscreen">
+      <router-view></router-view>
       <TabBar />
+      <button @click="goToPlayer">Vai al player</button>
    </div>
 </template>
 
@@ -13,7 +15,12 @@ export default {
       TabBar
    },
    computed: {
-      ...mapState('party', ['party'])
+      ...mapState('party', ['party_playlist'])
+   },
+   methods: {
+      goToPlayer() {
+         this.$router.push({ name: 'HostPlayer' })
+      }
    }
 }
 </script>
