@@ -2,7 +2,7 @@
    <div class="container">
       <div class="main">
          <div>
-            <img :src="imageUrl" alt="immagine non disponibile" />
+            <img :src="imageUrl" alt="immagine non disponibile" width="256" />
          </div>
          <h2>{{ track.name }}</h2>
          <div class="artists">
@@ -61,14 +61,14 @@ export default {
       return {
          user_devices: [],
          active_device: null,
-         show_devices_popup: true,
+         show_devices_popup: false,
          is_playing: null
       }
    },
    computed: {
       ...mapState('party', ['party_playlist']),
       imageUrl() {
-         return null
+         return this.track.images[0].url
       }
    },
    methods: {
@@ -96,6 +96,8 @@ export default {
       async play() {
          if (this.is_playing == null) {
             await PlayerApi.play(this.party_playlist.uri, this.active_device)
+            await PlayerApi.deactivateShuffle()
+            this.is_playing = true
          } else {
             this.is_playing = !this.is_playing
             await PlayerApi.resume()

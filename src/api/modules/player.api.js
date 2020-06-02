@@ -27,5 +27,8 @@ export default {
    },
    addToQueue(track_uri) {
       return apiClient.post(`/me/player/queue?uri=${track_uri}`)
+   },
+   deactivateShuffle() {
+      return apiClient.put('/me/player/shuffle?state=false')
    }
 }

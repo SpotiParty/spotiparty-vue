@@ -6,7 +6,7 @@ function cleanTracksResponse(response) {
       const artists = cleanArtistsResponse(track.track.artists)
       const parsedTrack = {
          id: track.track.id,
-         images: track.track.images,
+         images: track.track.album.images,
          name: track.track.name,
          artists: artists,
          uri: track.track.uri
