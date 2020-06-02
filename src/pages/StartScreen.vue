@@ -7,7 +7,9 @@
          <a :href="link">
             <BaseButton>Crea party</BaseButton>
          </a>
-         <BaseButton>Partecipa</BaseButton>
+         <router-link to="/join-party">
+            <BaseButton>Partecipa</BaseButton>
+         </router-link>
       </div>
    </div>
 </template>
@@ -16,8 +18,13 @@
 export default {
    data() {
       return {
+         /* 
+            The link to redirect after authorization. Also contains the authorization
+            scopes for the user. For more information:
+            https://developer.spotify.com/documentation/general/guides/scopes/ 
+         */
          link:
-            'https://accounts.spotify.com/authorize?client_id=a765347deed847c3980a14cdc4966112&redirect_uri=http://localhost:8080/party-setup&scope=user-read-private%20user-read-email&response_type=token&state=123'
+            'https://accounts.spotify.com/authorize?client_id=a765347deed847c3980a14cdc4966112&redirect_uri=http://localhost:8080/party-setup&scope=user-read-private%20user-read-email%20user-modify-playback-state%20user-read-playback-state%20playlist-modify-private%20playlist-modify-public%20user-read-playback-state&response_type=token&state=123'
       }
    }
 }
