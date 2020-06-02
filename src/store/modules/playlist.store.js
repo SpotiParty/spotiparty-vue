@@ -1,8 +1,54 @@
 import PlaylistApi from '@/api/modules/playlist.api.js'
 
+function cleanTracksResponse(response) {
+   const tracks = []
+   response.forEach(track => {
+      const artists = cleanArtistsResponse(track.track.artists)
+      const parsedTrack = {
+         id: track.track.id,
+         images: track.track.images,
+         name: track.track.name,
+         artists: artists,
+         uri: track.track.uri
+      }
+      tracks.push(parsedTrack)
+   })
+   return tracks
+}
+
+function cleanArtistsResponse(response) {
+   const artists = []
+   response.forEach(artist => {
+      const parsedArtist = {
+         id: artist.id,
+         name: artist.name,
+         uri: artist.uri
+      }
+      artists.push(parsedArtist)
+   })
+   return artists
+}
+
+function cleanPlaylistResponse(response) {
+   const playlists = []
+   response.forEach(playlist => {
+      const parsedPlaylist = {
+         id: playlist.id,
+         uri: playlist.uri,
+         name: playlist.name,
+         description: playlist.description,
+         images: playlist.images,
+         tracks: playlist.tracks
+      }
+      playlists.push(parsedPlaylist)
+   })
+   return playlists
+}
+
 export default {
    namespaced: true,
    state: {
+      //List of user playlist
       user_playlists: []
    },
    mutations: {
@@ -25,18 +71,7 @@ export default {
          const payload = rootState.user.user.id
          await PlaylistApi.getUserPlaylists(payload)
             .then(response => {
-               const playlists = []
-               response.data.items.forEach(playlist => {
-                  const parsedPlaylist = {
-                     id: playlist.id,
-                     uri: playlist.uri,
-                     name: playlist.name,
-                     description: playlist.description,
-                     images: playlist.images,
-                     tracks: playlist.tracks
-                  }
-                  playlists.push(parsedPlaylist)
-               })
+               const playlists = cleanPlaylistResponse(response.data.items)
                return playlists
             })
             .then(playlists => {
@@ -48,36 +83,19 @@ export default {
                      })
                      .catch(error => console.log(error))
                })
+               return playlists
+            })
+            .then(playlists => {
                commit('ADD_PLAYLISTS', playlists)
             })
-            .catch(error => console.log(error))
       },
       async getPlaylistTracksAndAddToPlayQueue({ commit, dispatch, getters }, playlist_id) {
          await PlaylistApi.getPlaylistTracks(playlist_id)
             .then(response => {
-               const tracks = []
-               //Remove unnecessary data from tracks
-               response.data.items.forEach(track => {
-                  //Remove unnecessary data from artists
-                  const artists = []
-                  track.track.artists.forEach(artist => {
-                     const parsedArtist = {
-                        id: artist.id,
-                        name: artist.name,
-                        uri: artist.uri
-                     }
-                     artists.push(parsedArtist)
-                  })
-                  const parsedTrack = {
-                     id: track.track.id,
-                     images: track.track.images,
-                     name: track.track.name,
-                     artists: artists,
-                     uri: track.track.uri,
-                     playlist_uri: getters.playlist_uri(playlist_id),
-                     playlist_id: playlist_id
-                  }
-                  tracks.push(parsedTrack)
+               let tracks = cleanTracksResponse(response.data.items)
+               tracks.forEach(track => {
+                  track.playlist_uri = getters.playlist_uri(playlist_id)
+                  track.playlist_id = playlist_id
                })
                return tracks
             })
@@ -89,7 +107,6 @@ export default {
                commit('ADD_TRACKS_TO_PLAYLIST', params)
                dispatch('party/addTracksToQueue', tracks, { root: true })
             })
-            .catch(error => console.log(error))
       }
    },
    getters: {
