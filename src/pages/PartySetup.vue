@@ -32,6 +32,7 @@ export default {
    },
    async created() {
       if (this.access_token == null) {
+         // Get the token from the hash of the route
          const token = this.$route.hash.split('=')[1].split('&')[0]
          await this.setToken(token)
          await this.setUser()

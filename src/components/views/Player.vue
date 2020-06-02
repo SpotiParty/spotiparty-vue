@@ -57,14 +57,16 @@ export default {
          active_device: null,
          show_devices_popup: false,
          is_playing: null,
-         track: null,
          track_number: 0
       }
    },
    computed: {
       ...mapState('party', ['party_playlist']),
       imageUrl() {
-         return this.track.images[0].url
+         return this.track.images[this.track_number].url
+      },
+      track() {
+         return this.party_playlist.tracks[this.track_number]
       }
    },
    methods: {
@@ -93,6 +95,7 @@ export default {
          if (this.is_playing == null) {
             await PlayerApi.play(this.party_playlist.uri, this.active_device)
             await PlayerApi.deactivateShuffle()
+            this.nextTrack()
             this.is_playing = true
          } else {
             this.is_playing = !this.is_playing
@@ -113,10 +116,15 @@ export default {
          await PlayerApi.getState().then(res => {
             this.is_playing = res.data.state
          })
+      },
+      nextTrack() {
+         this.track_number += 1
+         setTimeout(() => {
+            this.nextTrack()
+         }, 10000)
       }
    },
    async created() {
-      this.track = this.party_playlist.tracks[this.track_number]
       await this.getDevices()
       await this.getState()
    }

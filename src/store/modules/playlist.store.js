@@ -49,7 +49,7 @@ function cleanPlaylistResponse(response) {
 export default {
    namespaced: true,
    state: {
-      //List of user playlist
+      //List of user personal playlist
       user_playlists: []
    },
    mutations: {
@@ -68,13 +68,18 @@ export default {
       }
    },
    actions: {
+      /*
+         Get the list of user playlists
+      */
       async getListOfPlaylists({ commit, rootState }) {
          const payload = rootState.user.user.id
          await PlaylistApi.getUserPlaylists(payload)
+            //Remove unnecessary data from the playlists
             .then(response => {
                const playlists = cleanPlaylistResponse(response.data.items)
                return playlists
             })
+            //Get the image for every playlist
             .then(playlists => {
                playlists.forEach(async playlist => {
                   const payload = playlist.id
@@ -90,8 +95,12 @@ export default {
                commit('ADD_PLAYLISTS', playlists)
             })
       },
+      /*
+         Get the playlist tracks and add to them ids of the playlist to which they belong
+      */
       async getPlaylistTracksAndAddToPlayQueue({ commit, dispatch, getters }, playlist_id) {
          await PlaylistApi.getPlaylistTracks(playlist_id)
+            //Add playlists ids to every track
             .then(response => {
                let tracks = cleanTracksResponse(response.data.items)
                tracks.forEach(track => {
@@ -111,6 +120,7 @@ export default {
       }
    },
    getters: {
+      // Return the playlist uri starting from the id
       playlist_uri: state => playlist_id => {
          const correctPlaylist = state.user_playlists.find(playlist => playlist.id == playlist_id)
          return correctPlaylist.uri
