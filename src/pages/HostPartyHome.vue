@@ -15,12 +15,7 @@ export default {
    },
    methods: {
       goToPlayer() {
-         this.$router.push({
-            name: 'HostPlayer',
-            params: {
-               track: this.party_playlist.tracks[0]
-            }
-         })
+         this.$router.push({ name: 'HostPlayer' })
       }
    }
 }

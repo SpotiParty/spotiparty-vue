@@ -9,7 +9,8 @@ function cleanTracksResponse(response) {
          images: track.track.album.images,
          name: track.track.name,
          artists: artists,
-         uri: track.track.uri
+         uri: track.track.uri,
+         votes: 0
       }
       tracks.push(parsedTrack)
    })

@@ -51,18 +51,14 @@ import PlayerApi from '@/api/modules/player.api.js'
 import { mapActions, mapState } from 'vuex'
 
 export default {
-   props: {
-      track: {
-         type: Object,
-         required: true
-      }
-   },
    data() {
       return {
          user_devices: [],
          active_device: null,
          show_devices_popup: false,
-         is_playing: null
+         is_playing: null,
+         track: null,
+         track_number: 0
       }
    },
    computed: {
@@ -120,6 +116,7 @@ export default {
       }
    },
    async created() {
+      this.track = this.party_playlist.tracks[this.track_number]
       await this.getDevices()
       await this.getState()
    }

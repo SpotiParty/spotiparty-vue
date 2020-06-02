@@ -30,5 +30,8 @@ export default {
    },
    deactivateShuffle() {
       return apiClient.put('/me/player/shuffle?state=false')
+   },
+   getCurrentTrack() {
+      return apiClient.get('/me/player')
    }
 }

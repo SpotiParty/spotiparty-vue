@@ -87,12 +87,7 @@ const routes = [
          {
             path: 'player',
             name: 'HostPlayer',
-            component: Player,
-            props: route => ({
-               playlist_uri: null,
-               track: null,
-               ...route.params
-            })
+            component: Player
          }
       ]
    }
