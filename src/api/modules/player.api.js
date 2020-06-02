@@ -25,5 +25,8 @@ export default {
    },
    getState() {
       return apiClient.get('/me/player')
+   },
+   addToQueue(track_uri) {
+      return apiClient.post(`/me/player/queue?uri=${track_uri}`)
    }
 }

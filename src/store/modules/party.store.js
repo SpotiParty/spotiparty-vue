@@ -1,6 +1,7 @@
 import { firestoreAction } from 'vuexfire'
 import { db } from '@/db.js'
 import router from '@/router/router.js'
+import PlayerApi from '@/api/modules/player.api.js'
 
 export default {
    namespaced: true,
@@ -45,8 +46,9 @@ export default {
             commit('ADD_PARTY_CODE', input_code)
          }
       },
-      addTracksToQueue({ commit }, tracks) {
+      async addTracksToQueue({ commit, dispatch }, tracks) {
          commit('ADD_TRACKS_TO_QUEUE', tracks)
+         await dispatch('addQueueToSpotify')
       },
       async playPause({ commit, dispatch, state }) {
          const status = !state.in_play
@@ -57,7 +59,13 @@ export default {
          return db.collection('party').add({
             in_play: status
          })
-      })
+      }),
+      async addQueueToSpotify({ state }) {
+         state.current_playlist.forEach(async track => {
+            console.log(track.uri)
+            await PlayerApi.addToQueue(track.uri)
+         })
+      }
    },
    getters: {
       isPartyCode(state) {

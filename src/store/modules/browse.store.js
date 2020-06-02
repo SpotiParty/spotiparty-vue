@@ -72,7 +72,9 @@ export default {
          return state.category_playlists.find(item => item.category_id == category_id) != undefined
       },
       category_playlists: state => category_id => {
-         return state.category_playlists.find(item => item.category_id == category_id).playlists
+         const category = state.category_playlists.find(item => item.category_id == category_id)
+            .playlists
+         return category.playlists
       }
    }
 }

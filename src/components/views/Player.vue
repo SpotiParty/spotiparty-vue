@@ -4,28 +4,28 @@
          <div>
             <img :src="imageUrl" alt="immagine non disponibile" />
          </div>
-         <h2>{{ trackName }}</h2>
+         <h2>{{ track.name }}</h2>
          <div class="artists">
-            <p v-for="artist in artists" :key="artist.id">
-               {{ artist }}
+            <p v-for="artist in track.artists" :key="artist.id">
+               {{ artist.name }}
             </p>
          </div>
       </div>
       <div class="container-controls">
-         <CircleButton v-if="!this.is_playing" :width="100" :height="100" @click="play">
+         <BaseButtonWithIcon v-if="!this.is_playing" :width="100" :height="100" @click="play">
             <div class="flex">
                <BaseIcon :width="51" :height="51" viewBox="0 0 51 51">
                   <Play />
                </BaseIcon>
             </div>
-         </CircleButton>
+         </BaseButtonWithIcon>
          <BaseButtonWithIcon v-else :width="100" :height="100" @click="pause">
             <BaseIcon :width="51" :height="51" viewBox="0 0 51 51">
                <Pause />
             </BaseIcon>
          </BaseButtonWithIcon>
          <div class="devices">
-            <div class="selector">
+            <div class="selector" v-if="show_devices_popup">
                <div
                   class="device"
                   v-for="device in this.user_devices"
@@ -52,30 +52,22 @@ import { mapActions } from 'vuex'
 
 export default {
    props: {
-      playlist_uri: String,
-      track: Object
+      track: {
+         type: Object,
+         required: true
+      }
    },
    data() {
       return {
-         state: null,
          user_devices: [],
-         device_active: null,
+         active_device: null,
+         show_devices_popup: true,
          is_playing: false
       }
    },
    computed: {
       imageUrl() {
-         return this.track.album.images[0].url
-      },
-      trackName() {
-         return this.track.name
-      },
-      trackArtists() {
-         var artists = []
-         this.track.artists.forEach(a => {
-            artists.push(a.name)
-         })
-         return artists
+         return null
       }
    },
    methods: {
@@ -83,12 +75,12 @@ export default {
       async getDevices() {
          await PlayerApi.getUserDevices().then(res => {
             this.user_devices = []
-            res.data.devices.forEach(dev => {
-               this.user_devices.push(dev)
+            res.data.devices.forEach(device => {
+               this.user_devices.push(device)
             })
-            if (!this.device_active) {
+            if (!this.active_device) {
                const older_device = this.user_devices[this.user_devices.length - 1]
-               this.device_active = older_device.id
+               this.active_device = older_device.id
                this.setDevice(older_device.id)
             }
          })
@@ -97,36 +89,33 @@ export default {
          await PlayerApi.switchDevice(device)
       },
       async pause() {
-         this.state = !this.state
+         this.is_playing = !this.is_playing
          await PlayerApi.pause()
       },
       async play() {
-         this.state = !this.state
+         this.is_playing = !this.is_playing
          await PlayerApi.resume()
       },
       clickDevices() {
          this.getDevices()
-         this.$refs.selector.classList.toggle('show')
+         this.show_devices_popup = !this.show_devices_popup
       },
       selectDevice(device_id) {
-         console.log(device_id)
-         this.device_active = device_id
+         this.active_device = device_id
          this.setDevice(device_id)
          this.clickDevices()
       },
       // metodo che prende lo stato attuale di riproduzione
       async getState() {
          await PlayerApi.getState().then(res => {
-            this.state = res.data.is_playing
+            this.is_playing = res.data.state
          })
-      },
-      async setup() {
-         await this.getDevices()
-         await this.getState()
       }
    },
-   created() {
-      this.setup()
+   async created() {
+      await this.getDevices()
+      await this.getState()
+      // await PlayerApi.play(this.track.playlist_uri, this.track.uri, this.active_device)
    }
 }
 </script>
@@ -147,10 +136,8 @@ export default {
 .selector
    background-color: #2C2C2C
    border-radius: 10px
-   display: none
    margin-bottom: 10px
    padding: 5px 15px
-.show
    display: block
 .device
    align-items: center

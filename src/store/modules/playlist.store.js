@@ -52,7 +52,7 @@ export default {
             })
             .catch(error => console.log(error))
       },
-      async getPlaylistTracksAndAddToPlayQueue({ commit, dispatch }, playlist_id) {
+      async getPlaylistTracksAndAddToPlayQueue({ commit, dispatch, getters }, playlist_id) {
          await PlaylistApi.getPlaylistTracks(playlist_id)
             .then(response => {
                const tracks = []
@@ -73,7 +73,9 @@ export default {
                      images: track.track.images,
                      name: track.track.name,
                      artists: artists,
-                     uri: track.track.uri
+                     uri: track.track.uri,
+                     playlist_uri: getters.playlist_uri(playlist_id),
+                     playlist_id: playlist_id
                   }
                   tracks.push(parsedTrack)
                })
@@ -90,5 +92,10 @@ export default {
             .catch(error => console.log(error))
       }
    },
-   getters: {}
+   getters: {
+      playlist_uri: state => playlist_id => {
+         const correctPlaylist = state.user_playlists.find(playlist => playlist.id == playlist_id)
+         return correctPlaylist.uri
+      }
+   }
 }

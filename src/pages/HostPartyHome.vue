@@ -1,6 +1,8 @@
 <template>
    <div class="host-party-home fullscreen">
-      {{ this.current_playlist }}
+      <router-view></router-view>
+      <button @click="goToPlayer">Vai al player</button>
+      <!-- Tab bar da inserire -->
    </div>
 </template>
 
@@ -10,6 +12,16 @@ import { mapState } from 'vuex'
 export default {
    computed: {
       ...mapState('party', ['current_playlist'])
+   },
+   methods: {
+      goToPlayer() {
+         this.$router.push({
+            name: 'HostPlayer',
+            params: {
+               track: this.current_playlist[0]
+            }
+         })
+      }
    }
 }
 </script>
