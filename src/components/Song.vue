@@ -1,11 +1,11 @@
 <template>
    <div :style="style" class="song-element" @click="click">
       <div class="img">
-         <img class="track-image img" :src="track.icons[0].url" />
+         <img class="track-image" :src="track.icons[0].url" />
       </div>
       <div class="song-name">
-         <h3>{{ track.name }}</h3>
-         <h5>{{ track.album }}</h5>
+         <div class="style-text-song">{{ track.name }}</div>
+         <div class="style-text-album">{{ track.album }}</div>
       </div>
    </div>
 </template>
@@ -19,7 +19,7 @@ export default {
       },
       height: {
          type: Number,
-         default: 64
+         default: 62
       },
       width: {
          type: Number,
@@ -52,27 +52,23 @@ export default {
    grid-template-rows: 100%
    margin: 7px 0
 .img
-   grid-column-start: 2
    grid-column-end: 3
+   grid-column-start: 2
    grid-row: auto
-   place-self: center
 .song-name
-   grid-column-start: 4
-   grid-column-end: 5
-   grid-row: auto
-
    align-self: center
-   justify-self: start
-h3
-   padding: 0
-   margin: 0
-   text-align: start
+   grid-column-end: 5
+   grid-column-start: 4
+   grid-row: auto
+   justify-self: flex-start
+.style-text-song
    color: white
-h5
-   padding: 0
-   margin: 0
+   font-size: 20px
    text-align: start
+.style-text-album
    color: white
+   font-size: 15px
+   text-align: start
 .track-image
    height: 62px
    width: 62px
