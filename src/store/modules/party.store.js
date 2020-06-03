@@ -37,6 +37,14 @@ export default {
       ADD_PLAYLIST_IDS(state, params) {
          state.party_playlist.id = params.id
          state.party_playlist.uri = params.uri
+      },
+      ADD_VOTE(state, uri) {
+         const track = state.party_playlist.tracks.filter(track => track.uri == uri)
+         track.votes += 1
+      },
+      REMOVE_VOTE(state, uri) {
+         const track = state.party_playlist.tracks.filter(track => track.uri == uri)
+         track.votes -= 1
       }
    },
    actions: {
@@ -98,7 +106,13 @@ export default {
          return db.collection('party').add({
             in_play: status
          })
-      })
+      }),
+      addVote({ commit }, uri) {
+         commit('VOTE', uri)
+      },
+      removeVote({ commit }, uri) {
+         commit('REMOVE_VOTE', uri)
+      }
    },
    getters: {
       isPartyCode(state) {

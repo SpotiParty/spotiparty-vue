@@ -1,21 +1,12 @@
 <template>
-   <div class="party-setup fullscreen">
-      <h1>Benvenuto nel party</h1>
+   <div>
+      <router-view></router-view>
+      <Tab-bar />
    </div>
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
-
-export default {
-   computed: {
-      ...mapState('party', ['party'])
-   },
-   methods: {
-      ...mapActions('user', ['setToken', 'setUser']),
-      ...mapActions('party', ['createParty'])
-   }
-}
+export default {}
 </script>
 
 <style lang="sass" scoped>
