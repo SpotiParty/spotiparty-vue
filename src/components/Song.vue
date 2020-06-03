@@ -38,17 +38,6 @@ export default {
       click() {
          this.$emit('click')
       }
-   },
-   created() {
-      this.track = {
-         name: 'Nome traccia',
-         icons: [
-            {
-               url: 'https://i.scdn.co/image/ab67616d00001e0296d6790f8d107fbc0148a526'
-            }
-         ],
-         album: 'Album'
-      }
    }
 }
 </script>
