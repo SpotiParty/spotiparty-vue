@@ -88,6 +88,16 @@ const routes = [
             path: 'player',
             name: 'HostPlayer',
             component: Player
+         },
+         {
+            path: 'votes',
+            name: 'HostVotes',
+            component: Player
+         },
+         {
+            path: 'settings',
+            name: 'HostSetting',
+            component: Player
          }
       ]
    }

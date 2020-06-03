@@ -1,8 +1,7 @@
 <template>
    <div class="host-party-home fullscreen">
       <router-view></router-view>
-      <TabBar />
-      <button @click="goToPlayer">Vai al player</button>
+      <TabBar class="tab" />
    </div>
 </template>
 
@@ -17,8 +16,8 @@ export default {
    computed: {
       ...mapState('party', ['party_playlist'])
    },
-   methods: {
-      goToPlayer() {
+   created() {
+      if (this.$router.currentRoute.name != 'HostPlayer') {
          this.$router.push({ name: 'HostPlayer' })
       }
    }
@@ -27,11 +26,12 @@ export default {
 
 <style lang="sass" scoped>
 .host-party-home
-   align-items: center
+   align-items: space-between
    color: white
    display: flex
    flex-direction: column
    justify-content: center
-   .demo
-      color: white
+   .tab
+      position: fixed
+      bottom: 0px
 </style>
