@@ -11,6 +11,7 @@
 
 <script>
 export default {
+   // TODO aggiungere emissione dello stato
    props: {
       options: {
          type: Array,
@@ -53,6 +54,7 @@ export default {
    methods: {
       select(index) {
          this.selected_option = index
+         this.$emit('selected_option', index)
       }
    }
 }
@@ -64,27 +66,25 @@ export default {
 .container
    position: relative
 .switch
-   position: relative
-   display: grid
-   grid-template-columns: 50% 50%
-   grid-template-rows: 100%
    border-radius: 32px
    border: 2px solid map-get($colors, 'primary')
+   display: grid
+   grid-template-columns: 50% 50%
 div
-   display: flex
-   justify-content: center
    align-items: center
-   font-weight: 600
-   font-size: 21px
    color: white
+   display: flex
+   font-size: 21px
+   font-weight: 600
+   justify-content: center
    z-index: 1
 .selector
-   position: absolute
-   left: 0
-   border-radius: 32px
    background-color: map-get($colors, 'primary')
-   width: 50%
+   border-radius: 32px
    height: 100%
-   z-index: 0
+   left: 0
+   position: absolute
    transition: all 0.2s ease-out
+   width: 50%
+   z-index: 0
 </style>

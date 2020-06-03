@@ -7,7 +7,7 @@ export default {
    state: {
       party: {
          party_code: null,
-         current_playlist: []
+         current_playlist: ['temp']
       }
    },
    mutations: {
@@ -50,6 +50,9 @@ export default {
       isPartyCode(state) {
          return state.party.party_code != null
       },
-      logged_in: state => !!state.party.party_code
+      logged_in: state => !!state.party.party_code,
+      getCurrentPlaylist(state) {
+         return state.party.current_playlist
+      }
    }
 }

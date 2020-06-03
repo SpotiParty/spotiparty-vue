@@ -11,7 +11,6 @@ import HostPartyHome from '@/pages/HostPartyHome.vue'
 import PlaylistList from '@/components/views/PlaylistList.vue'
 import CategoryList from '@/components/views/CategoryList.vue'
 import Browse from '@/components/views/Browse.vue'
-import Settings from '@/components/views/Settings.vue'
 
 Vue.use(VueRouter)
 
@@ -83,12 +82,6 @@ const routes = [
       name: 'HostPartyHome',
       component: HostPartyHome,
       meta: { requireAuth: true }
-   },
-   {
-      // TODO cancellare rotta provvisoria
-      path: '/settings',
-      name: 'Settings',
-      component: Settings
    }
 ]
 
