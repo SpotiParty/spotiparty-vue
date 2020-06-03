@@ -18,7 +18,7 @@
       <router-link :to="{ name: 'HostVotes' }">
          <div
             :class="{
-               active: current_route_name == 'HostVotes',
+               active: current_route_name == 'HostVoting',
                inactive: current_route_name != 'HostVotes',
                'tab-element': true
             }"
@@ -88,8 +88,8 @@ export default {
          justify-content: flex-start
          margin: 1px
 .active
-   color: white !important
-   filter: brightness(100%) !important
+   color: white
+   filter: brightness(100%)
 .inactive
    color: #d9d9d9
    filter: brightness(80%)

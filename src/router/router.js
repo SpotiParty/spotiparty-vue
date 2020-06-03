@@ -14,6 +14,9 @@ import Browse from '@/components/views/Browse.vue'
 import HostPlayer from '@/components/views/HostPlayer.vue'
 import HostVoting from '@/components/views/HostVoting.vue'
 import HostSetting from '@/components/views/HostSetting.vue'
+import GuestPlayer from '@/components/views/GuestPlayer.vue'
+import GuestVoting from '@/components/views/GuestVoting.vue'
+import GuestSetting from '@/components/views/GuestSetting.vue'
 
 Vue.use(VueRouter)
 
@@ -36,7 +39,25 @@ const routes = [
    {
       path: '/guest-party-home',
       name: 'GuestPartyHome',
-      component: GuestPartyHome
+      component: GuestPartyHome,
+      meta: { requireAuth: true },
+      children: [
+         {
+            path: 'player',
+            name: 'GuestPlayer',
+            component: GuestPlayer
+         },
+         {
+            path: 'votes',
+            name: 'GuestVoting',
+            component: GuestVoting
+         },
+         {
+            path: 'settings',
+            name: 'GuestSetting',
+            component: GuestSetting
+         }
+      ]
    },
    {
       path: '/select-playlist',
@@ -93,7 +114,7 @@ const routes = [
          },
          {
             path: 'votes',
-            name: 'HostVotes',
+            name: 'HostVoting',
             component: HostVoting
          },
          {
