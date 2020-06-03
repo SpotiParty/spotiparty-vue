@@ -11,7 +11,9 @@ import HostPartyHome from '@/pages/HostPartyHome.vue'
 import PlaylistList from '@/components/views/PlaylistList.vue'
 import CategoryList from '@/components/views/CategoryList.vue'
 import Browse from '@/components/views/Browse.vue'
-import Player from '@/components/views/Player.vue'
+import HostPlayer from '@/components/views/HostPlayer.vue'
+import HostVoting from '@/components/views/HostVoting.vue'
+import HostSetting from '@/components/views/HostSetting.vue'
 
 Vue.use(VueRouter)
 
@@ -87,17 +89,17 @@ const routes = [
          {
             path: 'player',
             name: 'HostPlayer',
-            component: Player
+            component: HostPlayer
          },
          {
             path: 'votes',
             name: 'HostVotes',
-            component: Player
+            component: HostVoting
          },
          {
             path: 'settings',
             name: 'HostSetting',
-            component: Player
+            component: HostSetting
          }
       ]
    }
