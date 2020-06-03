@@ -1,7 +1,7 @@
 <template>
    <div class="settings">
       <p>playlist corrente :</p>
-      <p class="playlist-name">{{ this.current_playlist_name }}</p>
+      <p class="playlist-name">{{ this.current_playlist.name }}</p>
       <router-link :to="{ name: 'SelectPlaylist' }">
          <BaseButton :width="220">Cambia playlist</BaseButton>
       </router-link>
@@ -11,17 +11,16 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapState } from 'vuex'
 
 export default {
    data() {
       return {
-         party_modes: ['battaglia', 'democrazia'],
-         current_playlist_name: this.getCurrentPlaylist()[0].name
+         party_modes: ['battaglia', 'democrazia']
       }
    },
    methods: {
-      ...mapGetters('party', ['getCurrentPlaylist'])
+      ...mapState('party', ['current_playlist'])
    }
 }
 </script>

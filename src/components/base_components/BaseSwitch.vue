@@ -54,7 +54,7 @@ export default {
    methods: {
       select(index) {
          this.selected_option = index
-         this.$emit('selected_option', index)
+         this.$emit('selected', index)
       }
    }
 }

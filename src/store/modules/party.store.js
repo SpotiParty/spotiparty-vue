@@ -50,9 +50,6 @@ export default {
       isPartyCode(state) {
          return state.party.party_code != null
       },
-      logged_in: state => !!state.party.party_code,
-      getCurrentPlaylist(state) {
-         return state.party.current_playlist
-      }
+      logged_in: state => !!state.party.party_code
    }
 }
