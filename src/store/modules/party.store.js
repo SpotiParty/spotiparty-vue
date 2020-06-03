@@ -7,7 +7,7 @@ export default {
    state: {
       party: {
          party_code: null,
-         current_playlist: ['temp']
+         current_playlist: []
       }
    },
    mutations: {
