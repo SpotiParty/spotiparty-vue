@@ -7,7 +7,6 @@ import JoinParty from '@/pages/JoinParty.vue'
 import GuestPartyHome from '@/pages/GuestPartyHome.vue'
 import SelectPlaylist from '@/pages/SelectPlaylist.vue'
 import HostPartyHome from '@/pages/HostPartyHome.vue'
-import Settings from '@/components/views/Settings.vue'
 
 import PlaylistList from '@/components/views/PlaylistList.vue'
 import CategoryList from '@/components/views/CategoryList.vue'
@@ -83,11 +82,6 @@ const routes = [
       name: 'HostPartyHome',
       component: HostPartyHome,
       meta: { requireAuth: true }
-   },
-   {
-      path: '/settings',
-      name: 'Settings',
-      component: Settings
    }
 ]
 
