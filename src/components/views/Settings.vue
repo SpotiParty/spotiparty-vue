@@ -2,8 +2,9 @@
    <div class="settings">
       <p>playlist corrente :</p>
       <p class="playlist-name">Nome Playlist</p>
-      <BaseButton :width="220">Cambia playlist</BaseButton>
-      <!-- TODO controllare per le lettere accentate -->
+      <router-link :to="{ name: 'SelectPlaylist' }">
+         <BaseButton :width="220">Cambia playlist</BaseButton>
+      </router-link>
       <p>modalità party</p>
       <BaseSwitch :width="300" :options="this.party_modes" />
    </div>
@@ -31,7 +32,7 @@ export default {
    height: calc(100vh - 72px)
    background-color: map-get($colors, 'background')
    > p
-      margin: 30px 0 10px 0
+      margin: 30px 0 15px 0
       font-size: 18px
       color: white
    > .playlist-name
