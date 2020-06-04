@@ -1,16 +1,21 @@
 <template>
    <div>
       <router-view></router-view>
-      <Tab-bar />
+      <GuestTabBar />
    </div>
 </template>
 
 <script>
-import TabBar from '@/components/TabBar.vue'
+import GuestTabBar from '@/components/GuestTabBar.vue'
 
 export default {
    components: {
-      TabBar
+      GuestTabBar
+   },
+   created() {
+      if (this.$router.currentRoute.name != 'GuestPlayer') {
+         this.$router.push({ name: 'GuestPlayer' })
+      }
    }
 }
 </script>

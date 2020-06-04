@@ -19,9 +19,9 @@ export default {
       ...mapState('party', ['party_playlist'])
    },
    methods: {
-      ...mapActions('party', ['updateVotes']),
+      ...mapActions('party', ['uploadFirebaseVote']),
       voteSong(track_id) {
-         this.updateVotes(track_id)
+         this.uploadFirebaseVote(track_id)
       }
    }
 }

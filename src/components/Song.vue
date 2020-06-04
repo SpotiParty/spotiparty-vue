@@ -20,7 +20,6 @@ export default {
    },
    methods: {
       click() {
-         console.log('Clicking')
          this.$emit('click', this.track.id)
       }
    }

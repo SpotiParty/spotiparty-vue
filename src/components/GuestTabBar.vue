@@ -1,10 +1,10 @@
 <template>
    <div class="tab-bar">
-      <router-link :to="{ name: 'HostPlayer' }">
+      <router-link :to="{ name: 'GuestPlayer' }">
          <div
             :class="{
-               active: current_route_name == 'HostPlayer',
-               inactive: current_route_name != 'HostPlayer',
+               active: current_route_name == 'GuestPlayer',
+               inactive: current_route_name != 'GuestPlayer',
                'tab-element': true
             }"
          >
@@ -15,11 +15,11 @@
          </div>
       </router-link>
 
-      <router-link :to="{ name: 'HostVoting' }">
+      <router-link :to="{ name: 'GuestVoting' }">
          <div
             :class="{
-               active: current_route_name == 'HostVoting',
-               inactive: current_route_name != 'HostVoting',
+               active: current_route_name == 'GuestVoting',
+               inactive: current_route_name != 'GuestVoting',
                'tab-element': true
             }"
          >
@@ -30,11 +30,11 @@
          </div>
       </router-link>
 
-      <router-link :to="{ name: 'HostSetting' }">
+      <router-link :to="{ name: 'GuestSetting' }">
          <div
             :class="{
-               active: current_route_name == 'HostSetting',
-               inactive: current_route_name != 'HostSetting',
+               active: current_route_name == 'GuestSetting',
+               inactive: current_route_name != 'GuestSetting',
                'tab-element': true
             }"
          >
@@ -52,7 +52,7 @@ import { mapState, mapActions } from 'vuex'
 export default {
    data() {
       return {
-         current_route_name: 'HostPlayer'
+         current_route_name: 'GuestPlayer'
       }
    },
    computed: {
@@ -63,11 +63,11 @@ export default {
          this.current_route_name = to.name
       },
       firebase_votes(newVal) {
-         this.updateStateVotes(newVal)
+         this.updateLocalVotes(newVal)
       }
    },
    methods: {
-      ...mapActions('party', ['updateStateVotes'])
+      ...mapActions('party', ['updateLocalVotes'])
    }
 }
 </script>

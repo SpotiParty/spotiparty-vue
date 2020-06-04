@@ -1,17 +1,17 @@
 <template>
    <div class="host-party-home fullscreen">
       <router-view></router-view>
-      <TabBar class="tab" />
+      <HostTabBar class="tab" />
    </div>
 </template>
 
 <script>
-import TabBar from '@/components/TabBar.vue'
+import HostTabBar from '@/components/HostTabBar.vue'
 import { mapState } from 'vuex'
 
 export default {
    components: {
-      TabBar
+      HostTabBar
    },
    computed: {
       ...mapState('party', ['party_playlist'])

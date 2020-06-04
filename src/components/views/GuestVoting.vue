@@ -1,29 +1,41 @@
 <template>
-   <div>Guest Voting</div>
-   <!-- componente canzone -->
+   <div class="host-voting">
+      <div class="title">Vota la prossima canzone</div>
+      <div v-for="track in party_playlist.tracks" :key="track.id">
+         <Song :track="track" @click="voteSong" />
+      </div>
+   </div>
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapState, mapActions } from 'vuex'
+import Song from '@/components/Song.vue'
 
 export default {
-   data() {
-      // voted_song: null
+   components: {
+      Song
+   },
+   computed: {
+      ...mapState('party', ['party_playlist'])
    },
    methods: {
-      ...mapActions('party', ['addVote', 'removeVote']),
-      vote(uri) {
-         if (this.voted_song == null) {
-            this.addVote(uri)
-            this.voted_song = uri
-         } else {
-            this.removeVote(this.voted_song)
-            this.voted_song = uri
-            this.addVote(uri)
-         }
+      ...mapActions('party', ['updateVotes']),
+      voteSong(track_id) {
+         this.updateVotes(track_id)
       }
    }
 }
 </script>
 
-<style lang="sass" scoped></style>
+<style lang="sass" scoped>
+.host-voting
+   padding: 20px
+   display: flex
+   flex-direction: column
+   align-items: flex-start
+   justify-content: flex-start
+.title
+   font-weight: 600
+   font-size: 24px
+   margin: 0px 0px 20px 0px
+</style>

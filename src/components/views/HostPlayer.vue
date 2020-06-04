@@ -127,7 +127,6 @@ export default {
    async created() {
       await this.getDevices()
       await this.getState()
-      console.log(this.$store.state)
    }
 }
 </script>

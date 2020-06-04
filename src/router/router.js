@@ -37,29 +37,6 @@ const routes = [
       component: JoinParty
    },
    {
-      path: '/guest-party-home',
-      name: 'GuestPartyHome',
-      component: GuestPartyHome,
-      meta: { requireAuth: true },
-      children: [
-         {
-            path: 'player',
-            name: 'GuestPlayer',
-            component: GuestPlayer
-         },
-         {
-            path: 'votes',
-            name: 'GuestVoting',
-            component: GuestVoting
-         },
-         {
-            path: 'settings',
-            name: 'GuestSetting',
-            component: GuestSetting
-         }
-      ]
-   },
-   {
       path: '/select-playlist',
       name: 'SelectPlaylist',
       component: SelectPlaylist,
@@ -98,6 +75,29 @@ const routes = [
                   })
                }
             ]
+         }
+      ]
+   },
+   {
+      path: '/guest-party-home',
+      name: 'GuestPartyHome',
+      component: GuestPartyHome,
+      meta: { requireAuth: true },
+      children: [
+         {
+            path: 'player',
+            name: 'GuestPlayer',
+            component: GuestPlayer
+         },
+         {
+            path: 'votes',
+            name: 'GuestVoting',
+            component: GuestVoting
+         },
+         {
+            path: 'settings',
+            name: 'GuestSetting',
+            component: GuestSetting
          }
       ]
    },
