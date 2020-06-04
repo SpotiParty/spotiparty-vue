@@ -30,7 +30,7 @@ export default {
    color: white
    display: flex
    flex-direction: column
-   justify-content: center
+   justify-content: flex-start
    .tab
       position: fixed
       bottom: 0px

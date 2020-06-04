@@ -1,11 +1,11 @@
 <template>
-   <div :style="style" class="song-element" @click="click">
+   <div class="song-element" @click="click">
       <div class="img">
-         <img class="track-image" :src="track.icons[0].url" />
+         <img class="track-image" :src="track.images[0].url" />
       </div>
       <div class="song-name">
          <div class="style-text-song">{{ track.name }}</div>
-         <div class="style-text-album">{{ track.album }}</div>
+         <div class="style-text-artist">{{ track.artists[0].name }}</div>
       </div>
    </div>
 </template>
@@ -14,29 +14,14 @@
 export default {
    props: {
       track: {
-         type: Object,
-         default: null
-      },
-      height: {
-         type: Number,
-         default: 62
-      },
-      width: {
-         type: Number,
-         default: 100
-      }
-   },
-   data() {
-      return {
-         style: {
-            height: this.height + 'px',
-            width: this.width + '%'
-         }
+         type: null,
+         required: true
       }
    },
    methods: {
       click() {
-         this.$emit('click')
+         console.log('Clicking')
+         this.$emit('click', this.track.id)
       }
    }
 }
@@ -48,24 +33,24 @@ export default {
 .song-element
    background-color: map-get($colors, 'background')
    display: grid
-   grid-template-columns: 5% 20% 3% 67% 5%
+   width: 100%
+   height: 82px
+   grid-template-columns: 62px auto
+   column-gap: 10px
    grid-template-rows: 100%
-   margin: 7px 0
+   padding: 10px 0px
+   box-sizing: border-box
 .img
-   grid-column-end: 3
-   grid-column-start: 2
    grid-row: auto
 .song-name
    align-self: center
-   grid-column-end: 5
-   grid-column-start: 4
    grid-row: auto
    justify-self: flex-start
 .style-text-song
    color: white
    font-size: 20px
    text-align: start
-.style-text-album
+.style-text-artist
    color: white
    font-size: 15px
    text-align: start

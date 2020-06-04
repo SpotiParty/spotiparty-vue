@@ -1,19 +1,41 @@
 <template>
-   <div>
-      HostVoting
+   <div class="host-voting">
+      <div class="title">Vota la prossima canzone</div>
+      <div v-for="track in party_playlist.tracks" :key="track.id">
+         <Song :track="track" @click="voteSong" />
+      </div>
    </div>
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapState, mapActions } from 'vuex'
+import Song from '@/components/Song.vue'
+
 export default {
-   methods: {
-      ...mapActions('party', ['bindFirebaseVotes'])
+   components: {
+      Song
    },
-   created() {
-      this.bindFirebaseVotes()
+   computed: {
+      ...mapState('party', ['party_playlist'])
+   },
+   methods: {
+      ...mapActions('party', ['updateVotes']),
+      voteSong(track_id) {
+         this.updateVotes(track_id)
+      }
    }
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="sass" scoped>
+.host-voting
+   padding: 20px
+   display: flex
+   flex-direction: column
+   align-items: flex-start
+   justify-content: flex-start
+.title
+   font-weight: 600
+   font-size: 24px
+   margin: 0px 0px 20px 0px
+</style>

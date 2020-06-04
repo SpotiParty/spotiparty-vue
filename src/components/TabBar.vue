@@ -19,7 +19,7 @@
          <div
             :class="{
                active: current_route_name == 'HostVoting',
-               inactive: current_route_name != 'HostVotes',
+               inactive: current_route_name != 'HostVoting',
                'tab-element': true
             }"
          >
