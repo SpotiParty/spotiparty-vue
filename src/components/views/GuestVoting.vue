@@ -8,11 +8,11 @@ import { mapActions } from 'vuex'
 
 export default {
    data() {
-      voted_song: null
+      // voted_song: null
    },
    methods: {
-      ...mapActions('party', ['voteNextSong']),
-      addVote(uri) {
+      ...mapActions('party', ['addVote', 'removeVote']),
+      vote(uri) {
          if (this.voted_song == null) {
             this.addVote(uri)
             this.voted_song = uri

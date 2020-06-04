@@ -26,9 +26,6 @@ export default {
          link:
             'https://accounts.spotify.com/authorize?client_id=a765347deed847c3980a14cdc4966112&redirect_uri=http://localhost:8080/party-setup&scope=user-read-private%20user-read-email%20user-modify-playback-state%20user-read-playback-state%20playlist-modify-private%20playlist-modify-public%20user-read-playback-state&response_type=token&state=123'
       }
-   },
-   created() {
-      this.saluta()
    }
 }
 </script>

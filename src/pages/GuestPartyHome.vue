@@ -6,7 +6,13 @@
 </template>
 
 <script>
-export default {}
+import TabBar from '@/components/TabBar.vue'
+
+export default {
+   components: {
+      TabBar
+   }
+}
 </script>
 
 <style lang="sass" scoped>
@@ -15,4 +21,7 @@ export default {}
    display: flex
    flex-direction: column
    justify-content: center
+.tab-bar
+   position: fixed
+   bottom: 0
 </style>

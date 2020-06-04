@@ -1,4 +1,5 @@
 import PlaylistApi from '@/api/modules/playlist.api.js'
+import TracksApi from '@/api/modules/tracks.api.js'
 
 function cleanTracksResponse(response) {
    const tracks = []
@@ -10,7 +11,10 @@ function cleanTracksResponse(response) {
          name: track.track.name,
          artists: artists,
          uri: track.track.uri,
-         votes: 0
+         votes: 0,
+         playlist_uri: null,
+         playlist_id: null,
+         duration_ms: null
       }
       tracks.push(parsedTrack)
    })
@@ -106,6 +110,15 @@ export default {
                tracks.forEach(track => {
                   track.playlist_uri = getters.playlist_uri(playlist_id)
                   track.playlist_id = playlist_id
+               })
+               return tracks
+            })
+            //Add tracks length to every track
+            .then(tracks => {
+               tracks.forEach(async track => {
+                  await TracksApi.getAudioFeatures(track.id).then(response => {
+                     track.duration_ms = response.data.duration_ms
+                  })
                })
                return tracks
             })
