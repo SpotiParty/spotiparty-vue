@@ -15,7 +15,7 @@
          </div>
       </router-link>
 
-      <router-link :to="{ name: 'HostVotes' }">
+      <router-link :to="{ name: 'HostVoting' }">
          <div
             :class="{
                active: current_route_name == 'HostVoting',
@@ -47,16 +47,27 @@
    </div>
 </template>
 <script>
+import { mapState, mapActions } from 'vuex'
+
 export default {
    data() {
       return {
          current_route_name: 'HostPlayer'
       }
    },
+   computed: {
+      ...mapState('party', ['firebase_votes'])
+   },
    watch: {
       $route(to) {
          this.current_route_name = to.name
+      },
+      firebase_votes(newVal) {
+         this.updateStateVotes(newVal)
       }
+   },
+   methods: {
+      ...mapActions('party', ['updateStateVotes'])
    }
 }
 </script>

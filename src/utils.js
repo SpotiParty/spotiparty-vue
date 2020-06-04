@@ -22,5 +22,51 @@ export default {
          array[j] = x
       }
       return array
+   },
+   cleanTracksResponse(response) {
+      const tracks = []
+      response.forEach(track => {
+         const artists = this.cleanArtistsResponse(track.track.artists)
+         const parsedTrack = {
+            id: track.track.id,
+            images: track.track.album.images,
+            name: track.track.name,
+            artists: artists,
+            uri: track.track.uri,
+            votes: 0,
+            playlist_uri: null,
+            playlist_id: null,
+            duration_ms: null
+         }
+         tracks.push(parsedTrack)
+      })
+      return tracks
+   },
+   cleanArtistsResponse(response) {
+      const artists = []
+      response.forEach(artist => {
+         const parsedArtist = {
+            id: artist.id,
+            name: artist.name,
+            uri: artist.uri
+         }
+         artists.push(parsedArtist)
+      })
+      return artists
+   },
+   cleanPlaylistResponse(response) {
+      const playlists = []
+      response.forEach(playlist => {
+         const parsedPlaylist = {
+            id: playlist.id,
+            uri: playlist.uri,
+            name: playlist.name,
+            description: playlist.description,
+            images: playlist.images,
+            tracks: playlist.tracks
+         }
+         playlists.push(parsedPlaylist)
+      })
+      return playlists
    }
 }

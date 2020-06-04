@@ -5,7 +5,15 @@
 </template>
 
 <script>
-export default {}
+import { mapActions } from 'vuex'
+export default {
+   methods: {
+      ...mapActions('party', ['bindFirebaseVotes'])
+   },
+   created() {
+      this.bindFirebaseVotes()
+   }
+}
 </script>
 
 <style lang="scss" scoped></style>

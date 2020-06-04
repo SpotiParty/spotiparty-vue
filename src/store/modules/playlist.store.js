@@ -1,54 +1,6 @@
 import PlaylistApi from '@/api/modules/playlist.api.js'
 import TracksApi from '@/api/modules/tracks.api.js'
-
-function cleanTracksResponse(response) {
-   const tracks = []
-   response.forEach(track => {
-      const artists = cleanArtistsResponse(track.track.artists)
-      const parsedTrack = {
-         id: track.track.id,
-         images: track.track.album.images,
-         name: track.track.name,
-         artists: artists,
-         uri: track.track.uri,
-         votes: 0,
-         playlist_uri: null,
-         playlist_id: null,
-         duration_ms: null
-      }
-      tracks.push(parsedTrack)
-   })
-   return tracks
-}
-
-function cleanArtistsResponse(response) {
-   const artists = []
-   response.forEach(artist => {
-      const parsedArtist = {
-         id: artist.id,
-         name: artist.name,
-         uri: artist.uri
-      }
-      artists.push(parsedArtist)
-   })
-   return artists
-}
-
-function cleanPlaylistResponse(response) {
-   const playlists = []
-   response.forEach(playlist => {
-      const parsedPlaylist = {
-         id: playlist.id,
-         uri: playlist.uri,
-         name: playlist.name,
-         description: playlist.description,
-         images: playlist.images,
-         tracks: playlist.tracks
-      }
-      playlists.push(parsedPlaylist)
-   })
-   return playlists
-}
+import Utils from '@/utils.js'
 
 export default {
    namespaced: true,
@@ -80,7 +32,7 @@ export default {
          await PlaylistApi.getUserPlaylists(payload)
             //Remove unnecessary data from the playlists
             .then(response => {
-               const playlists = cleanPlaylistResponse(response.data.items)
+               const playlists = Utils.cleanPlaylistResponse(response.data.items)
                return playlists
             })
             //Get the image for every playlist
@@ -106,7 +58,7 @@ export default {
          await PlaylistApi.getPlaylistTracks(playlist_id)
             //Add playlists ids to every track
             .then(response => {
-               let tracks = cleanTracksResponse(response.data.items)
+               let tracks = Utils.cleanTracksResponse(response.data.items)
                tracks.forEach(track => {
                   track.playlist_uri = getters.playlist_uri(playlist_id)
                   track.playlist_id = playlist_id
