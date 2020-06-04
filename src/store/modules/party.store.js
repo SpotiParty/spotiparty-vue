@@ -17,7 +17,8 @@ export default {
       //Track that is currently playing
       currently_playing: null,
       in_play: false,
-      firebase_votes: null
+      firebase_votes: null,
+      voted_song_id: null
    },
    mutations: {
       ...vuexfireMutations,
@@ -40,13 +41,12 @@ export default {
          state.party_playlist.id = params.id
          state.party_playlist.uri = params.uri
       },
-      ADD_VOTE(state, uri) {
-         const track = state.party_playlist.tracks.filter(track => track.uri == uri)
-         track.votes += 1
+      UPDATE_SONG_VOTES(state, song_votes) {
+         const track = state.party_playlist.tracks.find(track => track.id == song_votes.track_id)
+         track.votes = song_votes.votes
       },
-      REMOVE_VOTE(state, uri) {
-         const track = state.party_playlist.tracks.filter(track => track.uri == uri)
-         track.votes -= 1
+      VOTE_A_SONG(state, track_id) {
+         state.voted_song_id = track_id
       }
    },
    actions: {
@@ -107,7 +107,6 @@ export default {
          await PlaylistApi.addTracksToPlaylist(tracks, state.party_playlist.id)
          await dispatch('uploadPlaylist')
          await dispatch('bindFirebaseVotes')
-         console.log(state)
       },
       /*
          Upload to firebase an object called votes with property named as tracks
@@ -115,16 +114,20 @@ export default {
       */
       uploadPlaylist: firestoreAction(async ({ state, getters }) => {
          const track_ids = getters.tracks_ids
-         const votes = {}
+         const songs_votes = []
          //Create an object with track ids as object properties
          track_ids.forEach(track_id => {
-            votes[track_id] = 0
+            const song_votes = {
+               track_id: track_id,
+               votes: 0
+            }
+            songs_votes.push(song_votes)
          })
          await db
             .collection('votes')
             .doc(state.party_code)
             .update({
-               votes: votes
+               songs_votes: songs_votes
             })
       }),
       async playPause({ commit, dispatch, state }) {
@@ -137,19 +140,24 @@ export default {
             in_play: status
          })
       }),
-      addVote({ commit }, uri) {
-         commit('VOTE', uri)
+      async updateStateVotes({ commit }, firebase_votes) {
+         firebase_votes.songs_votes.forEach(song_votes => {
+            commit('UPDATE_SONG_VOTES', song_votes)
+         })
       },
-      removeVote({ commit }, uri) {
-         commit('REMOVE_VOTE', uri)
-      },
-      async updateStateVotes({ dispatch }, firebase_votes) {
-         for (let property in firebase_votes.votes) {
-            if (Object.prototype.hasOwnProperty.call(firebase_votes.votes, property)) {
-               console.log(property)
-               dispatch('UPDATE_SONG_VOTES')
-            }
+      async updateVotes({ state, commit }, track_id) {
+         const new_votes = JSON.parse(JSON.stringify(state.firebase_votes.songs_votes))
+         const song_to_vote = new_votes.find(song => song.track_id == track_id)
+         if (state.voted_song_id != null) {
+            const old_vote = new_votes.find(song => song.track_id == state.voted_song_id)
+            old_vote.votes -= 1
          }
+         song_to_vote.votes += 1
+         commit('VOTE_A_SONG', track_id)
+         await db
+            .collection('votes')
+            .doc(state.party_code)
+            .update({ songs_votes: new_votes })
       }
    },
    getters: {
