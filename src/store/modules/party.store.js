@@ -112,12 +112,12 @@ export default {
 
 
          PARTY JOIN
-         test part: t1f9yb
+         test part: but3uo
       /*
          Check if in Firebase there is an entry with a party_code that 
          correspond with the insterted code
       */
-      async joinParty({ commit, dispatch }, input_code) {
+      async joinParty({ commit, dispatch, state }, input_code) {
          const outputDocument = await db
             .collection('party')
             .where('party_code', '==', `${input_code}`)
@@ -125,6 +125,9 @@ export default {
          if (outputDocument.docs.length != 0) {
             commit('ADD_PARTY_CODE', input_code)
             await dispatch('bindFirebaseParty')
+            await commit('user/SET_ACCESS_TOKEN', state.firebase_party.spotify_token, {
+               root: true
+            })
             return true
          } else {
             return false
@@ -136,7 +139,7 @@ export default {
                id: response.data.id,
                uri: response.data.uri
             }
-            commit('ADD_PLAYLIST_ID', playlist_ids)
+            commit('ADD_PLAYLIST_IDS', playlist_ids)
             commit('ADD_PLAYLIST_NAME', response.data.name)
             dispatch('getPartyPlaylistTracks')
          })

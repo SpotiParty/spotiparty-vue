@@ -7,20 +7,32 @@
 
 <script>
 import GuestTabBar from '@/components/GuestTabBar.vue'
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 
 export default {
    components: {
       GuestTabBar
    },
+   computed: {
+      ...mapState('party', ['firebase_party'])
+   },
    methods: {
-      ...mapActions('party', ['getPartyPlaylistTracks'])
+      ...mapActions('party', ['getPartyPlaylist']),
+      getPlaylist() {
+         if (this.firebase_party == null) {
+            setTimeout(() => {
+               this.getPlaylist()
+            }, 1000)
+         } else {
+            this.getPartyPlaylist()
+         }
+      }
    },
    created() {
       if (this.$router.currentRoute.name != 'GuestPlayer') {
          this.$router.push({ name: 'GuestPlayer' })
       }
-      this.getPartyPlaylist()
+      this.getPlaylist()
    }
 }
 </script>

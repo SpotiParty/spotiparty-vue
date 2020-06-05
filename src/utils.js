@@ -34,8 +34,6 @@ export default {
             artists: artists,
             uri: track.track.uri,
             votes: 0,
-            playlist_uri: null,
-            playlist_id: null,
             duration_ms: null
          }
          tracks.push(parsedTrack)
