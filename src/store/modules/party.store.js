@@ -112,7 +112,7 @@ export default {
 
 
          PARTY JOIN
-         test part: but3uo
+         test part: ipjbfh
       /*
          Check if in Firebase there is an entry with a party_code that 
          correspond with the insterted code
@@ -128,6 +128,7 @@ export default {
             await commit('user/SET_ACCESS_TOKEN', state.firebase_party.spotify_token, {
                root: true
             })
+            await dispatch('bindFirebaseVotes')
             return true
          } else {
             return false

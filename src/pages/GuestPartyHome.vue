@@ -19,6 +19,7 @@ export default {
    methods: {
       ...mapActions('party', ['getPartyPlaylist']),
       getPlaylist() {
+         //TODO vedere se c'è un modo migliore per fare la cosa
          if (this.firebase_party == null) {
             setTimeout(() => {
                this.getPlaylist()
