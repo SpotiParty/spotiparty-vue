@@ -7,6 +7,7 @@ import Utils from '@/utils.js'
 export default {
    namespaced: true,
    state: {
+      //Information on party
       party_code: null,
       party_playlist: {
          tracks: [],
@@ -14,27 +15,21 @@ export default {
          id: null,
          uri: null
       },
-      //Track that is currently playing
+      firebase_party: null,
+      //Information on playback
       currently_playing: null,
-      in_play: false,
+      playback_state: null,
+      //Information on votes
       voted_song_id: null,
-      //Firebase data
-      firebase_votes: null,
-      firebase_party: null
+      firebase_votes: null
    },
    mutations: {
       ...vuexfireMutations,
       ADD_PARTY_CODE(state, party_code) {
          state.party_code = party_code
       },
-      /*
-         Replace the current tracks with the new tracks
-      */
       ADD_PLAYLIST_TRACKS(state, tracks) {
          state.party_playlist.tracks = [...tracks]
-      },
-      PLAY_PAUSE(state, status) {
-         state.in_play = status
       },
       ADD_PLAYLIST_NAME(state, name) {
          state.party_playlist.name = name
@@ -49,6 +44,12 @@ export default {
       },
       VOTE_A_SONG(state, track_id) {
          state.voted_song_id = track_id
+      },
+      UPDATE_PLAYBACK_STATE(state, newState) {
+         state.playback_state = newState
+      },
+      UPDATE_CURRENTLY_PLAYING(state, track) {
+         state.currently_playing = track
       }
    },
    actions: {
@@ -100,7 +101,9 @@ export default {
                party_code: state.party_code,
                spotify_token: rootState.user.access_token,
                votes: db.collection('votes').doc(state.party_code),
-               playlist_id: state.party_playlist.id
+               playlist_id: state.party_playlist.id,
+               playback_state: false,
+               currently_playing: {}
             })
       }),
       bindFirebaseParty: firestoreAction(async ({ bindFirestoreRef, state }) => {
@@ -210,16 +213,46 @@ export default {
          SONG PLAYBACK
 
       */
-      async playPause({ commit, dispatch, state }) {
-         const status = !state.in_play
-         await dispatch('syncPlayPause', status)
-         commit('PLAY_PAUSE', status)
+      async partyPlay({ dispatch }) {
+         await dispatch('uploadPlaybackState', true)
       },
-      syncPlayPause: firestoreAction(status => {
-         return db.collection('party').add({
-            in_play: status
-         })
+      async partyPause({ dispatch }) {
+         await dispatch('uploadPlaybackState', false)
+      },
+      uploadPlaybackState: firestoreAction(({ state }, status) => {
+         return db
+            .collection('party')
+            .doc(state.party_code)
+            .update({
+               playback_state: status
+            })
       }),
+      async updateLocalPlaybackState({ commit }, state) {
+         commit('UPDATE_PLAYBACK_STATE', state)
+      },
+      async nextTrack({ dispatch, getters, state }) {
+         let track = {}
+         if (state.currently_playing == null) {
+            track = state.party_playlist.tracks[0]
+            await dispatch('uploadCurrentlyPlaying', track)
+         } else {
+            track = getters.next_track
+            await dispatch('uploadCurrentlyPlaying', track)
+         }
+         return track
+      },
+      uploadCurrentlyPlaying: firestoreAction(async ({ state }, track) => {
+         console.log(`Uploading next track: ${track.name}`)
+         return await db
+            .collection('party')
+            .doc(state.party_code)
+            .update({
+               currently_playing: track
+            })
+      }),
+      async updateLocalCurrentlyPlaying({ commit }, track) {
+         commit('UPDATE_CURRENTLY_PLAYING', track)
+      },
       /*
 
 
@@ -254,6 +287,15 @@ export default {
       },
       guest_has_own_account(state, getters, rootState) {
          return state.firebase_party.spotify_token != rootState.user.access_token
+      },
+      next_track(state) {
+         let next_track = state.party_playlist.tracks[0]
+         state.party_playlist.tracks.forEach(track => {
+            if (next_track.votes < track.votes && track.played == false) {
+               next_track = track
+            }
+         })
+         return next_track
       }
    }
 }

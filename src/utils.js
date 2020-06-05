@@ -34,7 +34,8 @@ export default {
             artists: artists,
             uri: track.track.uri,
             votes: 0,
-            duration_ms: null
+            duration_ms: null,
+            played: false
          }
          tracks.push(parsedTrack)
       })
@@ -66,5 +67,15 @@ export default {
          playlists.push(parsedPlaylist)
       })
       return playlists
+   },
+   sortByVotes(track_1, track_2) {
+      console.log(track_1)
+      if (track_1.votes > track_2.votes) {
+         return 1
+      }
+      if (track_1.votes < track_2.votes) {
+         return -1
+      }
+      return 0
    }
 }

@@ -7,14 +7,34 @@
 
 <script>
 import HostTabBar from '@/components/HostTabBar.vue'
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 export default {
    components: {
       HostTabBar
    },
    computed: {
-      ...mapState('party', ['party_playlist'])
+      ...mapState('party', ['party_playlist', 'firebase_party', 'firebase_votes'])
+   },
+   watch: {
+      firebase_party(newValue, oldValue) {
+         if (newValue.playback_state != oldValue.playback_state) {
+            this.updateLocalPlaybackState(newValue.playback_state)
+         }
+         if (newValue.currently_playing != oldValue.currently_playing) {
+            this.updateLocalCurrentlyPlaying(newValue.currently_playing)
+         }
+      },
+      firebase_votes(newVal) {
+         this.updateLocalVotes(newVal)
+      }
+   },
+   methods: {
+      ...mapActions('party', [
+         'updateLocalPlaybackState',
+         'updateLocalCurrentlyPlaying',
+         'updateLocalVotes'
+      ])
    },
    created() {
       if (this.$router.currentRoute.name != 'HostPlayer') {

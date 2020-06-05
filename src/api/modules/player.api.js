@@ -2,10 +2,13 @@ import apiClient from '@/api/apiClient.js'
 
 // chiamata di play
 export default {
-   play(playlist_uri, device_id) {
+   play(playlist_uri, track_uri, device_id) {
       const param = device_id ? '?device_id=' + device_id : ''
       return apiClient.put('/me/player/play' + param, {
-         context_uri: playlist_uri
+         context_uri: playlist_uri,
+         offset: {
+            uri: track_uri
+         }
       })
    },
    resume() {

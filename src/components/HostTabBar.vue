@@ -47,7 +47,7 @@
    </div>
 </template>
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState } from 'vuex'
 
 export default {
    data() {
@@ -61,13 +61,7 @@ export default {
    watch: {
       $route(to) {
          this.current_route_name = to.name
-      },
-      firebase_votes(newVal) {
-         this.updateLocalVotes(newVal)
       }
-   },
-   methods: {
-      ...mapActions('party', ['updateLocalVotes'])
    }
 }
 </script>

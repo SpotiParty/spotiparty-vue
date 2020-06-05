@@ -12,7 +12,7 @@
          </div>
       </div>
       <div class="container-controls">
-         <BaseButtonWithIcon v-if="!this.is_playing" :width="100" :height="100" @click="play">
+         <BaseButtonWithIcon v-if="!playback_state" :width="100" :height="100" @click="play">
             <div class="flex">
                <BaseIcon :width="51" :height="51" viewBox="0 0 51 51">
                   <Play />
@@ -22,6 +22,11 @@
          <BaseButtonWithIcon v-else :width="100" :height="100" @click="pause">
             <BaseIcon :width="51" :height="51" viewBox="0 0 51 51">
                <Pause />
+            </BaseIcon>
+         </BaseButtonWithIcon>
+         <BaseButtonWithIcon :width="70" :height="70" @click="next">
+            <BaseIcon :width="51" :height="51">
+               <StepForward />
             </BaseIcon>
          </BaseButtonWithIcon>
          <div class="devices">
@@ -55,22 +60,47 @@ export default {
       return {
          user_devices: [],
          active_device: null,
-         show_devices_popup: false,
-         is_playing: null,
-         track_number: 0
+         show_devices_popup: false
       }
    },
    computed: {
-      ...mapState('party', ['party_playlist']),
+      ...mapState('party', ['party_playlist', 'currently_playing', 'playback_state']),
       imageUrl() {
-         return this.track.images[this.track_number].url
+         return this.track.images[0].url
       },
       track() {
-         return this.party_playlist.tracks[this.track_number]
+         if (this.currently_playing == null) {
+            const track = this.party_playlist.tracks[0]
+            return track
+         } else {
+            const track = this.currently_playing
+            return track
+         }
       }
    },
    methods: {
       ...mapActions('user', ['setToken']),
+      ...mapActions('party', ['partyPlay', 'partyPause', 'nextTrack']),
+      async pause() {
+         await this.partyPause()
+         await PlayerApi.pause()
+      },
+      async play() {
+         if (this.currently_playing == null) {
+            const track = await this.nextTrack()
+            await PlayerApi.play(this.party_playlist.uri, track.uri, this.active_device)
+            await PlayerApi.deactivateShuffle()
+            await this.partyPlay()
+         } else {
+            await PlayerApi.resume()
+            await this.partyPlay()
+         }
+      },
+      async next() {
+         const track = await this.nextTrack()
+         console.log(`next track: ${track.name}`)
+         await PlayerApi.play(this.party_playlist.uri, track.uri, this.active_device)
+      },
       async getDevices() {
          await PlayerApi.getUserDevices().then(res => {
             this.user_devices = []
@@ -87,21 +117,6 @@ export default {
       async setDevice(device) {
          await PlayerApi.switchDevice(device)
       },
-      async pause() {
-         this.is_playing = !this.is_playing
-         await PlayerApi.pause()
-      },
-      async play() {
-         if (this.is_playing == null) {
-            await PlayerApi.play(this.party_playlist.uri, this.active_device)
-            await PlayerApi.deactivateShuffle()
-            this.nextTrack()
-            this.is_playing = true
-         } else {
-            this.is_playing = !this.is_playing
-            await PlayerApi.resume()
-         }
-      },
       clickDevices() {
          this.getDevices()
          this.show_devices_popup = !this.show_devices_popup
@@ -113,15 +128,13 @@ export default {
       },
       // metodo che prende lo stato attuale di riproduzione
       async getState() {
-         await PlayerApi.getState().then(res => {
-            this.is_playing = res.data.state
+         await PlayerApi.getState().then(response => {
+            if (response.data.state) {
+               this.partyPlay()
+            } else {
+               this.partyPause()
+            }
          })
-      },
-      nextTrack() {
-         this.track_number += 1
-         setTimeout(() => {
-            this.nextTrack()
-         }, 10000)
       }
    },
    async created() {

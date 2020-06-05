@@ -16,11 +16,6 @@ export default {
    computed: {
       ...mapState('party', ['firebase_party', 'firebase_votes'])
    },
-   watch: {
-      firebase_votes(newVal) {
-         this.updateLocalVotes(newVal)
-      }
-   },
    methods: {
       ...mapActions('party', ['getPartyPlaylist', 'updateLocalVotes']),
       getPlaylist() {
@@ -35,8 +30,8 @@ export default {
       }
    },
    created() {
-      if (this.$router.currentRoute.name != 'GuestPlayer') {
-         this.$router.push({ name: 'GuestPlayer' })
+      if (this.$router.currentRoute.name != 'GuestRequireAccess') {
+         this.$router.push({ name: 'GuestRequireAccess' })
       }
       this.getPlaylist()
    }
