@@ -39,11 +39,9 @@ export default {
             .then(playlists => {
                playlists.forEach(async playlist => {
                   const payload = playlist.id
-                  await PlaylistApi.getPlaylistCover(payload)
-                     .then(response => {
-                        playlist.images = response.data
-                     })
-                     .catch(error => console.log(error))
+                  await PlaylistApi.getPlaylistCover(payload).then(response => {
+                     playlist.images = response.data
+                  })
                })
                return playlists
             })
@@ -54,15 +52,11 @@ export default {
       /*
          Get the playlist tracks and add to them ids of the playlist to which they belong
       */
-      async getPlaylistTracksAndAddToPlayQueue({ commit, dispatch, getters }, playlist_id) {
+      async getPlaylistTracksAndAddToPlayQueue({ commit, dispatch }, playlist_id) {
          await PlaylistApi.getPlaylistTracks(playlist_id)
             //Add playlists ids to every track
             .then(response => {
                let tracks = Utils.cleanTracksResponse(response.data.items)
-               tracks.forEach(track => {
-                  track.playlist_uri = getters.playlist_uri(playlist_id)
-                  track.playlist_id = playlist_id
-               })
                return tracks
             })
             //Add tracks length to every track
@@ -82,13 +76,6 @@ export default {
                commit('ADD_TRACKS_TO_PLAYLIST', params)
                dispatch('party/addTracksToPlaylist', tracks, { root: true })
             })
-      }
-   },
-   getters: {
-      // Return the playlist uri starting from the id
-      playlist_uri: state => playlist_id => {
-         const correctPlaylist = state.user_playlists.find(playlist => playlist.id == playlist_id)
-         return correctPlaylist.uri
       }
    }
 }
