@@ -19,6 +19,7 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
+import { db } from '@/db.js'
 import Utils from '@/utils.js'
 
 export default {
@@ -28,7 +29,23 @@ export default {
    },
    methods: {
       ...mapActions('user', ['setToken', 'setUser']),
-      ...mapActions('party', ['createParty'])
+      ...mapActions('party', ['createParty']),
+      deleteOldData(party_code) {
+         db.collection('party')
+            .get()
+            .then(snap => {
+               snap.forEach(doc => {
+                  if (doc.id != party_code) {
+                     db.collection('party')
+                        .doc(doc.id)
+                        .delete()
+                     db.collection('votes')
+                        .doc(doc.id)
+                        .delete()
+                  }
+               })
+            })
+      }
    },
    async created() {
       if (this.access_token == null) {
@@ -38,6 +55,8 @@ export default {
          await this.setUser()
          const party_code = Utils.generatePartyCode()
          await this.createParty(party_code)
+         //TODO Only for dev mode, remove for production
+         this.deleteOldData(party_code)
       }
    }
 }

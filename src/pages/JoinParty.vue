@@ -39,6 +39,7 @@ export default {
    },
    computed: {
       ...mapState('party', ['party_code']),
+      ...mapState('user', ['access_token']),
       placeholder() {
          if (!this.code_is_correct) {
             return 'Codice errato'
@@ -47,12 +48,12 @@ export default {
       }
    },
    watch: {
-      party_code() {
+      access_token() {
          this.$router.push({ name: 'GuestPartyHome' })
       }
    },
    methods: {
-      ...mapActions('party', ['joinParty']),
+      ...mapActions('party', ['joinParty', 'updateAccessToken']),
       displayButton() {
          this.input_is_open = true
       },
@@ -61,6 +62,9 @@ export default {
       },
       async checkPartyCode() {
          this.code_is_correct = await this.joinParty(this.input_code)
+         if (this.code_is_correct) {
+            this.updateAccessToken()
+         }
          this.input_code = ''
       }
    },

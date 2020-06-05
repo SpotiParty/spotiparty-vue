@@ -1,10 +1,10 @@
 <template>
    <div class="tab-bar">
-      <router-link v-if="guest_has_own_account" :to="{ name: 'GuestPlayer' }">
+      <router-link v-if="!guest_has_own_account" :to="{ name: 'GuestRequireAccess' }">
          <div
             :class="{
-               active: current_route_name == 'GuestPlayer',
-               inactive: current_route_name != 'GuestPlayer',
+               active: current_route_name == 'GuestRequireAccess',
+               inactive: current_route_name != 'GuestRequireAccess',
                'tab-element': true
             }"
          >
@@ -14,11 +14,12 @@
             <div class="title">Player</div>
          </div>
       </router-link>
-      <router-link v-else :to="{ name: 'GuestRequireAccess' }">
+
+      <router-link v-else :to="{ name: 'GuestPlayer' }">
          <div
             :class="{
-               active: current_route_name == 'GuestRequireAccess',
-               inactive: current_route_name != 'GuestRequireAccess',
+               active: current_route_name == 'GuestPlayer',
+               inactive: current_route_name != 'GuestPlayer',
                'tab-element': true
             }"
          >
@@ -66,7 +67,7 @@ import { mapGetters } from 'vuex'
 export default {
    data() {
       return {
-         current_route_name: 'GuestPlayer'
+         current_route_name: 'GuestRequireAccess'
       }
    },
    computed: {

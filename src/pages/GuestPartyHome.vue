@@ -23,7 +23,7 @@ export default {
          if (this.firebase_party == null) {
             setTimeout(() => {
                this.getPlaylist()
-            }, 1000)
+            }, 3000)
          } else {
             this.getPartyPlaylist()
          }

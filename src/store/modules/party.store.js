@@ -115,12 +115,12 @@ export default {
 
 
          PARTY JOIN
-         test part: ipjbfh
-      /*
+
+         /*
          Check if in Firebase there is an entry with a party_code that 
          correspond with the insterted code
       */
-      async joinParty({ commit, dispatch, state }, input_code) {
+      async joinParty({ commit, dispatch }, input_code) {
          const outputDocument = await db
             .collection('party')
             .where('party_code', '==', `${input_code}`)
@@ -128,14 +128,16 @@ export default {
          if (outputDocument.docs.length != 0) {
             commit('ADD_PARTY_CODE', input_code)
             await dispatch('bindFirebaseParty')
-            await commit('user/SET_ACCESS_TOKEN', state.firebase_party.spotify_token, {
-               root: true
-            })
             await dispatch('bindFirebaseVotes')
             return true
          } else {
             return false
          }
+      },
+      updateAccessToken({ commit, state }) {
+         commit('user/SET_ACCESS_TOKEN', state.firebase_party.spotify_token, {
+            root: true
+         })
       },
       async getPartyPlaylist({ state, commit, dispatch }) {
          await PlaylistApi.getPlaylist(state.firebase_party.playlist_id).then(response => {
@@ -201,10 +203,6 @@ export default {
             .update({
                songs_votes: songs_votes
             })
-      }),
-      bindFirebaseVotes: firestoreAction(async ({ bindFirestoreRef, state }) => {
-         // return the promise returned by `bindFirestoreRef`
-         return bindFirestoreRef('firebase_votes', db.collection('votes').doc(state.party_code))
       }),
       /*
 
@@ -278,7 +276,11 @@ export default {
          firebase_votes.songs_votes.forEach(song_votes => {
             commit('UPDATE_SONG_VOTES', song_votes)
          })
-      }
+      },
+      bindFirebaseVotes: firestoreAction(async ({ bindFirestoreRef, state }) => {
+         // return the promise returned by `bindFirestoreRef`
+         return bindFirestoreRef('firebase_votes', db.collection('votes').doc(state.party_code))
+      })
    },
    getters: {
       logged_in: state => !!state.party_code,
