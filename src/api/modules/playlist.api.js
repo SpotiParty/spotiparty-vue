@@ -23,5 +23,8 @@ export default {
       }
       tracks.forEach(track => payload.uris.push(track.uri))
       return apiClient.post(`/playlists/${playlist_id}/tracks`, payload)
+   },
+   getPlaylist(playlist_id) {
+      return apiClient.get(`/playlists/${playlist_id}`)
    }
 }

@@ -7,15 +7,20 @@
 
 <script>
 import GuestTabBar from '@/components/GuestTabBar.vue'
+import { mapActions } from 'vuex'
 
 export default {
    components: {
       GuestTabBar
    },
+   methods: {
+      ...mapActions('party', ['getPartyPlaylistTracks'])
+   },
    created() {
       if (this.$router.currentRoute.name != 'GuestPlayer') {
          this.$router.push({ name: 'GuestPlayer' })
       }
+      this.getPartyPlaylist()
    }
 }
 </script>

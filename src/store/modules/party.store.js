@@ -1,6 +1,7 @@
 import { firestoreAction, vuexfireMutations } from 'vuexfire'
 import { db } from '@/db.js'
 import PlaylistApi from '@/api/modules/playlist.api.js'
+import TracksApi from '@/api/modules/tracks.api.js'
 import Utils from '@/utils.js'
 
 export default {
@@ -29,7 +30,7 @@ export default {
       /*
          Replace the current tracks with the new tracks
       */
-      ADD_TRACKS_TO_QUEUE(state, tracks) {
+      ADD_PLAYLIST_TRACKS(state, tracks) {
          state.party_playlist.tracks = [...tracks]
       },
       PLAY_PAUSE(state, status) {
@@ -90,7 +91,8 @@ export default {
          db.collection('votes')
             .doc(state.party_code)
             .set({
-               voters: 0
+               voters: 0,
+               songs_votes: []
             })
          db.collection('party')
             .doc(state.party_code)
@@ -98,7 +100,7 @@ export default {
                party_code: state.party_code,
                spotify_token: rootState.user.access_token,
                votes: db.collection('votes').doc(state.party_code),
-               tracks: []
+               playlist_id: state.party_playlist.id
             })
       }),
       bindFirebaseParty: firestoreAction(async ({ bindFirestoreRef, state }) => {
@@ -110,22 +112,50 @@ export default {
 
 
          PARTY JOIN
-
+         test part: t1f9yb
       /*
          Check if in Firebase there is an entry with a party_code that 
          correspond with the insterted code
       */
-      async joinParty({ commit }, input_code) {
+      async joinParty({ commit, dispatch }, input_code) {
          const outputDocument = await db
             .collection('party')
             .where('party_code', '==', `${input_code}`)
             .get()
          if (outputDocument.docs.length != 0) {
             commit('ADD_PARTY_CODE', input_code)
+            await dispatch('bindFirebaseParty')
             return true
          } else {
             return false
          }
+      },
+      async getPartyPlaylist({ state, commit, dispatch }) {
+         await PlaylistApi.getPlaylist(state.firebase_party.playlist_id).then(response => {
+            const playlist_ids = {
+               id: response.data.id,
+               uri: response.data.uri
+            }
+            commit('ADD_PLAYLIST_ID', playlist_ids)
+            commit('ADD_PLAYLIST_NAME', response.data.name)
+            dispatch('getPartyPlaylistTracks')
+         })
+      },
+      async getPartyPlaylistTracks({ commit, state }) {
+         await PlaylistApi.getPlaylistTracks(state.party_playlist.id)
+            .then(response => {
+               let tracks = Utils.cleanTracksResponse(response.data.items)
+               return tracks
+            })
+            //Add tracks length to every track
+            .then(tracks => {
+               tracks.forEach(async track => {
+                  await TracksApi.getAudioFeatures(track.id).then(response => {
+                     track.duration_ms = response.data.duration_ms
+                  })
+               })
+               commit('ADD_PLAYLIST_TRACKS', tracks)
+            })
       },
       /*
 
@@ -138,27 +168,16 @@ export default {
       */
       async addTracksToPlaylist({ commit, dispatch, state }, tracks) {
          tracks = Utils.shuffle(tracks)
-         commit('ADD_TRACKS_TO_QUEUE', tracks)
+         commit('ADD_PLAYLIST_TRACKS', tracks)
          await PlaylistApi.addTracksToPlaylist(tracks, state.party_playlist.id)
-         await dispatch('setFirebasePlaylist')
-         await dispatch('uploadFirebaseVotes')
+         await dispatch('setFirebaseVotes')
          await dispatch('bindFirebaseVotes')
       },
-      /*
-         Upload the playlist on the party firebase document to sync it with guests
-         */
-      setFirebasePlaylist: firestoreAction(async ({ getters, state }) => {
-         const tracks_ids = getters.tracks_ids
-         await db
-            .collection('party')
-            .doc(state.party_code)
-            .update({ tracks: tracks_ids })
-      }),
       /*
          Upload to firebase an object called votes with property named as tracks
          ids and votes for the object
       */
-      uploadFirebaseVotes: firestoreAction(async ({ state, getters }) => {
+      setFirebaseVotes: firestoreAction(async ({ state, getters }) => {
          const track_ids = getters.tracks_ids
          const songs_votes = []
          //Create an object with track ids as object properties
