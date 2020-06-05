@@ -251,6 +251,9 @@ export default {
       logged_in: state => !!state.party_code,
       tracks_ids(state) {
          return state.party_playlist.tracks.map(track => track.id)
+      },
+      guest_has_own_account(state, getters, rootState) {
+         return state.firebase_party.spotify_token != rootState.user.access_token
       }
    }
 }

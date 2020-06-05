@@ -1,6 +1,6 @@
 <template>
    <div>
-      <router-view></router-view>
+      <router-view class="tab"></router-view>
       <GuestTabBar />
    </div>
 </template>
@@ -14,10 +14,15 @@ export default {
       GuestTabBar
    },
    computed: {
-      ...mapState('party', ['firebase_party'])
+      ...mapState('party', ['firebase_party', 'firebase_votes'])
+   },
+   watch: {
+      firebase_votes(newVal) {
+         this.updateLocalVotes(newVal)
+      }
    },
    methods: {
-      ...mapActions('party', ['getPartyPlaylist']),
+      ...mapActions('party', ['getPartyPlaylist', 'updateLocalVotes']),
       getPlaylist() {
          //TODO vedere se c'è un modo migliore per fare la cosa
          if (this.firebase_party == null) {
@@ -47,4 +52,7 @@ export default {
 .tab-bar
    position: fixed
    bottom: 0
+.tab
+   box-sizing: border-box
+   width: 100%
 </style>

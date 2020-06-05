@@ -17,6 +17,7 @@ import HostSetting from '@/components/views/HostSetting.vue'
 import GuestPlayer from '@/components/views/GuestPlayer.vue'
 import GuestVoting from '@/components/views/GuestVoting.vue'
 import GuestSetting from '@/components/views/GuestSetting.vue'
+import GuestRequireAccess from '@/components/views/GuestRequireAccess.vue'
 
 Vue.use(VueRouter)
 
@@ -98,6 +99,11 @@ const routes = [
             path: 'settings',
             name: 'GuestSetting',
             component: GuestSetting
+         },
+         {
+            path: 'require-access',
+            name: 'GuestRequireAccess',
+            component: GuestRequireAccess
          }
       ]
    },

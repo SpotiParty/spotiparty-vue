@@ -1,10 +1,24 @@
 <template>
    <div class="tab-bar">
-      <router-link :to="{ name: 'GuestPlayer' }">
+      <router-link v-if="guest_has_own_account" :to="{ name: 'GuestPlayer' }">
          <div
             :class="{
                active: current_route_name == 'GuestPlayer',
                inactive: current_route_name != 'GuestPlayer',
+               'tab-element': true
+            }"
+         >
+            <BaseIcon width="27" height="27" viewBox="0 0 27 27">
+               <Player />
+            </BaseIcon>
+            <div class="title">Player</div>
+         </div>
+      </router-link>
+      <router-link v-else :to="{ name: 'GuestRequireAccess' }">
+         <div
+            :class="{
+               active: current_route_name == 'GuestRequireAccess',
+               inactive: current_route_name != 'GuestRequireAccess',
                'tab-element': true
             }"
          >
@@ -47,7 +61,7 @@
    </div>
 </template>
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapGetters } from 'vuex'
 
 export default {
    data() {
@@ -56,18 +70,12 @@ export default {
       }
    },
    computed: {
-      ...mapState('party', ['firebase_votes'])
+      ...mapGetters('party', ['guest_has_own_account'])
    },
    watch: {
       $route(to) {
          this.current_route_name = to.name
-      },
-      firebase_votes(newVal) {
-         this.updateLocalVotes(newVal)
       }
-   },
-   methods: {
-      ...mapActions('party', ['updateLocalVotes'])
    }
 }
 </script>

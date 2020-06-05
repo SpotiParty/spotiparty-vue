@@ -1,5 +1,5 @@
 <template>
-   <div class="host-voting">
+   <div class="guest-voting">
       <div class="title">Vota la prossima canzone</div>
       <div v-for="track in party_playlist.tracks" :key="track.id">
          <Song :track="track" @click="voteSong" />
@@ -28,7 +28,9 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-.host-voting
+@import '@/assets/variables.scss'
+.guest-voting
+   background-color: map-get($colors, "background")
    padding: 20px
    display: flex
    flex-direction: column
