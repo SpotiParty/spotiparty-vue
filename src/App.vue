@@ -5,7 +5,9 @@
 </template>
 
 <script>
-export default {}
+export default {
+   created() {}
+}
 </script>
 
 <style lang="sass">

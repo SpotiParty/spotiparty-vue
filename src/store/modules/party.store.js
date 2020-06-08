@@ -27,6 +27,7 @@ export default {
       ...vuexfireMutations,
       ADD_PARTY_CODE(state, party_code) {
          state.party_code = party_code
+         localStorage.setItem('party_code', party_code)
       },
       ADD_PLAYLIST_TRACKS(state, tracks) {
          state.party_playlist.tracks = [...tracks]
@@ -165,6 +166,17 @@ export default {
                })
                commit('ADD_PLAYLIST_TRACKS', tracks)
             })
+      },
+      /*
+
+
+         GUEST SPOTIFY LOGIN
+
+      */
+      async guestSpotifyLogin({ dispatch }) {
+         const party_code = localStorage.getItem('party_code')
+         dispatch('joinParty', party_code)
+         return party_code
       },
       /*
 

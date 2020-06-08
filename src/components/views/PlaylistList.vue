@@ -7,6 +7,9 @@
             :class="{
                'selected-playlist': selected_playlist == playlist.id
             }"
+            git
+            pull
+            -
          />
       </div>
    </div>
