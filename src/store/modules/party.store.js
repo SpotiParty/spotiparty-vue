@@ -173,9 +173,10 @@ export default {
          GUEST SPOTIFY LOGIN
 
       */
-      async guestSpotifyLogin({ dispatch }) {
+      async guestSpotifyLogin({ dispatch, commit }) {
          const party_code = localStorage.getItem('party_code')
-         dispatch('joinParty', party_code)
+         await dispatch('joinParty', party_code)
+         commit('user/SET_GUEST_PERSONAL_ACCOUNT', null, { root: true })
          return party_code
       },
       /*
@@ -298,9 +299,6 @@ export default {
       logged_in: state => !!state.party_code,
       tracks_ids(state) {
          return state.party_playlist.tracks.map(track => track.id)
-      },
-      guest_has_own_account(state, getters, rootState) {
-         return state.firebase_party.spotify_token != rootState.user.access_token
       },
       next_track(state) {
          let next_track = state.party_playlist.tracks[0]

@@ -3,7 +3,9 @@
       <div class="warning">
          Per riprodurre le canzoni del party, devi accedere con il tuo account Spotify
       </div>
-      <BaseButton>Accedi</BaseButton>
+      <a :href="link">
+         <BaseButton>Accedi</BaseButton>
+      </a>
    </div>
 </template>
 

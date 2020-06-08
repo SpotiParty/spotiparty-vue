@@ -32,7 +32,7 @@ export default {
 .song-element
    background-color: map-get($colors, 'background')
    display: grid
-   width: inherit
+   width: 100%
    height: 92px
    grid-template-columns: 62px auto
    column-gap: 10px

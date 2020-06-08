@@ -30,8 +30,8 @@ export default {
       }
    },
    created() {
-      if (this.$router.currentRoute.name != 'GuestRequireAccess') {
-         this.$router.push({ name: 'GuestRequireAccess' })
+      if (this.$router.currentRoute.name != 'GuestVoting') {
+         this.$router.push({ name: 'GuestVoting' })
       }
       this.getPlaylist()
    }

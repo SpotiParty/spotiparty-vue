@@ -1,6 +1,6 @@
 <template>
    <div class="tab-bar">
-      <router-link v-if="!guest_has_own_account" :to="{ name: 'GuestRequireAccess' }">
+      <router-link v-if="!guest_personal_account" :to="{ name: 'GuestRequireAccess' }">
          <div
             :class="{
                active: current_route_name == 'GuestRequireAccess',
@@ -62,16 +62,16 @@
    </div>
 </template>
 <script>
-import { mapGetters } from 'vuex'
+import { mapState } from 'vuex'
 
 export default {
    data() {
       return {
-         current_route_name: 'GuestRequireAccess'
+         current_route_name: 'GuestVoting'
       }
    },
    computed: {
-      ...mapGetters('party', ['guest_has_own_account'])
+      ...mapState('user', ['guest_personal_account'])
    },
    watch: {
       $route(to) {
