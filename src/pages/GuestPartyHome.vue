@@ -1,5 +1,5 @@
 <template>
-   <div>
+   <div class="fullscreen">
       <router-view class="tab"></router-view>
       <GuestTabBar />
    </div>
@@ -39,15 +39,11 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-.party-setup
-   align-items: center
-   display: flex
-   flex-direction: column
-   justify-content: center
 .tab-bar
    position: fixed
    bottom: 0
 .tab
    box-sizing: border-box
    width: 100%
+   margin: 0px 0px 72px 0px
 </style>

@@ -150,9 +150,9 @@ export default {
 .selector
    background-color: #2C2C2C
    border-radius: 10px
+   display: block
    margin-bottom: 10px
    padding: 5px 15px
-   display: block
 .device
    align-items: center
    border-radius: 10px

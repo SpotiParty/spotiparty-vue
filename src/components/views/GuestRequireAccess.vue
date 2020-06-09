@@ -22,11 +22,11 @@ export default {
 
 <style lang="sass" scoped>
 .require-access
+   align-items: center
    color: white
-   height: calc(100vh - 72px)
    display: flex
    flex-direction: column
-   align-items: center
+   height: calc(100vh - 72px)
    justify-content: space-evenly
    .warning
       font-size: 22px
