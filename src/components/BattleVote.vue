@@ -1,11 +1,11 @@
 <template>
    <div class="vote-element" @click="click">
       <img class="img" :src="track.images[0].url" />
-      <div class="voti">
+      <div class="vote">
          <p>voti</p>
-         <p class="style-text-voti">1</p>
+         <p class="text-vote">1</p>
       </div>
-      <div class="style-name-song">{{ track.name }} - {{ track.artists[0].name }}</div>
+      <div class="name-song">{{ track.name }} - {{ track.artists[0].name }}</div>
    </div>
 </template>
 
@@ -34,21 +34,14 @@ export default {
    grid-template-columns: 60% 40%
    grid-template-rows: 75% 25%
    height: 100%
-   margin-top: 50px
+   margin: 10px 0
    width: 100%
 .img
-   align-self: flex-start
-   background-color: white
-   grid-column: 1
-   grid-row: 1
-   justify-self: flex-start
+   height: 80%
    margin-left: 30px
    margin-top: 30px
-   max-height: 100%
-   max-width: 100%
-   min-height: 170px
-   min-width: 170px
-.voti
+   width: 80%
+.vote
    align-items: center
    color: #ffffff
    display: flex
@@ -59,9 +52,9 @@ export default {
    justify-content: center
    margin: 0;
    padding-top: 10px
-.voti > p
+.vote > p
    margin-bottom: 5px
-.style-name-song
+.name-song
    align-self: center
    color: #ffffff
    font-size: 18px
@@ -73,7 +66,7 @@ export default {
    padding-left: 20px
    padding-right: 20px
    text-align: start
-.style-text-voti
+.text-vote
    color: #00BA61
    margin-top: 0
 </style>
