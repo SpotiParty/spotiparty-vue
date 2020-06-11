@@ -51,8 +51,20 @@ describe('BaseIcon', () => {
    })
    test("emit event 'focusin'", async () => {
       const wrapper = shallowMount(BaseInput)
-      const input = wrapper.find('input')
-      await input.trigger('focusin')
+      await wrapper.find('input').trigger('focusin')
       expect(wrapper.emitted().focusin).toBeTruthy()
+   })
+   test("emit event 'input'", async () => {
+      const wrapper = shallowMount(BaseInput)
+      await wrapper.find('input').setValue('test')
+      expect(wrapper.emitted().input).toBeTruthy()
+   })
+   test('recognize arrors', async () => {
+      const wrapper = await shallowMount(BaseInput)
+      expect(wrapper.find('input').classes('error')).toBe(false)
+      console.log(wrapper.find('input').classes())
+      await wrapper.setProps({ error: true })
+      console.log(wrapper.find('input').classes())
+      expect(wrapper.find('input').classes('error')).toBe(true)
    })
 })
