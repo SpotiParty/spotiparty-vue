@@ -5,7 +5,8 @@ export default {
    state: {
       user_devices: [],
       active_devices: null,
-      timer: null
+      timer: null,
+      next_track_timestamp: null
    },
    mutations: {
       SET_USER_DEVICES(state, user_devices) {
@@ -16,6 +17,9 @@ export default {
       },
       SET_TIMER(state, timer) {
          state.timer = timer
+      },
+      SET_NEXT_TRACK_TIMESTAMP(state, timestamp) {
+         state.next_track_timestamp = timestamp
       }
    },
    actions: {
@@ -43,9 +47,17 @@ export default {
             }
          })
       },
-      async pause({ dispatch }) {
+      async pause({ rootState, dispatch, commit, state }) {
          await dispatch('party/partyPause', null, { root: true })
+         await PlayerApi.getCurrentlyPlayingInfo().then(response => {
+            const paused_timestamp_ms = parseInt(response.data.progress_ms)
+            const next_track_timestamp =
+               rootState.party.currently_playing.duration_ms - paused_timestamp_ms
+            commit('SET_NEXT_TRACK_TIMESTAMP', next_track_timestamp)
+         })
          await PlayerApi.pause()
+         clearTimeout(state.timer)
+         commit('SET_TIMER', null)
       },
       async play({ state, rootState, dispatch, commit }) {
          if (rootState.party.currently_playing == null) {
@@ -60,6 +72,11 @@ export default {
             await dispatch('party/partyPlay', null, { root: true })
          } else {
             await PlayerApi.resume()
+            const timer = setTimeout(async () => {
+               await dispatch('automaticNext')
+            }, state.next_track_timestamp)
+            commit('SET_TIMER', timer)
+            console.log(`Playing next track after ${state.next_track_timestamp} ms`)
             await dispatch('party/partyPlay', null, { root: true })
          }
       },
