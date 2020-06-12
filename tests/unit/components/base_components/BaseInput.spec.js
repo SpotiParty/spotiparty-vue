@@ -62,9 +62,7 @@ describe('BaseIcon', () => {
    test('recognize arrors', async () => {
       const wrapper = await shallowMount(BaseInput)
       expect(wrapper.find('input').classes('error')).toBe(false)
-      console.log(wrapper.find('input').classes())
       await wrapper.setProps({ error: true })
-      console.log(wrapper.find('input').classes())
       expect(wrapper.find('input').classes('error')).toBe(true)
    })
 })
