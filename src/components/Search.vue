@@ -46,7 +46,7 @@ export default {
     border-radius: 32px
     border: solid 2px rgba(255, 255, 255, 0.8)
     box-sizing: border-box
-    background-color: white;
+    background-color: white
     color: rgba(255, 255, 255, 0.8)
     cursor: text
     font-size: 18px
@@ -61,7 +61,7 @@ export default {
     color: #323233
     padding: 0px
 .title
-    background: none;
-    border: none;
-    outline-width: 0;
+    background: none
+    border: none
+    outline-width: 0
 </style>
