@@ -47,7 +47,7 @@ export default {
          'updateLocalPlaybackState',
          'updateLocalPartyMode'
       ]),
-      ...mapActions('party', ['lazyPlay', 'lazyPause']),
+      ...mapActions('player', ['lazyPlay', 'lazyPause']),
       async getPlaylist() {
          //TODO vedere se c'è un modo migliore per fare la cosa
          if (this.firebase_party == null) {

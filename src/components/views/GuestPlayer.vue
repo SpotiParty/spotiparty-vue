@@ -14,13 +14,13 @@
       <div class="container-controls">
          <BaseButtonWithIcon v-if="!muted" :width="100" :height="100" @click="mute">
             <div class="flex">
-               <BaseIcon :width="50" :height="50" color="#000000">
+               <BaseIcon :width="50" :height="50" color="000000">
                   <Volume />
                </BaseIcon>
             </div>
          </BaseButtonWithIcon>
          <BaseButtonWithIcon v-else :width="100" :height="100" @click="unmute">
-            <BaseIcon :width="51" :height="51" viewBox="0 0 51 51">
+            <BaseIcon :width="51" :height="51" color="000000">
                <Mute />
             </BaseIcon>
          </BaseButtonWithIcon>

@@ -29,10 +29,10 @@ export default {
       }
    },
    computed: {
-      ...mapState('party', ['firebase_party', 'firebase_votes', 'updateLocalVotes'])
+      ...mapState('party', ['firebase_party', 'firebase_votes'])
    },
    methods: {
-      ...mapActions('party', ['guestSpotifyLogin']),
+      ...mapActions('party', ['guestSpotifyLogin', 'updateLocalVotes']),
       ...mapActions('user', ['setToken', 'setUser'])
    },
    async created() {

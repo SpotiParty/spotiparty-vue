@@ -38,6 +38,6 @@ export default {
       return apiClient.get('/me/player')
    },
    setVolume(volume_percent) {
-      return apiClient.put('/me/player/volume', volume_percent)
+      return apiClient.put(`/me/player/volume?volume_percent=${volume_percent}`)
    }
 }

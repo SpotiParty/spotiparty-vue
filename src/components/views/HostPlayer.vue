@@ -13,12 +13,12 @@
       </div>
       <div class="container-controls">
          <BaseButtonWithIcon v-if="!muted" :width="70" :height="70" @click="mute">
-            <BaseIcon :width="30" :height="30" color="#000000">
+            <BaseIcon :width="30" :height="30" color="000000">
                <Volume />
             </BaseIcon>
          </BaseButtonWithIcon>
          <BaseButtonWithIcon v-else :width="70" :height="70" @click="unmute">
-            <BaseIcon :width="30" :height="30" color="#000000">
+            <BaseIcon :width="30" :height="30" color="000000">
                <Mute />
             </BaseIcon>
          </BaseButtonWithIcon>
@@ -35,7 +35,7 @@
             </BaseIcon>
          </BaseButtonWithIcon>
          <BaseButtonWithIcon :width="70" :height="70" @click="next">
-            <BaseIcon :width="30" :height="30" color="#000000">
+            <BaseIcon :width="30" :height="30" color="000000">
                <StepForward />
             </BaseIcon>
          </BaseButtonWithIcon>
