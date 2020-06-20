@@ -23,9 +23,10 @@ export default {
       }
       return array
    },
-   cleanTracksResponse(response) {
+   cleanTracksFromPlaylistResponse(response) {
       const tracks = []
       response.forEach(track => {
+         console.log(track)
          if (track.track != null) {
             const artists = this.cleanArtistsResponse(track.track.artists)
             const parsedTrack = {
@@ -34,6 +35,27 @@ export default {
                name: track.track.name,
                artists: artists,
                uri: track.track.uri,
+               votes: 0,
+               duration_ms: null,
+               played: false
+            }
+            tracks.push(parsedTrack)
+         }
+      })
+      return tracks
+   },
+   cleanTracksResponse(response) {
+      const tracks = []
+      response.forEach(track => {
+         console.log(track)
+         if (track != null) {
+            const artists = this.cleanArtistsResponse(track.artists)
+            const parsedTrack = {
+               id: track.id,
+               images: track.album.images,
+               name: track.name,
+               artists: artists,
+               uri: track.uri,
                votes: 0,
                duration_ms: null,
                played: false

@@ -10,6 +10,7 @@ export default {
       //Information on party
       party_code: null,
       party_playlist: {
+         proposed_tracks: [],
          tracks: [],
          name: '',
          id: null,
@@ -67,6 +68,9 @@ export default {
       },
       SET_THRESHOLD(state, threshold) {
          state.threshold = threshold
+      },
+      ADD_TRACK_TO_PROPOSED(state, track) {
+         state.party_playlist.proposed_tracks.push(track)
       }
    },
    actions: {
@@ -171,7 +175,7 @@ export default {
       async getPartyPlaylistTracks({ commit, state }) {
          await PlaylistApi.getPlaylistTracks(state.party_playlist.id)
             .then(response => {
-               let tracks = Utils.cleanTracksResponse(response.data.items)
+               let tracks = Utils.cleanTracksFromPlaylistResponse(response.data.items)
                return tracks
             })
             //Add tracks length to every track
@@ -357,6 +361,16 @@ export default {
                   }
                })
          }
+      },
+      /*
+
+
+
+         TRACK PROPOSING
+
+      */
+      addTrackToProposed({ commit }, track) {
+         commit('ADD_TRACK_TO_PROPOSED', track)
       }
    },
    getters: {
