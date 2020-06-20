@@ -6,7 +6,9 @@ export default {
       user_devices: [],
       active_devices: null,
       timer: null,
-      next_track_timestamp: null
+      next_track_timestamp: null,
+      volume: 0,
+      muted: false
    },
    mutations: {
       SET_USER_DEVICES(state, user_devices) {
@@ -20,6 +22,13 @@ export default {
       },
       SET_NEXT_TRACK_TIMESTAMP(state, timestamp) {
          state.next_track_timestamp = timestamp
+      },
+      MUTE(state, old_volume) {
+         state.muted = true
+         state.volume = old_volume
+      },
+      UNMUTE(state) {
+         state.muted = false
       }
    },
    actions: {
@@ -104,6 +113,17 @@ export default {
       async setActiveDevice({ commit }, device_id) {
          commit('SET_ACTIVE_DEVICES', device_id)
          await PlayerApi.switchDevice(device_id)
+      },
+      async mute({ commit }) {
+         await PlayerApi.getCurrentlyPlayingInfo().then(response => {
+            const old_volume = response.data.device.volume_percent
+            commit('MUTE', old_volume)
+         })
+         await PlayerApi.setVolume(0)
+      },
+      async unmute({ commit, state }) {
+         commit('UNMUTE')
+         await PlayerApi.setVolume(state.volume)
       }
    },
    getters: {}
