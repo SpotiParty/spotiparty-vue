@@ -14,16 +14,22 @@ export default {
       GuestTabBar
    },
    computed: {
-      ...mapState('party', ['party_playlist', 'firebase_party', 'firebase_votes'])
+      ...mapState('party', ['party_playlist', 'firebase_party', 'firebase_votes']),
+      ...mapState('user', ['guest_personal_account'])
    },
    watch: {
       async firebase_party(newValue, oldValue) {
          if (newValue.playback_state != oldValue.playback_state) {
             await this.updateLocalPlaybackState(newValue.playback_state)
+            if (this.guest_personal_account) {
+               await this.lazyPause(newValue.playback_state)
+            }
          }
          if (newValue.currently_playing != oldValue.currently_playing) {
             await this.updateLocalCurrentlyPlaying(newValue.currently_playing)
-            await this.lazyPlay(newValue.currently_playing)
+            if (this.guest_personal_account) {
+               await this.lazyPlay(newValue.currently_playing)
+            }
          }
          if (newValue.party_mode.battle_songs != oldValue.party_mode.battle_songs) {
             await this.updateLocalPartyMode(newValue.party_mode)
@@ -41,6 +47,7 @@ export default {
          'updateLocalPlaybackState',
          'updateLocalPartyMode'
       ]),
+      ...mapActions('party', ['lazyPlay', 'lazyPause']),
       async getPlaylist() {
          //TODO vedere se c'è un modo migliore per fare la cosa
          if (this.firebase_party == null) {
