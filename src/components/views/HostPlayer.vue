@@ -12,7 +12,12 @@
          </div>
       </div>
       <div class="container-controls">
-         <BaseButtonWithIcon :width="70" :height="70" @click="next">
+         <BaseButtonWithIcon v-if="!muted" :width="70" :height="70" @click="mute">
+            <BaseIcon :width="30" :height="30" color="#000000">
+               <Volume />
+            </BaseIcon>
+         </BaseButtonWithIcon>
+         <BaseButtonWithIcon v-else :width="70" :height="70" @click="unmute">
             <BaseIcon :width="30" :height="30" color="#000000">
                <Mute />
             </BaseIcon>
@@ -67,7 +72,7 @@ export default {
    },
    computed: {
       ...mapState('party', ['party_playlist', 'currently_playing', 'playback_state']),
-      ...mapState('player', ['user_devices']),
+      ...mapState('player', ['user_devices', 'muted']),
       imageUrl() {
          return this.track.images[0].url
       },
@@ -89,7 +94,9 @@ export default {
          'setActiveDevice',
          'play',
          'pause',
-         'next'
+         'next',
+         'mute',
+         'unmute'
       ]),
       clickDevices() {
          this.getDevices()

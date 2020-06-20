@@ -124,6 +124,17 @@ export default {
       async unmute({ commit, state }) {
          commit('UNMUTE')
          await PlayerApi.setVolume(state.volume)
+      },
+      /*
+
+
+
+         GUEST PLAYER CONTROLS
+
+      */
+      async lazyPlay({ rootState, state }, track) {
+         await PlayerApi.play(rootState.party.party_playlist.uri, track.uri, state.active_device)
+         await PlayerApi.deactivateShuffle()
       }
    },
    getters: {}
