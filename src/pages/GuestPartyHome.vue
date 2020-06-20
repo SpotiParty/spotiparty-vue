@@ -53,12 +53,10 @@ export default {
       },
       getVotes() {
          if (this.party_playlist.tracks.length == 0) {
-            console.log(this.party_playlist.tracks)
             setTimeout(() => {
                this.getVotes()
             }, 1000)
          } else {
-            console.log('First update of played')
             this.updateLocalVotes(this.firebase_votes)
          }
       }

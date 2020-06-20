@@ -82,8 +82,6 @@ export default {
       }
    },
    methods: {
-      ...mapActions('user', ['setToken']),
-      ...mapActions('party', ['partyPlay', 'partyPause', 'nextTrack']),
       ...mapActions('player', [
          'getDevices',
          'getState',
@@ -98,7 +96,6 @@ export default {
          this.show_devices_popup = !this.show_devices_popup
       },
       selectDevice(device_id) {
-         console.log({ device_id })
          this.setActiveDevice(device_id)
          this.clickDevices()
       }

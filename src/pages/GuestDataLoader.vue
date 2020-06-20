@@ -29,7 +29,7 @@ export default {
       }
    },
    computed: {
-      ...mapState('party', ['firebase_party', 'firebase_votes'])
+      ...mapState('party', ['firebase_party', 'firebase_votes', 'updateLocalVotes'])
    },
    methods: {
       ...mapActions('party', ['guestSpotifyLogin']),
