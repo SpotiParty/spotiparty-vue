@@ -56,5 +56,6 @@ export default {
    box-sizing: border-box
    height: calc(100% - 72px)
    margin: 0px 0px 72px 0px
+   overflow: scroll
    width: 100%
 </style>

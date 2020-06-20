@@ -86,7 +86,6 @@ export default {
    flex-direction: column
    justify-content: flex-start
    padding: 15px
-   height: auto !important
    .battle-mode
       height: 100%
       overflow: hidden
