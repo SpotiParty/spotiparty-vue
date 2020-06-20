@@ -103,7 +103,7 @@ const routes = [
             path: 'votes',
             name: 'GuestVoting',
             component: GuestVoting,
-            childern: [
+            children: [
                {
                   path: 'party-tracks',
                   name: 'PartyTracks',
