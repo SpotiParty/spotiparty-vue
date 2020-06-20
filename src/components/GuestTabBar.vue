@@ -101,12 +101,12 @@ export default {
       margin: 1px
       width: 100px
    .title
-         color: inherit
-         display: flex
-         font-size: 12px
-         font-weight: 600
-         justify-content: flex-start
-         margin: 1px
+      color: inherit
+      display: flex
+      font-size: 12px
+      font-weight: 600
+      justify-content: flex-start
+      margin: 1px
 .active
    color: white
    filter: brightness(100%)

@@ -11,6 +11,11 @@
                v-if="!track.played"
             />
          </div>
+         <div class="suggestion">
+            <router-link :to="{ name: 'SearchSong' }">
+               <BaseButton>Suggerisci</BaseButton>
+            </router-link>
+         </div>
       </div>
       <div v-if="party_mode.mode == 'battle'" class="battle-mode">
          <div class="battle-card">
@@ -45,7 +50,13 @@ export default {
       BattleVote
    },
    computed: {
-      ...mapState('party', ['party_playlist', 'voted_song_id', 'party_mode', 'firebase_votes']),
+      ...mapState('party', [
+         'party_playlist',
+         'voted_song_id',
+         'party_mode',
+         'firebase_votes',
+         'party_code'
+      ]),
       first_battle_track() {
          return this.party_playlist.tracks.find(
             track => track.id == this.party_mode.battle_songs[0]
@@ -75,6 +86,7 @@ export default {
    flex-direction: column
    justify-content: flex-start
    padding: 15px
+   height: auto !important
    .battle-mode
       height: 100%
       overflow: hidden
@@ -97,5 +109,11 @@ export default {
 .selected
    filter: brightness(150%)
 .song
+   width: 100%
+.suggestion
+   align-items: center
+   display: flex
+   justify-content: center
+   padding: 10px
    width: 100%
 </style>

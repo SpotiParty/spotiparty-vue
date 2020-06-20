@@ -19,6 +19,7 @@ import GuestPlayer from '@/components/views/GuestPlayer.vue'
 import GuestVoting from '@/components/views/GuestVoting.vue'
 import GuestSetting from '@/components/views/GuestSetting.vue'
 import GuestRequireAccess from '@/components/views/GuestRequireAccess.vue'
+import SearchSong from '@/components/views/SearchSong.vue'
 
 Vue.use(VueRouter)
 
@@ -86,6 +87,11 @@ const routes = [
       component: GuestPartyHome,
       meta: { requireAuth: true },
       children: [
+         {
+            path: 'search-song',
+            name: 'SearchSong',
+            component: SearchSong
+         },
          {
             path: 'player',
             name: 'GuestPlayer',
