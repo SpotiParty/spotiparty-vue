@@ -37,7 +37,8 @@ export default {
                uri: track.track.uri,
                votes: 0,
                duration_ms: null,
-               played: false
+               played: false,
+               proposed: false
             }
             tracks.push(parsedTrack)
          }
@@ -58,7 +59,8 @@ export default {
                uri: track.uri,
                votes: 0,
                duration_ms: null,
-               played: false
+               played: false,
+               proposed: true
             }
             tracks.push(parsedTrack)
          }

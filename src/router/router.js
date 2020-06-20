@@ -20,6 +20,8 @@ import GuestVoting from '@/components/views/GuestVoting.vue'
 import GuestSetting from '@/components/views/GuestSetting.vue'
 import GuestRequireAccess from '@/components/views/GuestRequireAccess.vue'
 import SearchSong from '@/components/views/SearchSong.vue'
+import PartyTracks from '@/components/views/PartyTracks.vue'
+import ProposedTracks from '@/components/views/ProposedTracks.vue'
 
 Vue.use(VueRouter)
 
@@ -100,7 +102,19 @@ const routes = [
          {
             path: 'votes',
             name: 'GuestVoting',
-            component: GuestVoting
+            component: GuestVoting,
+            childern: [
+               {
+                  path: 'party-tracks',
+                  name: 'PartyTracks',
+                  component: PartyTracks
+               },
+               {
+                  path: 'proposed-tracks',
+                  name: 'ProposedTracks',
+                  component: ProposedTracks
+               }
+            ]
          },
          {
             path: 'settings',

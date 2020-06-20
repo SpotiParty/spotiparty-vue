@@ -33,8 +33,8 @@
       <router-link :to="{ name: 'GuestVoting' }">
          <div
             :class="{
-               active: current_route_name == 'GuestVoting',
-               inactive: current_route_name != 'GuestVoting',
+               active: isOnGuestVoting,
+               inactive: isOnGuestVoting,
                'tab-element': true
             }"
          >
@@ -76,6 +76,19 @@ export default {
    watch: {
       $route(to) {
          this.current_route_name = to.name
+      }
+   },
+   methods: {
+      isOnGuestVoting() {
+         if (
+            this.current_route_name == 'GuestVoting' ||
+            this.current_route_name == 'PartyTracks' ||
+            this.current_route_name == 'ProposedTracks'
+         ) {
+            return true
+         } else {
+            return false
+         }
       }
    }
 }
