@@ -19,7 +19,6 @@ const party = {
    mutations: {
       ADD_PARTY_CODE(state, party_code) {
          state.party_code = party_code
-         //localStorage.setItem('party_code', party_code)
       }
    },
    actions: {
@@ -47,7 +46,7 @@ describe('Component', () => {
    })
 })
 
-describe('JoinParty', () => {
+describe('JoinParty button', () => {
    test('show button when type', async () => {
       const wrapper = mount(JoinParty, {
          localVue,
@@ -62,9 +61,6 @@ describe('JoinParty', () => {
       expect(wrapper.vm.displayButton).toBeCalled()
       expect(wrapper.find('basebuttonwithicon').exists()).toBe(true)
    })
-})
-
-describe('JoinParty', () => {
    test("hide button with 'click' out of the input", async () => {
       const wrapper = mount(JoinParty, {
          localVue,
@@ -82,7 +78,7 @@ describe('JoinParty', () => {
    })
 })
 
-describe('JoinParty', () => {
+describe('JoinParty error', () => {
    test('error when code is wrong', () => {
       const wrapper = mount(JoinParty, {
          localVue,
