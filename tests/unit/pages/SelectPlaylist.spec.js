@@ -7,7 +7,6 @@ import Browse from '@/components/views/Browse.vue'
 import TabSelector from '@/components/TabSelector.vue'
 import VueRouter from 'vue-router'
 import Vuex from 'vuex'
-import { mapState } from 'vuex'
 
 // localeVue instance
 const localVue = createLocalVue()

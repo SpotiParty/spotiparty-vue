@@ -49,13 +49,14 @@ describe('Component', () => {
       expect(wrapper.isVueInstance()).toBeTruthy()
    })
    test('correct rendering of nested components', () => {
-      console.log('ASDASDASDASDASDASD')
-      console.log(party.state.party_playlist)
       const wrapper = mount(HostPartyHome, {
          localVue,
-         router,
-         store
+         store,
+         router
       })
+      console.log(wrapper.vm.$router)
       expect(wrapper.find(HostTabBar).exists()).toBe(true)
    })
 })
+
+// TODO vedere se si riescono a testare le rotte
