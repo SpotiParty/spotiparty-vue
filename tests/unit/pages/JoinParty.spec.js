@@ -7,10 +7,10 @@ const localVue = createLocalVue()
 localVue.use(Vuex)
 localVue.use(VueRouter)
 
+// store
 const user = {
    namespaced: true
 }
-
 const party = {
    namespaced: true,
    state: {
@@ -29,12 +29,14 @@ const party = {
    },
    getters: {}
 }
-
 const store = new Vuex.Store({
    modules: { party, user }
 })
+// end store
 
+// router
 const router = new VueRouter()
+// end router
 
 describe('Component', () => {
    test('is a Vue istance', () => {

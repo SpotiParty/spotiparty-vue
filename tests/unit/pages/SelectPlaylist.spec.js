@@ -17,20 +17,14 @@ localVue.use(Vuex)
 // store
 const playlists = {
    namespaced: true,
-   state: {
-      ...mapState('playlist', ['user_playlists'])
-      //user_playlists: []
-   },
+   state: {},
    mutations: {},
    actions: {},
    getters: {}
 }
 const party = {
    namespaced: true,
-   state: {
-      ...mapState('party', ['party_code'])
-      //party_code: null
-   },
+   state: {},
    mutations: {},
    actions: {},
    getters: {}
