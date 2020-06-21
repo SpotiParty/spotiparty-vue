@@ -1,21 +1,21 @@
-import { mount } from '@vue/test-utils'
+import { shallowMount } from '@vue/test-utils'
 import TabSelector from '@/components/TabSelector.vue'
 
 describe('Component', () => {
    test('is a Vue instance', () => {
-      const wrapper = mount(TabSelector)
+      const wrapper = shallowMount(TabSelector)
       expect(wrapper.isVueInstance()).toBeTruthy()
    })
 })
 
 describe('TabSelector props', () => {
    test('has correct default props', () => {
-      const wrapper = mount(TabSelector)
+      const wrapper = shallowMount(TabSelector)
       expect(wrapper.props('tabs')).toBe(undefined)
       expect(wrapper.props('selected')).toBe(0)
    })
    test('set props correctly', () => {
-      const wrapper = mount(TabSelector, {
+      const wrapper = shallowMount(TabSelector, {
          propsData: {
             tabs: ['first', 'second'],
             selected: 1
@@ -29,7 +29,7 @@ describe('TabSelector props', () => {
 
 describe('TabSelector data', () => {
    test('correct data values', () => {
-      const wrapper = mount(TabSelector)
+      const wrapper = shallowMount(TabSelector)
       expect(wrapper.vm.selected_tab).toBe(0)
       expect(wrapper.vm.animation).toBe(null)
       wrapper.setData({ selected_tab: 1 })
@@ -39,7 +39,7 @@ describe('TabSelector data', () => {
 
 describe('TabSelector html', () => {
    test('render html correctly', async () => {
-      const wrapper = mount(TabSelector, {
+      const wrapper = shallowMount(TabSelector, {
          propsData: {
             tabs: ['first', 'second'],
             selected: 1
@@ -53,7 +53,7 @@ describe('TabSelector html', () => {
 
 describe('TabSelector emit events', () => {
    test('emit "click" on tab selection', async () => {
-      const wrapper = mount(TabSelector, {
+      const wrapper = shallowMount(TabSelector, {
          propsData: {
             tabs: ['first', 'second'],
             selected: 1
