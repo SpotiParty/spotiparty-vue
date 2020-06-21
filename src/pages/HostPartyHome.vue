@@ -17,15 +17,18 @@ export default {
       ...mapState('party', ['party_playlist', 'firebase_party', 'firebase_votes'])
    },
    watch: {
-      firebase_party(newValue, oldValue) {
+      async firebase_party(newValue, oldValue) {
          if (newValue.playback_state != oldValue.playback_state) {
-            this.updateLocalPlaybackState(newValue.playback_state)
+            await this.updateLocalPlaybackState(newValue.playback_state)
          }
          if (newValue.currently_playing != oldValue.currently_playing) {
-            this.updateLocalCurrentlyPlaying(newValue.currently_playing)
+            await this.updateLocalCurrentlyPlaying(newValue.currently_playing)
          }
          if (newValue.party_mode.battle_songs != oldValue.party_mode.battle_songs) {
-            this.updateLocalPartyMode(newValue.party_mode)
+            await this.updateLocalPartyMode(newValue.party_mode)
+         }
+         if (newValue.proposed_tracks != oldValue.proposed_tracks) {
+            await this.updateLocalProposedTracks(newValue.proposed_tracks)
          }
       },
       firebase_votes(newVal) {
@@ -37,7 +40,8 @@ export default {
          'updateLocalPlaybackState',
          'updateLocalCurrentlyPlaying',
          'updateLocalVotes',
-         'updateLocalPartyMode'
+         'updateLocalPartyMode',
+         'updateLocalProposedTracks'
       ])
    },
    created() {

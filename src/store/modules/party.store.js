@@ -49,9 +49,20 @@ export default {
          state.party_playlist.uri = params.uri
       },
       UPDATE_SONG_VOTES(state, song_votes) {
-         const track = state.party_playlist.tracks.find(track => track.id == song_votes.track_id)
-         track.votes = song_votes.votes
-         track.played = song_votes.played
+         const party_track = state.party_playlist.tracks.find(
+            track => track.id == song_votes.track_id
+         )
+         if (party_track != undefined) {
+            party_track.votes = song_votes.votes
+            party_track.played = song_votes.played
+         }
+         const proposed_track = state.party_playlist.proposed_tracks.find(
+            track => track.id == song_votes.track_id
+         )
+         if (proposed_track != undefined) {
+            proposed_track.votes = song_votes.votes
+            proposed_track.played = song_votes.played
+         }
       },
       VOTE_A_SONG(state, track_id) {
          state.voted_song_id = track_id
@@ -125,7 +136,8 @@ export default {
                playlist_id: state.party_playlist.id,
                playback_state: false,
                party_mode: { mode: 'democracy', battle_songs: [] },
-               currently_playing: {}
+               currently_playing: {},
+               proposed_tracks: []
             })
       }),
       bindFirebaseParty: firestoreAction(async ({ bindFirestoreRef, state }) => {
@@ -317,6 +329,19 @@ export default {
             .doc(state.party_code)
             .update({ songs_votes: new_votes })
       },
+      async addTrackToFirebaseVotes({ state }, track) {
+         const new_votes = JSON.parse(JSON.stringify(state.firebase_votes.songs_votes))
+         const new_song_vote = {
+            played: false,
+            track_id: track.id,
+            votes: 0
+         }
+         new_votes.push(new_song_vote)
+         await db
+            .collection('votes')
+            .doc(state.party_code)
+            .update({ songs_votes: new_votes })
+      },
       async updateLocalVotes({ commit }, firebase_votes) {
          firebase_votes.songs_votes.forEach(song_votes => {
             commit('UPDATE_SONG_VOTES', song_votes)
@@ -369,8 +394,24 @@ export default {
          TRACK PROPOSING
 
       */
-      addTrackToProposed({ commit }, track) {
+      async addTrackToProposed({ dispatch, commit, state }, track) {
          commit('ADD_TRACK_TO_PROPOSED', track)
+         await PlaylistApi.addTrackToPlaylist(track, state.party_playlist.id)
+         await dispatch('addTrackToFirebaseVotes', track)
+         await dispatch('uploadProposedTrack', track)
+      },
+      async uploadProposedTrack({ state }, track) {
+         const new_proposed_tracks = state.firebase_party.proposed_tracks
+         new_proposed_tracks.push(track)
+         await db
+            .collection('party')
+            .doc(state.party_code)
+            .update({ proposed_tracks: new_proposed_tracks })
+      },
+      updateLocalProposedTracks({ commit }, proposed_tracks) {
+         proposed_tracks.forEach(track => {
+            commit('ADD_TRACK_TO_PROPOSED', track)
+         })
       }
    },
    getters: {
@@ -389,6 +430,21 @@ export default {
                next_track = track
             }
          })
+         if (state.party_playlist.proposed_tracks.length > 0) {
+            let proposed_track = state.party_playlist.proposed_tracks[0]
+            state.party_playlist.proposed_tracks.forEach(track => {
+               if (
+                  proposed_track.votes <= track.votes &&
+                  track.played == false &&
+                  track.votes >= state.threshold
+               ) {
+                  proposed_track = track
+               }
+            })
+            if (proposed_track.votes > next_track.votes) {
+               return proposed_track
+            }
+         }
          return next_track
       },
       random_pair_of_ids(state) {
