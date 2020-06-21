@@ -42,4 +42,6 @@ export default {
    flex-direction: column
    justify-content: flex-start
    width: 100%
+.selected
+   filter: brightness(150%)
 </style>

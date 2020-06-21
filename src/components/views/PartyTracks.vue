@@ -18,7 +18,7 @@
 
 <script>
 import Song from '@/components/Song.vue'
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 export default {
    components: {
@@ -28,6 +28,7 @@ export default {
       ...mapState('party', ['party_playlist', 'voted_song_id'])
    },
    methods: {
+      ...mapActions('party', ['uploadFirebaseVote']),
       voteSong(track_id) {
          this.uploadFirebaseVote(track_id)
       }
@@ -46,4 +47,6 @@ export default {
    flex-direction: column
    justify-content: flex-start
    width: 100%
+.selected
+   filter: brightness(150%)
 </style>
