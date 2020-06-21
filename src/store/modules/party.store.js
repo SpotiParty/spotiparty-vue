@@ -82,6 +82,9 @@ export default {
       },
       ADD_TRACK_TO_PROPOSED(state, track) {
          state.party_playlist.proposed_tracks.push(track)
+      },
+      EMPTY_PROPOSED_TRACKS(state) {
+         state.party_playlist.proposed_tracks = []
       }
    },
    actions: {
@@ -275,15 +278,20 @@ export default {
       async updateLocalPlaybackState({ commit }, state) {
          commit('UPDATE_PLAYBACK_STATE', state)
       },
-      async nextTrack({ dispatch, getters, state }) {
+      async nextTrack({ dispatch, getters, commit, state }) {
          let track = {}
+         //se non è stata ancora riprodotta nessuna canzone
          if (state.currently_playing == null) {
             track = state.party_playlist.tracks[0]
             await dispatch('uploadCurrentlyPlaying', track)
          } else {
             track = getters.next_track
             await dispatch('uploadCurrentlyPlaying', track)
+            //Viene richiamato il party mode perche deve essere fatto l'upload di un nuovo pair di ID se la modalità è battle
             await dispatch('uploadPartyMode', state.party_mode.mode)
+            await dispatch('cleanSpotifyPlaylistFromUnplayedProposedTracks')
+            //Svuota le track proposte così nuove proposte possono avvenire
+            await commit('EMPTY_PROPOSED_TRACKS')
          }
          return track
       },
@@ -305,6 +313,20 @@ export default {
                songs_votes: new_songs_votes
             })
       }),
+      async cleanSpotifyPlaylistFromUnplayedProposedTracks({ state, getters }) {
+         const unplayed_proposed_tracks = getters.unplayed_proposed_tracks
+         const payload = {
+            tracks: []
+         }
+         unplayed_proposed_tracks.forEach(track => {
+            const track_uri = {
+               uri: track.uri
+            }
+            payload.tracks.push(track_uri)
+         })
+         console.log(payload)
+         await PlaylistApi.deleteTracks(state.party_playlist.id, payload)
+      },
       async updateLocalCurrentlyPlaying({ commit }, track) {
          commit('UPDATE_CURRENTLY_PLAYING', track)
       },
@@ -412,6 +434,17 @@ export default {
          proposed_tracks.forEach(track => {
             commit('ADD_TRACK_TO_PROPOSED', track)
          })
+      },
+      //Svuoto la lista di proposed track da firebase perchè questa agisce come un buffer
+      async cleanFirebaseProposedTracks({ state }) {
+         const new_proposed_tracks = []
+         await db
+            .collection('party')
+            .doc(state.party_code)
+            .update({ proposed_tracks: new_proposed_tracks })
+      },
+      emptyProposedTracks({ commit }) {
+         commit('EMPTY_PROPOSED_TRACKS')
       }
    },
    getters: {
@@ -456,6 +489,9 @@ export default {
             second_random_track = tracks[Math.floor(Math.random() * tracks.length)]
          }
          return [first_random_track.id, second_random_track.id]
+      },
+      unplayed_proposed_tracks(state) {
+         return state.party_playlist.proposed_tracks.filter(track => track.played == false)
       }
    }
 }

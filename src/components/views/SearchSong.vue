@@ -1,7 +1,7 @@
 <template>
    <div>
       <div class="search-input">
-         <SearchBar v-model="search_text"></SearchBar>
+         <SearchBar v-model="search_text" @keyup.enter="search"></SearchBar>
       </div>
       <div v-for="track in result_tracks" :key="track.id">
          <Song :track="track" @click="selectTrack" />
@@ -28,15 +28,15 @@ export default {
          result_tracks: []
       }
    },
-   watch: {
-      search_text(oldVal, newVal) {
-         this.search(newVal)
-      }
-   },
+   // watch: {
+   //    search_text(oldVal, newVal) {
+   //       this.search(newVal)
+   //    }
+   // },
    methods: {
       ...mapActions('party', ['addTrackToProposed']),
-      async search(search_text) {
-         await SearchApi.searchSong(search_text).then(response => {
+      async search() {
+         await SearchApi.searchSong(this.search_text).then(response => {
             const parsed_tracks = Utils.cleanTracksResponse(response.data.tracks.items)
             parsed_tracks.forEach(async track => {
                await TracksApi.getAudioFeatures(track.id).then(response => {

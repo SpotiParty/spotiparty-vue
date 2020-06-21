@@ -33,5 +33,9 @@ export default {
    },
    getPlaylist(playlist_id) {
       return apiClient.get(`/playlists/${playlist_id}`)
+   },
+   deleteTracks(playlist_id, payload) {
+      console.log(payload)
+      return apiClient.delete(`/playlists/${playlist_id}/tracks`, { data: payload })
    }
 }

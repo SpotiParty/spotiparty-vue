@@ -29,6 +29,7 @@ export default {
          }
          if (newValue.proposed_tracks != oldValue.proposed_tracks) {
             await this.updateLocalProposedTracks(newValue.proposed_tracks)
+            await this.cleanFirebaseProposedTracks()
          }
       },
       firebase_votes(newVal) {
@@ -41,7 +42,8 @@ export default {
          'updateLocalCurrentlyPlaying',
          'updateLocalVotes',
          'updateLocalPartyMode',
-         'updateLocalProposedTracks'
+         'updateLocalProposedTracks',
+         'cleanFirebaseProposedTracks'
       ])
    },
    created() {

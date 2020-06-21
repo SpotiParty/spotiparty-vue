@@ -27,6 +27,10 @@ export default {
          }
          if (newValue.currently_playing != oldValue.currently_playing) {
             await this.updateLocalCurrentlyPlaying(newValue.currently_playing)
+            if (newValue.currently_playing.id != oldValue.currently_playing.id) {
+               //Se è stata riprodotta una nuova canzone, le proposte vengono azzerate
+               await this.emptyProposedTracks()
+            }
             if (this.guest_personal_account) {
                await this.lazyPlay(newValue.currently_playing)
             }
@@ -45,7 +49,8 @@ export default {
          'updateLocalVotes',
          'updateLocalCurrentlyPlaying',
          'updateLocalPlaybackState',
-         'updateLocalPartyMode'
+         'updateLocalPartyMode',
+         'emptyProposedTracks'
       ]),
       ...mapActions('player', ['lazyPlay', 'lazyPause']),
       async getPlaylist() {
