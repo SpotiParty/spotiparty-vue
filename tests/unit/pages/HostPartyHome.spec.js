@@ -54,7 +54,6 @@ describe('Component', () => {
          store,
          router
       })
-      console.log(wrapper.vm.$router)
       expect(wrapper.find(HostTabBar).exists()).toBe(true)
    })
 })
