@@ -3,7 +3,7 @@ import Song from '@/components/Song.vue'
 
 const track = {
    id: 'track_id',
-   images: ['image/url'],
+   images: [{ url: 'image/url' }],
    name: 'track_name',
    artists: [{ name: 'artist_name' }]
 }
@@ -39,6 +39,7 @@ describe('Song html', () => {
       })
       expect(wrapper.find('div[class="style-text-song"]').text()).toBe(track.name)
       expect(wrapper.find('div[class="style-text-artist"]').text()).toBe(track.artists[0].name)
+      expect(wrapper.find('img').attributes('src')).toBe(track.images[0].url)
    })
 })
 
