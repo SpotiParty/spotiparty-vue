@@ -74,7 +74,6 @@ describe('HostVoting battle mode', () => {
          localVue,
          store
       })
-      jest.spyOn(wrapper.vm, 'party_mode')
       expect(wrapper.find(BattleVote).exists()).toBe(true)
       expect(wrapper.findAll(BattleVote).length).toBe(2)
       expect(
