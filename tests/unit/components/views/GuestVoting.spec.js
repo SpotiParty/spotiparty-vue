@@ -14,13 +14,13 @@ const party = {
       party_playlist: {
          tracks: [
             {
-               id: '0',
+               id: 0,
                played: false,
                images: [{ url: 'image/url' }],
                artists: [{ name: 'artist_name' }]
             },
             {
-               id: '1',
+               id: 1,
                played: false,
                images: [{ url: 'image/url' }],
                artists: [{ name: 'artist_name' }]
@@ -30,10 +30,10 @@ const party = {
          id: null,
          uri: null
       },
-      voted_song_id: '0',
+      voted_song_id: 0,
       party_mode: {
          mode: 'democracy',
-         battle_songs: ['0', '1']
+         battle_songs: [0, 1]
       }
    },
    mutations: {},

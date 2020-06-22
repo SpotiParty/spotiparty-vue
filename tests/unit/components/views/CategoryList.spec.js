@@ -12,12 +12,12 @@ const browse = {
    state: {
       categories: [
          {
-            id: '0',
+            id: 0,
             name: 'category_name',
             icons: [{ url: 'icon/url' }]
          },
          {
-            id: '1',
+            id: 1,
             name: 'category_name',
             icons: [{ url: 'icon/url' }]
          }
@@ -55,7 +55,7 @@ describe('CategoryList click', () => {
          localVue,
          store
       })
-      await wrapper.vm.click('0')
-      expect(wrapper.emitted('click')[0][0]).toBe('0')
+      await wrapper.vm.click(0)
+      expect(wrapper.emitted('click')[0][0]).toBe(0)
    })
 })

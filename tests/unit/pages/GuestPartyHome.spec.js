@@ -49,8 +49,6 @@ describe('Component', () => {
       expect(wrapper.isVueInstance()).toBeTruthy()
    })
    test('correct rendering of nested components', () => {
-      console.log('ASDASDASDASDASDASD')
-      console.log(party.state.party_playlist)
       const wrapper = mount(GuestPartyHome, {
          localVue,
          router,

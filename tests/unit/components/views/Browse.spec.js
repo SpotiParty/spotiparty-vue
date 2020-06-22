@@ -71,7 +71,6 @@ describe('Browse route and emit', () => {
       })
       await wrapper.vm.$router.push('/select-playlist/browse/category-list')
       await wrapper.vm.openCategory(0)
-      console.log(wrapper.vm.$route)
       expect(wrapper.vm.$route.name).toBe('CategoryPlaylists')
    })
    test('emit "click"', async () => {

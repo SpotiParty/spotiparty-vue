@@ -11,7 +11,7 @@ const party = {
    state: {
       party_mode: {
          mode: 'democracy',
-         battle_songs: ['0', '1']
+         battle_songs: [0, 1]
       }
    },
    mutations: {},
@@ -51,6 +51,5 @@ describe('HostSetting computed', () => {
       expect(wrapper.vm.selected_mode).toBe(0)
       wrapper.vm.$store.state.party.party_mode.mode = 'battle'
       expect(wrapper.vm.selected_mode).toBe(1)
-      console.log(wrapper.find('baseswitch').attributes())
    })
 })

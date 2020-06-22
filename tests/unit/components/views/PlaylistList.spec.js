@@ -4,11 +4,11 @@ import Playlist from '@/components/Playlist.vue'
 
 const playlist_list = [
    {
-      id: '0',
+      id: 0,
       images: [{ url: 'image_url' }]
    },
    {
-      id: '1',
+      id: 1,
       images: [{ url: 'image_url' }]
    }
 ]
