@@ -105,13 +105,13 @@ const routes = [
             component: GuestVoting,
             children: [
                {
-                  path: 'party-tracks',
-                  name: 'PartyTracks',
+                  path: 'guest-party-tracks',
+                  name: 'GuestPartyTracks',
                   component: PartyTracks
                },
                {
                   path: 'proposed-tracks',
-                  name: 'ProposedTracks',
+                  name: 'GuestProposedTracks',
                   component: ProposedTracks
                }
             ]
@@ -142,7 +142,19 @@ const routes = [
          {
             path: 'votes',
             name: 'HostVoting',
-            component: HostVoting
+            component: HostVoting,
+            children: [
+               {
+                  path: 'host-party-tracks',
+                  name: 'HostPartyTracks',
+                  component: PartyTracks
+               },
+               {
+                  path: 'host-proposed-tracks',
+                  name: 'HostProposedTracks',
+                  component: ProposedTracks
+               }
+            ]
          },
          {
             path: 'settings',
