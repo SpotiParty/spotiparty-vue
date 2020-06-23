@@ -49,6 +49,7 @@ describe('Component', () => {
    })
    test('correct rendering of nested components', () => {
       const wrapper = mount(HostTabBar, {
+         stubs: ['router-link', 'router-view'],
          localVue,
          router
       })
@@ -62,6 +63,7 @@ describe('Component', () => {
 describe('HostTabBar watcher with routes', () => {
    test('update data when routes changes', async () => {
       const wrapper = mount(HostTabBar, {
+         stubs: ['router-link', 'router-view'],
          localVue,
          router
       })

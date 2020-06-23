@@ -26,6 +26,7 @@ const store = new Vuex.Store({
 describe('Component', () => {
    test('is a Vue instance', () => {
       const wrapper = shallowMount(HostSetting, {
+         stubs: ['router-link', 'router-view'],
          localVue,
          store
       })
@@ -45,6 +46,7 @@ describe('Component', () => {
 describe('HostSetting computed', () => {
    test('computed return correct value', async () => {
       const wrapper = shallowMount(HostSetting, {
+         stubs: ['router-link', 'router-view'],
          localVue,
          store
       })

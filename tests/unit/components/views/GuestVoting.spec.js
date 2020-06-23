@@ -5,15 +5,10 @@ import BattleVote from '@/components/BattleVote.vue'
 import Vuex from 'vuex'
 import VueRouter from 'vue-router'
 
-// router
-const routes = []
-const router = new VueRouter({
-   routes
-})
-// end router
 const localVue = createLocalVue()
 localVue.use(Vuex)
 localVue.use(VueRouter)
+const router = new VueRouter()
 
 // store
 const party = {
@@ -56,6 +51,7 @@ const store = new Vuex.Store({
 describe('Component', () => {
    test('is a Vue instance', () => {
       const wrapper = shallowMount(GuestVoting, {
+         stubs: ['router-link', 'router-view'],
          localVue,
          store,
          router
@@ -67,8 +63,10 @@ describe('Component', () => {
 describe('GuestVoting democracy mode', () => {
    test('correct rendering of nested components', async () => {
       const wrapper = mount(GuestVoting, {
+         stubs: ['router-link', 'router-view'],
          localVue,
-         store
+         store,
+         router
       })
       expect(wrapper.find(Song).exists()).toBe(true)
       expect(wrapper.findAll(Song).length).toBe(2)
@@ -80,8 +78,10 @@ describe('GuestVoting battle mode', () => {
    test('correct rendering of nested components', async () => {
       store.state.party.party_mode.mode = 'battle'
       const wrapper = mount(GuestVoting, {
+         stubs: ['router-link', 'router-view'],
          localVue,
-         store
+         store,
+         router
       })
       expect(wrapper.find(BattleVote).exists()).toBe(true)
       expect(wrapper.findAll(BattleVote).length).toBe(2)

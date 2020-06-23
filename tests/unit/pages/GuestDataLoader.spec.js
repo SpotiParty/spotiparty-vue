@@ -30,7 +30,6 @@ const router = new VueRouter({
    base: process.env.BASE_URL,
    routes
 })
-router
 // end router
 
 // store
@@ -62,6 +61,7 @@ describe('Component', () => {
       const wrapper = mount(GuestDataLoader, {
          localVue,
          store,
+         router,
          mocks: {
             $route
          }
