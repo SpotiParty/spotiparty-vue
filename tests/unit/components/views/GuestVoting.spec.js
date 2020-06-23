@@ -1,6 +1,5 @@
 import { mount, shallowMount, createLocalVue } from '@vue/test-utils'
 import GuestVoting from '@/components/views/GuestVoting.vue'
-import Song from '@/components/Song.vue'
 import BattleVote from '@/components/BattleVote.vue'
 import Vuex from 'vuex'
 import VueRouter from 'vue-router'
