@@ -1,5 +1,5 @@
 import { mount, createLocalVue } from '@vue/test-utils'
-import JoinParty from '@/pages/joinparty.vue'
+import JoinParty from '@/pages/JoinParty.vue'
 import Vuex from 'vuex'
 import VueRouter from 'vue-router'
 
