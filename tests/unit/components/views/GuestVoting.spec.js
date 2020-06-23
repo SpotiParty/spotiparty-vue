@@ -60,20 +60,6 @@ describe('Component', () => {
    })
 })
 
-describe('GuestVoting democracy mode', () => {
-   test('correct rendering of nested components', async () => {
-      const wrapper = mount(GuestVoting, {
-         stubs: ['router-link', 'router-view'],
-         localVue,
-         store,
-         router
-      })
-      expect(wrapper.find(Song).exists()).toBe(true)
-      expect(wrapper.findAll(Song).length).toBe(2)
-      expect(wrapper.find(Song).attributes('class')).toContain('selected')
-   })
-})
-
 describe('GuestVoting battle mode', () => {
    test('correct rendering of nested components', async () => {
       store.state.party.party_mode.mode = 'battle'
