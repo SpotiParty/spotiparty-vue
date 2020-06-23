@@ -58,6 +58,7 @@ export default {
       },
       async pause({ rootState, dispatch, commit, state }) {
          await dispatch('party/partyPause', null, { root: true })
+         await clearTimeout(state.timer)
          await PlayerApi.getCurrentlyPlayingInfo().then(response => {
             const paused_timestamp_ms = parseInt(response.data.progress_ms)
             const next_track_timestamp =
@@ -65,7 +66,6 @@ export default {
             commit('SET_NEXT_TRACK_TIMESTAMP', next_track_timestamp)
          })
          await PlayerApi.pause()
-         clearTimeout(state.timer)
          commit('SET_TIMER', null)
       },
       async play({ state, rootState, dispatch, commit }) {
