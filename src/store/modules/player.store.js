@@ -76,7 +76,6 @@ export default {
                await dispatch('automaticNext')
             }, track.duration_ms)
             commit('SET_TIMER', timer)
-            console.log(`Playing next track after ${track.duration_ms} ms`)
             await PlayerApi.deactivateShuffle()
             await dispatch('party/partyPlay', null, { root: true })
          } else {
@@ -85,30 +84,25 @@ export default {
                await dispatch('automaticNext')
             }, state.next_track_timestamp)
             commit('SET_TIMER', timer)
-            console.log(`Playing next track after ${state.next_track_timestamp} ms`)
             await dispatch('party/partyPlay', null, { root: true })
          }
       },
       async automaticNext({ rootState, state, dispatch, commit }) {
          const track = await dispatch('party/nextTrack', null, { root: true })
-         console.log(`next track: ${track.name}`)
          await PlayerApi.play(rootState.party.party_playlist.uri, track.uri, state.active_device)
          const timer = setTimeout(async () => {
             await dispatch('automaticNext')
          }, track.duration_ms)
          commit('SET_TIMER', timer)
-         console.log(`Playing next track after ${track.duration_ms} ms`)
       },
       async next({ rootState, state, dispatch, commit }) {
          clearTimeout(state.timer)
          const track = await dispatch('party/nextTrack', null, { root: true })
-         console.log(`next track: ${track.name}`)
          await PlayerApi.play(rootState.party.party_playlist.uri, track.uri, state.active_device)
          const timer = setTimeout(async () => {
             await dispatch('automaticNext')
          }, track.duration_ms)
          commit('SET_TIMER', timer)
-         console.log(`Playing next track after ${track.duration_ms} ms`)
       },
       async setActiveDevice({ commit }, device_id) {
          commit('SET_ACTIVE_DEVICES', device_id)
