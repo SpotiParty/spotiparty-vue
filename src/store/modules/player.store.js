@@ -129,13 +129,6 @@ export default {
       async lazyPlay({ rootState, state }, track) {
          await PlayerApi.play(rootState.party.party_playlist.uri, track.uri, state.active_device)
          await PlayerApi.deactivateShuffle()
-      },
-      async lazyPause(playback_state) {
-         if (playback_state == false) {
-            await PlayerApi.pause()
-         } else {
-            await PlayerApi.resume()
-         }
       }
    },
    getters: {}

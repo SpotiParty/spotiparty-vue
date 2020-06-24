@@ -309,6 +309,7 @@ export default {
             //Viene richiamato il party mode perche deve essere fatto l'upload di un nuovo pair di ID se la modalità è battle
             await dispatch('uploadPartyMode', state.party_mode.mode)
             await dispatch('cleanSpotifyPlaylistFromUnplayedProposedTracks')
+            await dispatch('cleanFirebaseProposedTracks')
             //Svuota le track proposte così nuove proposte possono avvenire
             await commit('EMPTY_PROPOSED_TRACKS')
          }
@@ -433,8 +434,11 @@ export default {
          TRACK PROPOSING
 
       */
-      async addTrackToProposed({ dispatch, commit, state }, track) {
-         commit('ADD_TRACK_TO_PROPOSED', track)
+      async addTrackToProposed({ dispatch }, track) {
+         await dispatch('addTrackToFirebaseVotes', track)
+         await dispatch('uploadProposedTrack', track)
+      },
+      async addTrackToProposedAndPlaylist({ dispatch, state }, track) {
          await PlaylistApi.addTrackToPlaylist(track, state.party_playlist.id)
          await dispatch('addTrackToFirebaseVotes', track)
          await dispatch('uploadProposedTrack', track)
