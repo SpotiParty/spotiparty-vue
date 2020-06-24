@@ -44,7 +44,9 @@ const router = new VueRouter({
 
 describe('Component', () => {
    test('is a Vue instance', () => {
-      const wrapper = shallowMount(HostTabBar)
+      const wrapper = shallowMount(HostTabBar, {
+         localVue
+      })
       expect(wrapper.isVueInstance()).toBeTruthy()
    })
    test('correct rendering of nested components', () => {
