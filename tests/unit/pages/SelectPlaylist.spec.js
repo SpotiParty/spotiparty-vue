@@ -90,16 +90,19 @@ const router = new VueRouter({
 describe('Component', () => {
    test('is a vue instance', () => {
       const wrapper = shallowMount(SelectPlaylist, {
-         localVue
+         localVue,
+         router,
+         store
       })
       expect(wrapper.isVueInstance()).toBeTruthy()
    })
    test('correct rendering of nested components', () => {
       const wrapper = mount(SelectPlaylist, {
-         localVue
+         localVue,
+         router,
+         store
       })
       expect(wrapper.find(TabSelector).exists()).toBe(true)
-      expect(wrapper.find('router-view').exists()).toBe(true)
       expect(wrapper.find('basebutton').exists()).toBe(true)
    })
 })

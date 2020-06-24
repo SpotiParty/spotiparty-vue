@@ -5,10 +5,13 @@ import HostPartyHome from '@/pages/HostPartyHome.vue'
 import HostPlayer from '@/components/views/HostPlayer.vue'
 import HostVoting from '@/components/views/HostVoting.vue'
 import HostSetting from '@/components/views/HostSetting.vue'
+import Vuex from 'vuex'
 
 const localVue = createLocalVue()
 localVue.use(VueRouter)
+localVue.use(Vuex)
 
+const store = new Vuex.Store()
 // router
 const routes = [
    {
@@ -45,7 +48,8 @@ const router = new VueRouter({
 describe('Component', () => {
    test('is a Vue instance', () => {
       const wrapper = shallowMount(HostTabBar, {
-         localVue
+         localVue,
+         store
       })
       expect(wrapper.isVueInstance()).toBeTruthy()
    })
@@ -53,7 +57,8 @@ describe('Component', () => {
       const wrapper = mount(HostTabBar, {
          stubs: ['router-link', 'router-view'],
          localVue,
-         router
+         router,
+         store
       })
       expect(wrapper.findAll('baseicon').length).toBe(3)
       expect(wrapper.findAll('player').length).toBe(1)
@@ -67,7 +72,8 @@ describe('HostTabBar watcher with routes', () => {
       const wrapper = mount(HostTabBar, {
          stubs: ['router-link', 'router-view'],
          localVue,
-         router
+         router,
+         store
       })
       // rotta di base
       await wrapper.vm.$router.push('/host-party-home/player')
